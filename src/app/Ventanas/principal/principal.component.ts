@@ -15,4 +15,7 @@ export class PrincipalComponent {
   pacientes(){
     this.router.navigate(["/view-person"]);
   }
+  test(){
+    this.router.navigate(["/test-list"])
+  }
 }
