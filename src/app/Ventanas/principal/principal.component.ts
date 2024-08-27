@@ -13,6 +13,6 @@ export class PrincipalComponent {
   }
 
   pacientes(){
-    this.router.navigate(["/view-person"]);
+    this.router.navigate(["login/view-person"]);
   }
 }

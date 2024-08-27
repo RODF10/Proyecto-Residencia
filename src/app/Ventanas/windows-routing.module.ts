@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VistasComponent } from './vistas/vistas.component';
 import { TestListComponent } from './test-list/test-list.component';
+import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: 'test-list',
     component: TestListComponent  
+  },
+  {
+    path: 'diagnostic',
+    component: DiagnosticComponent
   }
 ];
 

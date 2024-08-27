@@ -1,0 +1,37 @@
+.category {
+    max-width: 1500px;
+    margin: 10px auto;
+}
+
+.category-title {
+    background-color: #e68dfc;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.category-title:hover{
+    background-color: #e063ff;
+}
+
+.category-content {
+    display: none;
+    padding: 10px;
+    background-color: #ffbbf7;
+    border: 1px solid #d64eff;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.title p{
+    text-align: center;
+    font-size: 35px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.lista li{
+    cursor: pointer;
+    max-width: 250px;
+    list-style: none;
+    display: block;
+}

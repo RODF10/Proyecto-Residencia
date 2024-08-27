@@ -1,0 +1,18 @@
+<div class="title">
+    <p>Categoria de la Encuesta</p>
+</div>
+<div *ngFor="let category of categoria; let i = index" class="category">
+    <div class="category-title" (click)="toggleCategoryIndex(i)">
+      {{ category.title }}
+    </div>
+    <div class="category-content" [ngStyle]="{ display: selectedCategoryIndex === i ? 'block' : 'none' }">
+      {{ category.content }}
+      <ul class="lista">
+        <li>{{category.cont1}}</li>
+        <li>{{category.cont2}}</li>
+        <li>{{category.cont3}}</li>
+        <li>{{category.cont4}}</li>
+        <li>{{category.cont5}}</li>
+      </ul>
+    </div>
+</div>

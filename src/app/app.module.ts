@@ -15,6 +15,7 @@ import { VistasComponent } from './Ventanas/vistas/vistas.component';
 import { StructureComponent } from './Layout/structure/structure.component';
 import { WindowsRoutingModule } from './Ventanas/windows-routing.module';
 import { TestListComponent } from './Ventanas/test-list/test-list.component';
+import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TestListComponent } from './Ventanas/test-list/test-list.component';
     ContentComponent,
     VistasComponent,
     StructureComponent,
-    TestListComponent
+    TestListComponent,
+    DiagnosticComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 interface Paciente {
   nombre?: string;
@@ -32,7 +33,7 @@ export class VistasComponent implements OnInit {
   pacienteForm: FormGroup = this.formBuilder.group({});
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private router: Router) {
     this.pacienteForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -61,5 +62,9 @@ export class VistasComponent implements OnInit {
     // Aquí puedes manejar los datos del formulario
     alert('Formulario enviado exitosamente!');
     console.log(this.pacienteForm.value);
+  }
+
+  categoria() {
+    this.router.navigate(['login/diagnostic']);
   }
 }
