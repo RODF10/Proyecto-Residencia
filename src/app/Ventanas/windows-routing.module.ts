@@ -6,6 +6,8 @@ import { PrincipalComponent } from './principal/principal.component';
 import { VistasComponent } from './vistas/vistas.component';
 import { TestListComponent } from './test-list/test-list.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
+import { ListPersonComponent } from './list-person/list-person.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {
@@ -32,7 +34,15 @@ const routes: Routes = [
   {
     path: 'diagnostic',
     component: DiagnosticComponent
-  }
+  },
+  {
+    path: 'list-person',
+    component: ListPersonComponent
+  },
+  {
+    path: 'about',
+    component: AboutComponent
+  },
 ];
 
 @NgModule({
