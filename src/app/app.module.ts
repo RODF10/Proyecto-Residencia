@@ -18,6 +18,15 @@ import { TestListComponent } from './Ventanas/test-list/test-list.component';
 import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component';
 import { ListPersonComponent } from './Ventanas/list-person/list-person.component';
 import { AboutComponent } from './Ventanas/about/about.component';
+import { Category1Component } from './Ventanas/Diagnosticos/category1/category1.component';
+
+//Incorporacion de Fecha
+import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import  localeEs  from '@angular/common/locales/es'
+
+//Registro de Fecha
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   declarations: [
@@ -32,7 +41,8 @@ import { AboutComponent } from './Ventanas/about/about.component';
     TestListComponent,
     DiagnosticComponent,
     ListPersonComponent,
-    AboutComponent
+    AboutComponent,
+    Category1Component
   ],
   imports: [
     BrowserModule,
@@ -41,7 +51,7 @@ import { AboutComponent } from './Ventanas/about/about.component';
     ReactiveFormsModule,
     WindowsRoutingModule,
   ],
-  providers: [],
+  providers: [ { provide: LOCALE_ID, useValue: 'es' } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

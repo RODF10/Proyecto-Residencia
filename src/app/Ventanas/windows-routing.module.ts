@@ -8,6 +8,7 @@ import { TestListComponent } from './test-list/test-list.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { ListPersonComponent } from './list-person/list-person.component';
 import { AboutComponent } from './about/about.component';
+import { Category1Component } from './Diagnosticos/category1/category1.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'about',
     component: AboutComponent
+  },
+  {
+    path: 'esfera-cognitiva',
+    component: Category1Component
   },
 ];
 

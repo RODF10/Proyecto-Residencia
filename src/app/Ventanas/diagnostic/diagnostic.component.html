@@ -8,11 +8,11 @@
     <div class="category-content" [ngStyle]="{ display: selectedCategoryIndex === i ? 'block' : 'none' }">
       {{ category.content }}
       <ul class="lista">
-        <li>{{category.cont1}}</li>
-        <li>{{category.cont2}}</li>
-        <li>{{category.cont3}}</li>
-        <li>{{category.cont4}}</li>
-        <li>{{category.cont5}}</li>
+        <li (click)="vent(category.cat,1)">{{category.cont1}}</li>
+        <li (click)="vent(category.cat,2)">{{category.cont2}}</li>
+        <li (click)="vent(category.cat,3)">{{category.cont3}}</li>
+        <li (click)="vent(category.cat,4)">{{category.cont4}}</li>
+        <li (click)="vent(category.cat,5)">{{category.cont5}}</li>
       </ul>
     </div>
 </div>
