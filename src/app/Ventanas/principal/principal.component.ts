@@ -8,11 +8,20 @@ import { Router } from '@angular/router';
 })
 export class PrincipalComponent {
 
+  fecha = new Date();
   constructor(private router: Router){
-
+   
   }
 
   pacientes(){
-    this.router.navigate(["/view-person"]);
+    this.router.navigate(["login/list-person"]);
+  }
+
+  horaActual: Date = new Date();
+
+  ngOnInit(): void {
+    setInterval(() => {
+      this.horaActual = new Date();
+    }, 1000);
   }
 }

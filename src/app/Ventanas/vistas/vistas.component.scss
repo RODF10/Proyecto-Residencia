@@ -4,3 +4,48 @@
 .text-center .btn{
     margin: 5px 15px;
 }
+
+.btn-history{
+    background: #81C4FF;
+}
+.btn-history:hover{
+    background: #5DB3FF;
+}
+
+//Tabla Style
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table, th, td {
+    border: 1px solid #ddd;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+th {
+    background-color: #f4f4f4;
+}
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.icon-button {
+    background: #3DB8FF;
+    color: #FFFFFF;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 5px;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    border-radius: 10%;
+}
+.icon-button:hover {
+    background: #75CDFF;
+}
+
+#example.modal-dialogModal{
+    width: 100%;
+    max-width: 1000px;
+}

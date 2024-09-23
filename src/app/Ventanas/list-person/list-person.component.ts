@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -14,11 +14,11 @@ interface Paciente {
 }
 
 @Component({
-  selector: 'app-vistas',
-  templateUrl: './vistas.component.html',
-  styleUrls: ['./vistas.component.scss']
+  selector: 'app-list-person',
+  templateUrl: './list-person.component.html',
+  styleUrls: ['./list-person.component.scss']
 })
-export class VistasComponent implements OnInit {
+export class ListPersonComponent {
   paciente: Paciente = {
     nombre: 'María García',
     apellido: 'Cauich',
@@ -46,12 +46,6 @@ export class VistasComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    
-  }
-
-  get f() { return this.pacienteForm.controls; }
-
   onSubmit() {
     this.submitted = true;
 
@@ -62,9 +56,5 @@ export class VistasComponent implements OnInit {
     // Aquí puedes manejar los datos del formulario
     alert('Formulario enviado exitosamente!');
     console.log(this.pacienteForm.value);
-  }
-
-  categoria() {
-    this.router.navigate(['login/diagnostic']);
   }
 }

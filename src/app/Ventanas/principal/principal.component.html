@@ -1,3 +1,17 @@
+<div class="fecha-hora">
+    <div class="reloj-container">
+        <p class="hours">Hora Actual:</p>
+        <div class="reloj">
+          {{ horaActual | date:'HH:mm:ss' }}
+        </div>
+    </div>
+    <div class="container-fecha">
+        <p class="date">{{ fecha | date: 'EEEE, dd/MM/yyyy' }}</p>
+    </div>
+</div>
+
+
+
 <div class="container">
   <h1 class="mt-5 text-center">Página de Inicio</h1>
   <p class="text-center">Bienvenido a la página de inicio de la aplicación.</p>
