@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { VistasComponent } from './vistas/vistas.component';
-import { TestListComponent } from './test-list/test-list.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { ListPersonComponent } from './list-person/list-person.component';
 import { AboutComponent } from './about/about.component';
@@ -27,10 +26,6 @@ const routes: Routes = [
   {
     path: 'view-person',
     component: VistasComponent
-  },
-  {
-    path: 'test-list',
-    component: TestListComponent  
   },
   {
     path: 'diagnostic',
