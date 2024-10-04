@@ -1,0 +1,56 @@
+<div class="contentMedic">
+  <div class="medicAvailable">
+
+  </div>
+
+  <div class="ingresos">
+
+  </div>
+</div>
+
+
+<div class="texto">
+  <h1>Lista de Pacientes Diagnosticados</h1>
+</div>
+
+<div class="container" id="htmlData">
+    <table class="table table-bordered" id="tblHistory">
+      <thead>
+        <tr>
+          <th>Doctor</th>
+          <th>Paciente</th>
+          <th>Diagnóstico</th>
+          <th>Puntaje</th>
+          <th>Observaciones</th>
+          <th>Fecha de Captura</th>
+          <th>Hora</th>
+          <th>Centro Médico</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let record of medicalRecords">
+          <td>{{ record.doctor }}</td>
+          <td>{{ record.paciente }}</td>
+          <td>{{ record.diagnostico }}</td>
+          <td>{{ record.resultado }} pto</td>
+          <td>{{ record.observaciones }}</td>
+          <td>{{ record.fechaCaptura }}</td>
+          <td>{{ record.hora }}</td>
+          <td>{{ record.centroMedico }}</td>
+          <td>
+            <button (click)="downloadPDF()" class="btn btn-primary btn-sm" title="Descargar PDF">
+              <!-- <i class="fa fa-edit"></i> -->
+              <i class="fas fa-download"></i>
+            </button>
+            <button (click)="deleteRecord(record.id)" class="btn btn-danger btn-sm">
+              <i class="fa fa-trash"></i>
+            </button>
+            <button (click)="updateRecord(record)" class="btn btn-info btn-sm">
+              <i class="fa fa-refresh"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+</div>

@@ -8,6 +8,7 @@ import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { ListPersonComponent } from './list-person/list-person.component';
 import { AboutComponent } from './about/about.component';
 import { Category1Component } from './Diagnosticos/category1/category1.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
   {
     path: 'esfera-cognitiva',
     component: Category1Component
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   },
 ];
 

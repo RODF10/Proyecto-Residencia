@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { MedicalHistory } from 'src/app/Shared/Data';
 
 @Component({
   selector: 'app-principal',
@@ -7,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./principal.component.scss']
 })
 export class PrincipalComponent {
+  
 
   fecha = new Date();
   constructor(private router: Router){
@@ -24,4 +26,6 @@ export class PrincipalComponent {
       this.horaActual = new Date();
     }, 1000);
   }
+
+  
 }
