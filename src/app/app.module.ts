@@ -23,7 +23,8 @@ import { Category1Component } from './Ventanas/Diagnosticos/category1/category1.
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import  localeEs  from '@angular/common/locales/es';
-import { DashboardComponent } from './Ventanas/dashboard/dashboard.component'
+import { DashboardComponent } from './Ventanas/dashboard/dashboard.component';
+import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.component'
 
 //Registro de Fecha
 registerLocaleData(localeEs, 'es');
@@ -42,7 +43,8 @@ registerLocaleData(localeEs, 'es');
     ListPersonComponent,
     AboutComponent,
     Category1Component,
-    DashboardComponent
+    DashboardComponent,
+    ProfileMedicComponent
   ],
   imports: [
     BrowserModule,

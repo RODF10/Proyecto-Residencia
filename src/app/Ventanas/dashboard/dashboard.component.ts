@@ -108,7 +108,7 @@ export class DashboardComponent {
     // Agregar pie de página con la fecha actual
     const date = new Date();
     doc.text(`Fecha de generación: ${date.toLocaleDateString()} ${date.toLocaleTimeString()}`, 20, 290); // Parte inferior de la página
-    doc.text('Documento generado en HTML', 180, 290);
+    doc.text('Documento generado en HTML', 150, 290);
 
     // Descargar el archivo PDF
     doc.save('reporte_medico.pdf');

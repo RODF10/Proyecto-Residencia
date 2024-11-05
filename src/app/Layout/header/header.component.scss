@@ -1,4 +1,61 @@
-li:hover{
-    background: rgba(56, 65, 73, 0.3);
-    border-radius: 10px;
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f06cff;
+    padding: 10px;
+    color: #fff;
+}
+
+.menu a {
+    margin: 0 15px;
+    color: #fff;
+    text-decoration: none;
+}
+
+.profile {
+    position: relative;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+.profile a:hover{
+	background: rgba(0,250,238,0.3);
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.navbar .logo .icono, .logo h2{
+	display: inline;
+}
+.logo .icono {
+	background: white;
+	border-radius: 50%;
+}
+.logo:hover{
+	cursor: pointer;
 }
