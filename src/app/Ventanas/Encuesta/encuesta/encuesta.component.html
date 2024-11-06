@@ -11,7 +11,8 @@
         <h5>{{ pregunta.texto }}</h5>
         <div *ngFor="let inciso of pregunta.incisos; let i = index">
           <label>
-            <input type="radio" name="{{ encuesta.titulo + pregunta.texto }}" (change)="pregunta.respuestaSeleccionada = i" />
+            <input type="radio" name="{{ encuesta.titulo + pregunta.texto }}" (change)="pregunta.respuestaSeleccionada = i; calcularPuntajeTotal(encuesta)" />
+            <img *ngIf="inciso.imagenUrl" [src]="inciso.imagenUrl" alt="{{ inciso.texto }}" class="inciso-imagen" />
             {{ inciso.texto }} ({{ inciso.puntaje }} puntos)
           </label>
         </div>
@@ -23,3 +24,5 @@
   <div class="finalizar-encuesta">
     <button (click)="finalizarEncuesta()">Finalizar Encuesta</button>
   </div>
+</div>
+

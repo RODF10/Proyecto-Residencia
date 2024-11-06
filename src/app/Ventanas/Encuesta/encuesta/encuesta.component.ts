@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 export interface Inciso {
   texto: string;
   puntaje: number;
+  imagenUrl?: string; // Nueva propiedad para la URL de la imagen
 }
 
 export interface Pregunta {
@@ -245,6 +246,99 @@ export class EncuestaComponent {
       ],
       expandida: false
     },
+    {
+    titulo: 'Trastorno Neurocognoscitivo Menor. DSM 5',
+      preguntas: [
+        {
+          texto: 'Criterios diagnósticos Del DSM-5 para trastorno neurocognoscitivo menor.',
+          incisos: [
+            { texto: 'A. Evidencia de un declive cognitivo moderado comparado con el nivel previo de rendimiento en uno o más de uno de los dominios cognitivos (atención compleja, función ejecutiva, aprendizaje y memoria, lenguaje, habilidad perceptual motora o cognición social) basada en:', puntaje: 10 },
+            { texto: '1.- Preocupación del individuo, en un infórmate que le conoce o el clínico, porque ha habido un declive significativo en una función cognitiva', puntaje: 5 },
+            { texto: '2.- Declive modesto del rendimiento cognitivo, preferentemente documentado por un test neuropsicológico estandarizado o, en su defecto, por la evaluación clínica cuantitativa.', puntaje: 0 },
+            { texto: 'B. Los déficits cognitivos son insuficientes para interferir con la independencia de las actividades cotidianas (p. ej., actividades instrumentales de la vida diaria, tareas complejas como manejo de medicación o de dinero), pudiendo ser preciso esforzarse más, utilizar estrategias compensatorias o hacer una acomodación para mantener la independencia.', puntaje: 0 },
+            { texto: 'C. Los déficits cognitivos no ocurren exclusivamente en el contexto de síndrome confusional', puntaje: 0 },
+            { texto: 'D. Los déficits cognitivos no son atribuibles de forma primaria a la presencia de otros trastornos mentales (por ej. trastorno depresivo mayor, esquizofrenia.', puntaje: 0 },
+            { texto: 'Especificar: Sin alteración del comportamiento o Con alteración del comportamiento.', puntaje: 0 },
+          ]
+        },
+      ],
+      expandida: false
+    },
+    {
+      titulo: 'Trastorno Neurocognoscitivo Mayor. DSM 5',
+        preguntas: [
+          {
+            texto: 'Criterios diagnósticos Del DSM-5 para trastorno neurocognoscitivo menor.',
+            incisos: [
+              { texto: 'A. Evidencia de un declive cognitivo significativo comparado con el nivel previo de rendimiento en uno o más de uno de los dominios cognitivos (atención compleja, función ejecutiva, aprendizaje y memoria, lenguaje, habilidad perceptual motora o cognición social) basada en:', puntaje: 10 },
+              { texto: '1.- Preocupación del individuo, en un infórmate que le conoce o el clínico, porque ha habido un declive significativo en una función cognitiva', puntaje: 5 },
+              { texto: '2.- Declive sustancial del rendimiento cognitivo, preferentemente documentado por un test neuropsicológico estandarizado o, en su defecto, por la evaluación clínica cuantitativa.', puntaje: 0 },
+              { texto: 'B. Los déficits cognitivos interfieren con la independencia de las actividades cotidianas (es decir, por lo menos necesita asistencia con las actividades instrumentadas complejas de la vida diaria, como pagar facturas o cumplir los rendimientos)', puntaje: 0 },
+              { texto: 'C. Los déficits cognitivos no ocurren exclusivamente en el contexto de síndrome confusional', puntaje: 0 },
+              { texto: 'D. Los déficits cognitivos no son atribuibles de forma primaria a la presencia de otros trastornos mentales (por ej. trastorno depresivo mayor, esquizofrenia).', puntaje: 0 },
+              { texto: 'Especificar: Sin alteración del comportamiento o Con alteración del comportamiento.', puntaje: 0 },
+              { texto: 'Especificar gravedad actual:', puntaje: 0 },
+              { texto: 'Leve: dificultad con las actividades instrumentadas cotidianas', puntaje: 0 },
+              { texto: 'Moderado: dificultad con las actividades básicas cotidianas', puntaje: 0 },
+              { texto: 'Grave: totalmente dependiente', puntaje: 0 },
+            ]
+          },
+        ],
+        expandida: false
+      },
+      {
+        titulo: 'MMSE de Folstein',
+          preguntas: [
+            {
+              texto: 'ORIENTACION TIEMPO / ESPACIO',
+              incisos: [
+                { texto: '¿Cuál es el año?', puntaje: 1},
+                { texto: '¿Cuál es el mes?', puntaje: 2 },
+                { texto: '¿Qué día del mes es hoy?', puntaje: 3 },
+                { texto: '¿Qué día de la semana es hoy?', puntaje: 4 },
+                { texto: '¿Qué hora es aproximadamente?', puntaje: 5 },
+                { texto: '¿En dónde estamos ahora?', puntaje: 1 },
+                { texto: '¿En qué país estamos?', puntaje: 2 },
+                { texto: '¿En qué Estado vivimos?', puntaje: 3 },
+                { texto: '¿En qué ciudad estamos?', puntaje: 4 },
+                { texto: '¿En qué colonia, delegación o municipio?', puntaje: 5 },
+              ]
+            },
+            {
+              texto: 'FIJACIÓN',
+              incisos: [
+                { texto: '"Le voy a decir 3 palabras, cuando yo los termine quiero que por favor Usted los repita” (Anote un punto cada vez que la palabra sea correcta). Flor Coche Nariz', puntaje: 3 },
+              ]
+            },
+            {
+              texto: 'CONCENTRACIÓN Y CÁLCULO',
+              incisos: [
+                { texto: '"Le voy a pedir que reste de 4 en 4 a partir del 40." (Anote un punto cada vez que la diferencia sea correcta aunque la anterior fuera incorrecta.', puntaje: 5 },
+              ]
+            },
+            {
+              texto: 'MEMORIA',
+              incisos: [
+                { texto: '"¿Recuerda usted las tres palabras que le dije antes? Dígalas" Flor Coche Nariz', puntaje: 3 },
+              ]
+            },
+            {
+              texto: 'LENGUAJE Y CONSTRUCCIÓN',
+              incisos: [
+                { texto: '"¿Qué es esto?” (Mostrar un reloj).', puntaje: 1 },
+                { texto: '“¿y esto?” (Mostrar un bolígrafo).', puntaje: 2 },
+                { texto: '"Repita la siguiente frase después de mí: - “No voy si tu no llegas temprano".', puntaje: 1 },
+                { texto: 'Le voy a dar algunas instrucciones. Por favor sígalas en el orden en que se las voy a decir. 1. "Tome el papel con la mano izquierda”, 2. “dóblelo por la mitad” y 3. “póngalo en el suelo"', puntaje: 3 },
+                { texto: '"Lea esto y haga lo que dice:" “Cierre los ojos”', puntaje: 1 },
+                { texto: '"Quiero que por favor escriba una Oración con sujeto y predicado', puntaje: 1 },
+                { texto: '"Copie este dibujo"', puntaje: 1, imagenUrl: 'C:\Users\Fernando Chan Cauich\Documents\Proyecto-Residencia\src\assets\Imagenes\MMSE de Folstein.png'},
+              ]
+            },
+          ],
+          expandida: false
+        },
+
+
     // Agrega más encuestas según sea necesario
   ];
 
@@ -256,7 +350,7 @@ export class EncuestaComponent {
   }
 
  // Calcular y asignar puntaje total para cada encuesta
- private calcularPuntajeTotal(encuesta: Encuesta): number {
+ public calcularPuntajeTotal(encuesta: Encuesta): number {
   return encuesta.preguntas.reduce((total, pregunta) => {
     return total + (pregunta.respuestaSeleccionada !== undefined ? pregunta.incisos[pregunta.respuestaSeleccionada].puntaje : 0);
   }, 0);
