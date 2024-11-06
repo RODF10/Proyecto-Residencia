@@ -18,11 +18,13 @@ import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component'
 import { ListPersonComponent } from './Ventanas/list-person/list-person.component';
 import { AboutComponent } from './Ventanas/about/about.component';
 import { Category1Component } from './Ventanas/Diagnosticos/category1/category1.component';
+import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.component';
 
 //Incorporacion de Fecha
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
-import  localeEs  from '@angular/common/locales/es'
+import  localeEs  from '@angular/common/locales/es';
+import { ResultadosComponent } from './Ventanas/Encuesta/resultados/resultados.component';
 
 //Registro de Fecha
 registerLocaleData(localeEs, 'es');
@@ -40,7 +42,9 @@ registerLocaleData(localeEs, 'es');
     DiagnosticComponent,
     ListPersonComponent,
     AboutComponent,
-    Category1Component
+    Category1Component,
+    EncuestaComponent,
+    ResultadosComponent
   ],
   imports: [
     BrowserModule,

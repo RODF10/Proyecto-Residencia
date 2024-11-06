@@ -1,0 +1,8 @@
+<div class="container">
+    <h2>Resultados de las Encuestas</h2>
+    <div *ngFor="let encuesta of encuestas" class="resultado-encuesta">
+      <h3>{{ encuesta.titulo }}</h3>
+      <p>Puntaje total: {{ encuesta.puntajeTotal }}</p>
+      <p>Diagnóstico: {{ encuesta.diagnostico }}</p>
+    </div>
+  </div>
