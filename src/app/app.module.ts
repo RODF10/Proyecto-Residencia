@@ -18,6 +18,7 @@ import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component'
 import { ListPersonComponent } from './Ventanas/list-person/list-person.component';
 import { AboutComponent } from './Ventanas/about/about.component';
 import { Category1Component } from './Ventanas/Diagnosticos/category1/category1.component';
+import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.component';
 
 //Incorporacion de Fecha
 import { LOCALE_ID } from '@angular/core';
