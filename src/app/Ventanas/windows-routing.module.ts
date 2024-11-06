@@ -9,6 +9,7 @@ import { ListPersonComponent } from './list-person/list-person.component';
 import { AboutComponent } from './about/about.component';
 import { Category1Component } from './Diagnosticos/category1/category1.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileMedicComponent } from './profile-medic/profile-medic.component';
 
 const routes: Routes = [
   {
@@ -47,6 +48,10 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileMedicComponent
   },
 ];
 

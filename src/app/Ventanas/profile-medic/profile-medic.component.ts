@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./profile-medic.component.scss']
 })
 export class ProfileMedicComponent {
+  
 
 }
