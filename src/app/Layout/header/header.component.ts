@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+import { LoadJSService } from 'src/app/Service/load-js.service';
 
 @Component({
   selector: 'app-header',
@@ -6,5 +8,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
+  dropdownOpen = false;
+
+  constructor(private LoadJS: LoadJSService, private router: Router){
+    LoadJS.Carga(["Profile"]);
+  }
+
+  mainPage(){
+    this.router.navigate(['login/dashboard']);
+  }
 
 }

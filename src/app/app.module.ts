@@ -24,7 +24,8 @@ import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.compone
 import { LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import  localeEs  from '@angular/common/locales/es';
-import { ResultadosComponent } from './Ventanas/Encuesta/resultados/resultados.component';
+import { DashboardComponent } from './Ventanas/dashboard/dashboard.component';
+import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.component'
 
 //Registro de Fecha
 registerLocaleData(localeEs, 'es');
@@ -43,8 +44,8 @@ registerLocaleData(localeEs, 'es');
     ListPersonComponent,
     AboutComponent,
     Category1Component,
-    EncuestaComponent,
-    ResultadosComponent
+    DashboardComponent,
+    ProfileMedicComponent
   ],
   imports: [
     BrowserModule,
