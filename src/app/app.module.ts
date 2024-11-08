@@ -45,7 +45,8 @@ registerLocaleData(localeEs, 'es');
     AboutComponent,
     Category1Component,
     DashboardComponent,
-    ProfileMedicComponent
+    ProfileMedicComponent,
+    EncuestaComponent
   ],
   imports: [
     BrowserModule,

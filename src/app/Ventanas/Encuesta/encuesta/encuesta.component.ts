@@ -240,7 +240,7 @@ export class EncuestaComponent {
           incisos: [
             { texto: 'Se encarga de sus asuntos económicos por si solo', puntaje: 10 },
             { texto: 'Realiza las compras de cada día, pero necesita ayuda en las grandes compras', puntaje: 5 },
-            { texto: 'Incapaz de manejar dinero', puntaje: 0 },
+            { texto: 'Incapaz de manejar dinero', puntaje: 0},
           ]
         },
       ],
@@ -331,7 +331,7 @@ export class EncuestaComponent {
                 { texto: 'Le voy a dar algunas instrucciones. Por favor sígalas en el orden en que se las voy a decir. 1. "Tome el papel con la mano izquierda”, 2. “dóblelo por la mitad” y 3. “póngalo en el suelo"', puntaje: 3 },
                 { texto: '"Lea esto y haga lo que dice:" “Cierre los ojos”', puntaje: 1 },
                 { texto: '"Quiero que por favor escriba una Oración con sujeto y predicado', puntaje: 1 },
-                { texto: '"Copie este dibujo"', puntaje: 1, imagenUrl: 'C:\Users\Fernando Chan Cauich\Documents\Proyecto-Residencia\src\assets\Imagenes\MMSE de Folstein.png'},
+                { texto: '"Copie este dibujo"', puntaje: 1, imagenUrl: 'assets/Imagenes/MMSE.png'},
               ]
             },
           ],
@@ -342,7 +342,7 @@ export class EncuestaComponent {
     // Agrega más encuestas según sea necesario
   ];
 
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   // Alternar expansión de la encuesta
   toggleEncuesta(encuesta: Encuesta): void {
@@ -357,7 +357,7 @@ export class EncuestaComponent {
 }
 
 // Asignar diagnóstico basado en el puntaje
-private asignarDiagnostico(puntaje: number): string {
+public asignarDiagnostico(puntaje: number): string {
   if (puntaje < 3) return 'Leve';
   if (puntaje < 6) return 'Moderado';
   return 'Grave';
