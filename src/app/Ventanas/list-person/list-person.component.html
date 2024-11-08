@@ -8,11 +8,11 @@
         </div>
         <div class="modal-body">
           <!-- Formulario del Registro -->
-          <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="pacienteForm" (ngSubmit)="registro()">
             <!-- Nombre -->
             <div class="form-group">
               <label for="nombre">Nombre:</label>
-              <input type="text" class="form-control" id="nombre" formControlName="nombre">
+              <input type="text" class="form-control" id="nombre" formControlName="nombre" [(ngModel)]="pacient.nombre">
               <div *ngIf="submitted && pacienteForm.controls['nombre'].errors">
                 <div *ngIf="pacienteForm.controls['nombre'].errors['required']" class="text-danger">Nombre es requerido</div>
               </div>
@@ -30,7 +30,7 @@
             <!-- Genero -->
             <div class="form-group">
               <label for="genero">Género:</label>
-              <select class="form-control" id="genero" formControlName="genero">
+              <select class="form-control" id="genero" formControlName="genero" [(ngModel)]="pacient.genero">
                 <option value="">Seleccione</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
@@ -44,13 +44,13 @@
             <!-- Fecha Nacimiento -->
             <div class="form-group">
               <label for="fechaNacimiento">Fecha de Nacimiento: </label>
-              <input type="date" id="fechaNacimiento" name="bday" required class="form-control">
+              <input type="date" id="fechaNacimiento" name="bday" required class="form-control" [(ngModel)]="pacient.fecha_nacimiento">
             </div>
 
             <!-- Contacto de Emergencia -->
             <div class="form-group">
               <label for="matricula">Contacto de Emergencia:</label>
-              <input type="text" class="form-control" id="matricula" formControlName="matricula" maxlength="10">
+              <input type="text" class="form-control" id="matricula" formControlName="matricula" maxlength="10" [(ngModel)]="pacient.telefono">
               <div *ngIf="submitted && pacienteForm.controls['matricula'].errors">
                 <div *ngIf="pacienteForm.controls['matricula'].errors['required']" class="text-danger">Número de Emergencia es requerido</div>
               </div>
@@ -59,7 +59,7 @@
             <!-- Domicilio -->
             <div class="form-group">
               <label for="caracteristicas">Domicilio:</label>
-              <textarea class="form-control" id="caracteristicas" formControlName="caracteristicas" rows="3"></textarea>
+              <textarea class="form-control" id="caracteristicas" formControlName="caracteristicas" rows="3" [(ngModel)]="pacient.direccion"></textarea>
               <div *ngIf="submitted && pacienteForm.controls['caracteristicas'].errors" class="text-danger">
                 <div *ngIf="pacienteForm.controls['caracteristicas'].errors['required']">Domicilio son requeridas</div>
               </div>
@@ -68,7 +68,7 @@
             <!-- Email del Contacto -->
             <div class="form-group">
               <label for="enfermedad">Correo Electrónico:</label>
-              <input type="text" class="form-control" id="enfermedad" formControlName="enfermedad">
+              <input type="text" class="form-control" id="enfermedad" formControlName="enfermedad" [(ngModel)]="pacient.email">
               <div *ngIf="submitted && pacienteForm.controls['enfermedad'].errors" class="text-danger">
                 <div *ngIf="pacienteForm.controls['enfermedad'].errors['required']">Correo es requerida</div>
               </div>

@@ -12,12 +12,12 @@ export class HeaderComponent implements OnInit{
 
   dropdownOpen = false;
 
-  constructor(private LoadJS: LoadJSService, private router: Router, public varService: NavbarService){
+  constructor(private LoadJS: LoadJSService, private router: Router, public authService: NavbarService){
     LoadJS.Carga(["Profile"]);
   }
 
   mainPage(){
-    this.router.navigate(['login/dashboard']);
+    this.router.navigate(['login/home']);
   }
 
   ngOnInit() {
@@ -30,6 +30,11 @@ export class HeaderComponent implements OnInit{
         }
       }
     });*/
+  }
+
+  login() {
+    this.authService.login();
+    this.router.navigate(['/login/principal']); // Redirige a la página principal
   }
 
 }

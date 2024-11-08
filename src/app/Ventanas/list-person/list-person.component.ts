@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/Service/api.service';
 
 interface Paciente {
   nombre?: string;
@@ -19,6 +20,8 @@ interface Paciente {
   styleUrls: ['./list-person.component.scss']
 })
 export class ListPersonComponent {
+  pacient = {nombre:'',fecha_nacimiento:'', genero:'', direccion:'', telefono:'', email:''}
+
   paciente: Paciente = {
     nombre: 'María García',
     apellido: 'Cauich',
@@ -33,7 +36,7 @@ export class ListPersonComponent {
   pacienteForm: FormGroup = this.formBuilder.group({});
   submitted = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private apiService: ApiService) {
     this.pacienteForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -56,5 +59,17 @@ export class ListPersonComponent {
     // Aquí puedes manejar los datos del formulario
     alert('Formulario enviado exitosamente!');
     console.log(this.pacienteForm.value);
+  }
+
+  registro(){
+    this.apiService.registerPacient(this.pacient).subscribe(
+      Response => {
+        console.log('Registro Exitoso', Response);
+      },
+      Error => {
+        console.error('Error en el Registro', Response);
+        alert('Error enviado exitosamente!');
+      }
+    );
   }
 }

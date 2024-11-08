@@ -4,15 +4,19 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class NavbarService {
-  public visible: boolean = false;
+  public isAuthenticated : boolean = false;
 
   constructor() {}
 
-  show() {
-    this.visible = true;
+  login() {
+    this.isAuthenticated  = true;
   }
 
-  hide() {
-    this.visible = false;
+  logout() {
+    this.isAuthenticated  = false;
+  }
+
+  isLoggedOut(){
+    return this.isAuthenticated;
   }
 }

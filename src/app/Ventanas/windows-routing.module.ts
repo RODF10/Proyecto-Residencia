@@ -50,6 +50,14 @@ const routes: Routes = [
     path: 'esfera-cognitiva',
     component: Category1Component
   },
+  {
+    path:'dashboard',
+    component: DashboardComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileMedicComponent
+  },
 ];
 
 @NgModule({

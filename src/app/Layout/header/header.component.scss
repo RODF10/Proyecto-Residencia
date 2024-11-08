@@ -15,8 +15,15 @@
 
 .profile {
     position: relative;
+    //width: 100px;
 }
-
+.user-name {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 400;
+    display: inline-flex;
+    margin-left: 10px;
+}
 .profile-image {
     width: 40px;
     height: 40px;
@@ -58,4 +65,60 @@
 }
 .logo:hover{
 	cursor: pointer;
+}
+.menu-toggle{
+    display: none;
+    position: absolute;
+    left:3%;
+    top: 15px;
+    font-size: 25px;
+}
+
+/* Para pantallas pequeñas (teléfonos) */
+@media (max-width: 767px) {
+    /* Mostrar el icono de menú y ocultar el menú principal */
+    .menu {
+        display: none;
+        flex-direction: column;
+        //position: absolute;
+        //top: 60px;
+        //right: 0;
+        background-color: #f06cff;
+        width: 50%;
+        padding: 10px;
+    }
+
+    .menu a {
+        margin: 10px 0;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+    .menu-toggle:hover{
+        cursor: pointer;
+    }
+
+    /* Estilo para el menú desplegable en móviles */
+    .menu.show {
+        display: flex;
+    }   
+    .profile{
+        display: block;
+
+    }
+    .logo{
+        margin-left: 10%;
+    }
+}
+
+/* Para pantallas medianas (tablets) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .menu a {
+        margin: 0 10px; /* Reduce el espacio entre enlaces */
+    }
+
+    .navbar {
+        padding: 10px 15px; /* Reduce el padding */
+    }
 }

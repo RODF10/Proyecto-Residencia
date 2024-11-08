@@ -28,3 +28,88 @@
     max-width: 350px;
     margin: auto;
 }
+
+
+.dashboard {
+  padding: 20px;
+}
+
+.statistics {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.stat-box {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 30%;
+}
+
+.content {
+  display: flex;
+  gap: 20px;
+}
+
+.patients, .todos {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.patients table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.patients table, .patients th, .patients td {
+  border: 1px solid #ddd;
+}
+
+.patients th, .patients td {
+  padding: 8px;
+  text-align: left;
+}
+
+.patient-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.status {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.completed {
+  background-color: #4CAF50;
+}
+
+.pending {
+  background-color: #FF9800;
+}
+
+.process {
+  background-color: #FFC107;
+}
+
+.todos ul {
+  list-style: none;
+  padding: 0;
+}
+
+.todo-item {
+  background-color: #f1f1f1;
+  margin: 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
