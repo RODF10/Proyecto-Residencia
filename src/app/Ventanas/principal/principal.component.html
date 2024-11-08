@@ -9,3 +9,58 @@
         <p class="date">{{ fecha | date: 'EEEE, dd/MM/yyyy' }}</p>
     </div>
 </div>
+
+<div class="dashboard">
+    <h1>Dashboard</h1>
+    <div class="statistics">
+        <div class="stat-box">
+            <p>1020</p>
+            <span>Citas Hechas</span>
+        </div>
+        <div class="stat-box">
+            <p>2834</p>
+            <span>Pacientes Ingresados</span>
+        </div>
+        <div class="stat-box">
+            <p>$2543</p>
+            <span>Total Encuestas</span>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="patients">
+            <h2>Diagnóstico de Pacientes Recientes</h2>
+            <table>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Date Order</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                    <td>01-10-2021</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                    <td>01-10-2021</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                    <td>01-10-2021</td>
+                    <td><span class="status process">Process</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="todos">
+            <h2>Todos</h2>
+            <ul>
+                <li class="todo-item">Todo List</li>
+                <li class="todo-item">Todo List</li>
+                <li class="todo-item">Todo List</li>
+            </ul>
+        </div>
+    </div>
+</div>

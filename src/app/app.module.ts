@@ -27,6 +27,9 @@ import  localeEs  from '@angular/common/locales/es';
 import { DashboardComponent } from './Ventanas/dashboard/dashboard.component';
 import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.component'
 
+//Conexio  Http
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
 //Registro de Fecha
 registerLocaleData(localeEs, 'es');
 
@@ -54,6 +57,7 @@ registerLocaleData(localeEs, 'es');
     FormsModule,
     ReactiveFormsModule,
     WindowsRoutingModule,
+    HttpClientModule,
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'es' } ],
   bootstrap: [AppComponent]

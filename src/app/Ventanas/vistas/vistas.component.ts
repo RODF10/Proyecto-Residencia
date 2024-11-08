@@ -67,4 +67,7 @@ export class VistasComponent implements OnInit {
   categoria() {
     this.router.navigate(['login/diagnostic']);
   }
+  history(){
+    this.router.navigate(['login/dashboard'])
+  }
 }
