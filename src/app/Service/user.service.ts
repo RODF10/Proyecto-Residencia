@@ -17,7 +17,7 @@ export class UserService {
 
   login(email: string, password: string): boolean {
     if (email === this.validar.email && password === this.validar.password) {
-      localStorage.setItem('authToken', 'logged_in'); // Guarda un token básico en el localStorage
+      localStorage.setItem('isAuthenticated', 'logged_in'); // Guarda un token básico en el localStorage
       return true;
     } else {
       // Mostrar SweetAlert si las credenciales son incorrectas
@@ -32,10 +32,10 @@ export class UserService {
   }
 
   logout(): void {
-    localStorage.removeItem('authToken'); // Borra el token para cerrar sesión
+    localStorage.removeItem('isAuthenticated'); // Borra el token para cerrar sesión
   }
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('authToken'); // Verifica si el token está en localStorage
+    return !!localStorage.getItem('isAuthenticated'); // Verifica si el token está en localStorage
   }
 }
