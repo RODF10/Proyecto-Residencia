@@ -7,7 +7,7 @@ import { StructureComponent } from './Layout/structure/structure.component';
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: 'home',
     component: StructureComponent,
     children: [
       {
@@ -19,10 +19,10 @@ const routes: Routes = [
     ],
   },
   {
-    path: '**',
-    redirectTo: 'login'
-  }
-
+    path: 'login', // Ruta para el administrador
+  component: LoginComponent,
+  },
+  
   /*{path: '', redirectTo:'/login', pathMatch: 'full'},
   {path:'login', component: LoginComponent},
   {path: 'home', component: PrincipalComponent},
