@@ -1,58 +1,66 @@
-<div class="container">
-  <h1 class="mt-5 text-center">Página de Inicio</h1>
-  <p class="text-center">Bienvenido a la página de inicio de la aplicación.</p>
-  <!--<div class="text-center">
-    <a href="/view-person" class="btn btn-primary">Ver Médico</a>
-  </div>-->
-  <div class="d-flex" id="wrapper">
-    <!-- Sidebar-->
-    <div class="border-end bg-white" id="sidebar-wrapper">
-        <div class="sidebar-heading border-bottom bg-light">Start Bootstrap</div>
-        <div class="list-group list-group-flush">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Dashboard</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Shortcuts</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Overview</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Events</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Profile</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="#!">Status</a>
+<div class="fecha-hora">
+    <div class="reloj-container">
+        <p class="hours">Hora Actual:</p>
+        <div class="reloj">
+          {{ horaActual | date:'HH:mm:ss' }}
         </div>
     </div>
-    <!-- Page content wrapper-->
-    <div id="page-content-wrapper">
-        <!-- Top navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-            <div class="container-fluid">
-                <button class="btn btn-warning" id="sidebarToggle" (click)="pacientes()">Lista de pacientes</button>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                        <button class="btn btn-warning" id="sidebarToggle" (click)="test()">Lista de test</button>
-                        <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#!">Action</a>
-                                <a class="dropdown-item" href="#!">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#!">Something else here</a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- Page content-->
-        <div class="container-fluid">
-            <h1 class="mt-4">Simple Sidebar</h1>
-            <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-            <p>
-                Make sure to keep all page content within the
-                <code>#page-content-wrapper</code>
-                . The top navbar is optional, and just for demonstration. Just create an element with the
-                <code>#sidebarToggle</code>
-                ID which will toggle the menu when clicked.
-            </p>
-        </div>
+    <div class="container-fecha">
+        <p class="date">{{ fecha | date: 'EEEE, dd/MM/yyyy' }}</p>
     </div>
 </div>
+
+<div class="dashboard">
+    <h1>Dashboard</h1>
+    <div class="statistics">
+        <div class="stat-box">
+            <p>1020</p>
+            <span>Citas Hechas</span>
+        </div>
+        <div class="stat-box">
+            <p>2834</p>
+            <span>Pacientes Ingresados</span>
+        </div>
+        <div class="stat-box">
+            <p>$2543</p>
+            <span>Total Encuestas</span>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="patients">
+            <h2>Diagnóstico de Pacientes Recientes</h2>
+            <table>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Date Order</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                    <td>01-10-2021</td>
+                    <td><span class="status completed">Completed</span></td>
+                </tr>
+                <tr>
+                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                    <td>01-10-2021</td>
+                    <td><span class="status pending">Pending</span></td>
+                </tr>
+                <tr>
+                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                    <td>01-10-2021</td>
+                    <td><span class="status process">Process</span></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div class="todos">
+            <h2>Todos</h2>
+            <ul>
+                <li class="todo-item">Todo List</li>
+                <li class="todo-item">Todo List</li>
+                <li class="todo-item">Todo List</li>
+            </ul>
+        </div>
+    </div>
 </div>

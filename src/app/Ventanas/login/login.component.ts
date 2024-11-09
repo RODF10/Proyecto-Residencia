@@ -21,7 +21,7 @@ export class LoginComponent {
       // Lógica de autenticación exitosa
 
       // Redirigir al usuario a la página de inicio
-      this.router.navigate(['/home']);
+      this.router.navigate(['login/home']);
 
       // Reemplazar la URL actual en el historial para evitar retroceder
       window.history.replaceState({}, document.title, '/home');

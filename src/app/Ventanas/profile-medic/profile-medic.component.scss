@@ -1,0 +1,130 @@
+body{
+    margin: 0;
+}
+/* CONTENEDOR GENERAL */
+.perfil{
+    max-width: 430px;
+    width: 100%;
+    background: rgb(204, 209, 209, 0.5);
+    padding: 15px;
+    position: relative;
+    display: flex;
+    margin-left: 50px;
+}
+/* CONTENEDOR IMAGEN */
+.perfil .user{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: opacity 0.3s ease;
+}
+.perfil .fotoPerfil:hover{
+    cursor: pointer;
+}
+.fotoPerfil {
+    position: relative;
+    width: 180px; /* Ajusta el tamaño de la imagen según tus necesidades */
+    height: 180px;
+    border-radius: 50%; /* Hace que la imagen sea circular */
+    overflow: hidden;
+}
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
+    color: white;
+    font-size: 18px;
+    opacity: 0; /* Oculta el texto por defecto */
+    transition: opacity 0.3s ease; /* Animación suave */
+    border-radius: 50%; /* Hace que el overlay también sea circular */
+}
+.fotoPerfil:hover .overlay {
+    opacity: 0.7; /* Muestra el texto al hacer hover */
+}
+
+.fotoPerfil:hover .user {
+    opacity: 0.6; /* Opcional: reduce la opacidad de la imagen al hacer hover */
+}
+/* CONTENEDOR DEL NOMBRE FECHA Y GENERO */
+.container{
+    display: block;
+}
+.perfil .name{
+    font-family: 'Arial', Courier, monospace;
+    font-size: 30px;
+    max-width: 230px;
+    margin-left: 10px;
+}
+
+#icon{
+    font-size: 13px;
+}
+.perfil .datoPersonal{
+    display: flex;
+}
+.perfil .date, .perfil .genero{
+    font-size: 17px;
+    font-family: 'Arial', Courier, monospace;
+    color: #c766fb;
+    font-weight: bold;
+}
+.perfil .genero{
+    margin-left: 10px;
+}
+/* ESTILO DEL BOTON EDITAR */
+.edit-btn {
+    position: absolute;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    top: 15px;
+    right: 10px;
+}
+
+.edit-btn i {
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.edit-btn:hover {
+    background-color: #0056b3;
+}
+/* CONTENEDOR PERSONA */
+.containerProfesional .pesonal {
+    //flex-wrap: wrap;
+    //gap: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    max-width: 40%;
+    max-width: 500PX;
+    margin-left: 50px;
+    margin-top: 45px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    //color: #333;
+    border-bottom: 2px solid black;
+    //width: calc(50% - 10px); /* Hace que cada elemento ocupe el 50% del ancho */
+    margin: 25px 0px;
+}
+.stat-item i, .stat-item span {
+    color: #b961ff
+}
+
