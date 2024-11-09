@@ -15,20 +15,16 @@ import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
   {
     path: '',
-    component: LoginComponent
+    component: PrincipalComponent
   },
   {
     path: 'encuestas',
     component: EncuestaComponent
-  },
-  {
-    path: 'home',
-    component: PrincipalComponent
   },
   {
     path: 'view-person',
