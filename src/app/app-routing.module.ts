@@ -4,11 +4,13 @@ import { LoginComponent } from './Ventanas/login/login.component';
 import { PrincipalComponent } from './Ventanas/principal/principal.component';
 import { VistasComponent } from './Ventanas/vistas/vistas.component';
 import { StructureComponent } from './Layout/structure/structure.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
     path: 'home',
     component: StructureComponent,
+    canActivate: [AuthGuard], // Protege la ruta con el guard
     children: [
       {
         path: '',
@@ -21,6 +23,11 @@ const routes: Routes = [
   {
     path: 'login', // Ruta para el administrador
   component: LoginComponent,
+  },
+  {
+    path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
   },
   
   /*{path: '', redirectTo:'/login', pathMatch: 'full'},

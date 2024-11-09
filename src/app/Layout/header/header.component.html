@@ -5,20 +5,20 @@
   </div>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <div class="menu">
-      <a href="home/list-person">Lista Pacientes</a>
-      <a href="#">Imagenes</a>
-      <a href="#">Video</a>
-      <a href="#">Pasatiempo</a>
-      <a href="#">Música</a>
-      <a href="home/about">Acerca de</a>
+      <a routerLink="list-person">Lista Pacientes</a>
+      <a routerLink="#">Imagenes</a>
+      <a routerLink="#">Video</a>
+      <a routerLink="#">Pasatiempo</a>
+      <a routerLink="#">Música</a>
+      <a routerLink="about">Acerca de</a>
   </div>
   <div class="profile">
       <img src="https://i.pinimg.com/1200x/88/f4/8f/88f48f94c2b60bb17a009a1513c53716.jpg" alt="Profile Image" class="profile-image" onclick="toggleDropdown()">
       <div id="dropdownMenu" class="dropdown-menu">
           <span class="user-name">Eduardo Manuel Miller Martínez</span> <!-- Nombre del usuario -->
-          <a href="home/profile"><i class="fas fa-user-circle"></i>Profile</a>
-          <a href="#"><i class="fas fa-cog"></i>Settings</a>
-          <a href="#"><i class="fas fa-sign-out-alt"></i>Logout</a>
+          <a routerLink="profile"><i class="fas fa-user-circle"></i>Profile</a>
+          <a routerLink="#"><i class="fas fa-cog"></i>Settings</a>
+          <a routerLink="#" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
       </div>
   </div>
 </div>
