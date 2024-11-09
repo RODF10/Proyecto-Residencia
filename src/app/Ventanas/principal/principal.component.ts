@@ -16,7 +16,7 @@ export class PrincipalComponent {
   }
 
   pacientes(){
-    this.router.navigate(["login/list-person"]);
+    this.router.navigate(["home/list-person"]);
   }
 
   horaActual: Date = new Date();

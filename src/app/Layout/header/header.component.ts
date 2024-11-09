@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit{
   }
 
   mainPage(){
-    this.router.navigate(['login/home']);
+    this.router.navigate(['home']);
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class HeaderComponent implements OnInit{
 
   login() {
     this.authService.login();
-    this.router.navigate(['/login/principal']); // Redirige a la página principal
+    this.router.navigate(['/home/principal']); // Redirige a la página principal
   }
 
 }
