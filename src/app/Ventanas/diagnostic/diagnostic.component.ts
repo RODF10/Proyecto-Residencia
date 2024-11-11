@@ -9,9 +9,9 @@ import { Router } from '@angular/router';
 export class DiagnosticComponent {
   e: String = 'Esfera';
   categoria = [
-    { title: this.e +' Cognitiva', cat: 1, content: 'Contenido de la Categoría 1', cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'Mini-COg' },
-    { title: this.e +' Afectiva', cat: 2, content: 'Contenido de la Categoría 2', cont1: 'GDS-15', cont2: 'PHQ9', cont3: 'GAI-SF', cont4: 'Inventario de Ansiedad de Beck', cont5: 'Escala de Soledad de 3 elementos' },
-    { title: this.e +' Funcional', cat: 3, content: 'Contenido de la Categoría 3', cont1: 'Katz', cont2: 'Indice de Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterio de Ensured' },
+    { title: ' FUNCIONALIDAD', cat: 1, content: 'Contenido de la Categoría 1', cont1: 'Indice de Barthel', cont2: 'Indice de Kartz', cont3: 'Lawton y Brody', cont4: '', cont5: '' },
+    { title: ' PSICOAFECTIVA', cat: 2, content: 'Contenido de la Categoría 2', cont1: 'MMSE Folsen', cont2: 'Prueba de Dibujo', cont3: 'Escala Depresion', cont4: 'Corta Presion', cont5: 'Gravedad Insomio' },
+    { title: ' SOCIO FAMILIAR', cat: 3, content: 'Contenido de la Categoría 3', cont1: 'Sobrecarga Zarit', cont2: 'Valoracion socio-familiar', cont3: 'Sospecha de maltrato', cont4: 'Detección de anciano de riesgo', cont5: 'Recursos sociales Diaz y Vega' },
   ];
 
   constructor(private router: Router){}
