@@ -108,17 +108,21 @@
   <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-plus-circle"></i> Añadir Paciente</button>
 </div>
 
-<!-- Mostrar Pacientes Registrados -->
-<div *ngIf="pacientes.length === 0">No hay pacientes registrados</div>
-<div *ngFor="let paciente of pacientes" class="card" style="width: 18rem; margin-bottom: 1rem;">
-  <img [src]="paciente.imagenUrl" class="card-img-top" alt="Foto de paciente">
-  <div class="card-body">
-    <h5 class="card-title">{{ paciente.nombre }} {{ paciente.apellido }}</h5>
-    <p class="card-text">Edad: {{ paciente.edad }}</p>
-    <p class="card-text">Género: {{ paciente.genero }}</p>
-    <p class="card-text">Características: {{ paciente.caracteristicas }}</p>
-    <p class="card-text">Enfermedad: {{ paciente.enfermedad }}</p>
-    <a href="#" class="btn btn-primary">Ver Perfil</a>
+
+
+  <form>
+    
+</form>
+
+
+
+<div class="card" style="width: 18rem;">
+    <img src="https://healthcaretransformers.com/wp-content/uploads/2021/08/roche-ht-header-6-diagnostic-trends-shaping-the-future-of-healthcare.png" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Maria Cauich</h5>
+      <p class="card-text">Padecimiento de memoria y falta de reconocimiento de ciertos obtejos cotidianos.</p>
+      <a href="home/view-person" class="perfil">Ver Perfil</a>
+    </div>
   </div>
 </div>
 

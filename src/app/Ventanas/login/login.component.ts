@@ -12,21 +12,14 @@ export class LoginComponent {
   password: string = '';
   errorMessage: string = '';
 
-  constructor(private valid: UserService, private router: Router){
-
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   onSubmit() {
-    if (this.valid.login(this.email, this.password)) {
-      // Lógica de autenticación exitosa
-
-      // Redirigir al usuario a la página de inicio
-      this.router.navigate(['login/home']);
-
-      // Reemplazar la URL actual en el historial para evitar retroceder
-      window.history.replaceState({}, document.title, '/home');
+    if (this.userService.login(this.email, this.password)) {
+      // Si las credenciales son correctas, redirige a 'home'
+      this.router.navigate(['home'], { replaceUrl: true });
     } else {
-      // Mostrar mensaje de error si la autenticación falla
+      // Si las credenciales son incorrectas, muestra el mensaje de error
       this.errorMessage = 'Correo electrónico o contraseña incorrectos';
     }
   }

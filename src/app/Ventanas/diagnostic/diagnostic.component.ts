@@ -32,7 +32,7 @@ export class DiagnosticComponent {
       case 1:
         switch(s){
           case 1:
-            this.router.navigate(['login/esfera-cognitiva']);
+            this.router.navigate(['home/esfera-cognitiva']);
             break;
           case 2:
             break;
