@@ -28,7 +28,8 @@ const routes: Routes = [
   },
   {
     path: 'encuestas',
-    component: EncuestaComponent
+    component: EncuestaComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'view-person',
@@ -37,7 +38,8 @@ const routes: Routes = [
   },
   {
     path: 'diagnostic',
-    component: DiagnosticComponent
+    component: DiagnosticComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'list-person',
@@ -46,7 +48,8 @@ const routes: Routes = [
   },
   {
     path: 'about',
-    component: AboutComponent
+    component: AboutComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'encuesta/:categoria',
@@ -55,7 +58,8 @@ const routes: Routes = [
   },
   {
     path:'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
@@ -64,7 +68,8 @@ const routes: Routes = [
   },
   {
     path: 'resultado',
-    component: ResultadosComponent
+    component: ResultadosComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'not-found',
