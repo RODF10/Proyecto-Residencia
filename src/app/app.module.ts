@@ -29,6 +29,7 @@ import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.co
 
 //Conexio  Http
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ResultadosComponent } from './Ventanas/Encuesta/resultados/resultados.component';
 
 //Registro de Fecha
 registerLocaleData(localeEs, 'es');
@@ -49,7 +50,8 @@ registerLocaleData(localeEs, 'es');
     Category1Component,
     DashboardComponent,
     ProfileMedicComponent,
-    EncuestaComponent
+    EncuestaComponent,
+    ResultadosComponent,
   ],
   imports: [
     BrowserModule,

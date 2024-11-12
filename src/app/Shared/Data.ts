@@ -9,3 +9,9 @@ export interface MedicalHistory {
     hora: string;
     centroMedico: string;
   }
+
+export interface Resultado {
+    nombre: string;
+    puntaje: number;
+    observacion: string;
+}
