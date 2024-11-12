@@ -12,6 +12,9 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileMedicComponent } from './profile-medic/profile-medic.component';
 import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
 import { ResultadosComponent } from './Encuesta/resultados/resultados.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -21,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: PrincipalComponent
+    component: PrincipalComponent,
   },
   {
     path: 'encuestas',
@@ -29,7 +32,8 @@ const routes: Routes = [
   },
   {
     path: 'view-person',
-    component: VistasComponent
+    component: VistasComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'diagnostic',
@@ -37,7 +41,8 @@ const routes: Routes = [
   },
   {
     path: 'list-person',
-    component: ListPersonComponent
+    component: ListPersonComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'about',
@@ -45,7 +50,8 @@ const routes: Routes = [
   },
   {
     path: 'encuesta/:categoria',
-    component: Category1Component
+    component: Category1Component,
+    canActivate: [AuthGuard]
   },
   {
     path:'dashboard',
@@ -53,11 +59,16 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: ProfileMedicComponent
+    component: ProfileMedicComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'resultado',
     component: ResultadosComponent
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent
   },
 ];
 

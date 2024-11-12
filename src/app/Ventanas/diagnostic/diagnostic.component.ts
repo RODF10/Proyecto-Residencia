@@ -38,10 +38,10 @@ export class DiagnosticComponent {
         switch(s){
           case 1:
             //this.router.navigate(['home/encuesta/{categoria}']);
-            this.cambiarCategoria(this.f+'-indice-barthel');
+            this.cambiarCategoria(this.f.toLowerCase()+'-indice-barthel');
             break;
           case 2:
-            this.cambiarCategoria(this.f +'indice-kartz');
+            this.cambiarCategoria(this.f.toLowerCase() +'-indice-kartz');
             break;
           case 3:
             break;
@@ -59,7 +59,7 @@ export class DiagnosticComponent {
   }
 
   cambiarCategoria(categoria: string): void {
-    this.router.navigate([`/encuesta/${categoria}`]);
+    this.router.navigate([`home//encuesta/${categoria}`]);
   }
 
 }
