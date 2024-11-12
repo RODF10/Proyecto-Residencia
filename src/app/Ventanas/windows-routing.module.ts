@@ -14,7 +14,6 @@ import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
 import { ResultadosComponent } from './Encuesta/resultados/resultados.component';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from '../guards/auth.guard';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -70,10 +69,6 @@ const routes: Routes = [
     path: 'resultado',
     component: ResultadosComponent,
     canActivate: [AuthGuard]
-  },
-  {
-    path: 'not-found',
-    component: NotFoundComponent
   },
 ];
 
