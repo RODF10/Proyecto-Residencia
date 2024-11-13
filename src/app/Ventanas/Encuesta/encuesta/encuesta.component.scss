@@ -20,7 +20,7 @@
   text-align: left;
   padding: 0.75rem;
   font-size: 1.25rem;
-  background-color: #007bff;
+  background-color: #dc04f8;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -81,75 +81,34 @@
   .resultado {
     font-size: 1rem;
   }
+
+  .inciso-imagen {
+    width: 30px; /* Tamaño de la imagen */
+    height: auto;
+    margin-right: 8px; /* Espacio entre la imagen y el texto */
+    vertical-align: middle;
+  }
+  .finalizar-encuesta button {
+    background-color: #6a0dad; /* Color morado primario */
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+  }
+  
+  .finalizar-encuesta button:hover {
+    background-color: #5a008e; /* Color morado oscuro para hover */
+    transform: scale(1.05);
+  }
+  
+  .finalizar-encuesta button:active {
+    background-color: #4a0075; /* Aún más oscuro al hacer clic */
+    transform: scale(0.98);
+  }
+
 }
-.inciso-imagen {
-  width: 30px; /* Tamaño de la imagen */
-  height: auto;
-  margin-right: 8px; /* Espacio entre la imagen y el texto */
-  vertical-align: middle;
-}
-
-
-
-
-
-
-//.container {
-  //max-width: 600px;
-  //margin: 0 auto;
-//}
-
-//.encuesta {
-  //margin-bottom: 1rem;
-  //border: 1px solid #ddd;
-  //border-radius: 0.25rem;
-  //background-color: #f9f9f9;
-//}
-
-//.encuesta-titulo {
-  //width: 100%;
-  //text-align: left;
-  //padding: 0.75rem;
-  //font-size: 1.25rem;
-  //background-color: #007bff;
-  //color: #fff;
-  //border: none;
-  //cursor: pointer;
-  //position: relative;
-
-  //&:focus {
-    //outline: none;
-  //}
-
-  //.flecha-arriba::after {
-    //content: '▲';
-    //position: absolute;
-    //right: 1rem;
-  //}
-
-  //.flecha-abajo::after {
-    //content: '▼';
-    //position: absolute;
-    //right: 1rem;
-  //}
-//}
-
-//.preguntas {
-  //padding: 1rem;
-
-  //.pregunta {
-    //margin-bottom: 1rem;
-  //}
-
-  //label {
-   // display: block;
-    //margin-bottom: 0.5rem;
-  //}
-
-  //.resultado {
-    //margin-top: 1rem;
-    //font-weight: bold;
-  //}
-//}
-
 

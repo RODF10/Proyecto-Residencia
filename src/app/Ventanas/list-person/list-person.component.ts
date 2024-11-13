@@ -1,42 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ApiService } from 'src/app/Service/api.service';
-
-interface Paciente {
-  nombre?: string;
-  apellido?: string;
-  edad?: number;
-  caracteristicas?: string;
-  enfermedad?: string;
-  genero?: string;
-  imagenUrl?: string;
-  matricula?: number;
-}
+import { PacienteService } from 'src/app/Service/paciente.service';
 
 @Component({
   selector: 'app-list-person',
   templateUrl: './list-person.component.html',
   styleUrls: ['./list-person.component.scss']
 })
-export class ListPersonComponent {
-  pacient = {nombre:'',fecha_nacimiento:'', genero:'', direccion:'', telefono:'', email:''}
+export class ListPersonComponent implements OnInit {
+  pacienteForm: FormGroup;
+  submitted = false;
+  pacientes: any[] = []; // Array para almacenar los pacientes registrados
 
-  paciente: Paciente = {
-    nombre: 'María García',
-    apellido: 'Cauich',
-    edad: 30,
-    caracteristicas: 'Paciente de cuidados intensivos',
-    genero: 'Femenino',
-    enfermedad: 'COVID-19',
-    imagenUrl: 'https://img.freepik.com/vector-gratis/doctor-examinando-paciente-clinica-ilustrada_23-2148856559.jpg',
-    matricula: 12345
+  // Objeto para almacenar los datos del formulario
+  pacient = {
+    nombre: '',
+    apellido: '',
+    genero: '',
+    fecha_nacimiento: '',
+    telefono: '',
+    direccion: '',
+    email: '',
+    edad: '',
+    enfermedad: '',
+    caracteristicas: ''
   };
 
-  pacienteForm: FormGroup = this.formBuilder.group({});
-  submitted = false;
-
-  constructor(private formBuilder: FormBuilder, private router: Router, private apiService: ApiService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private pacienteService: PacienteService
+  ) {
+    // Definición del formulario reactivo
     this.pacienteForm = this.formBuilder.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -49,26 +43,53 @@ export class ListPersonComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.obtenerPacientes();
+  }
+
+  // Método para obtener la lista de pacientes
+  obtenerPacientes() {
+    this.pacienteService.getPacientes().subscribe(
+      (data) => {
+        this.pacientes = data;
+      },
+      (error) => {
+        console.error('Error al obtener pacientes:', error);
+      }
+    );
+  }
+
+  // Método para manejar el envío del formulario
   onSubmit() {
     this.submitted = true;
 
+    // Verificar si el formulario es inválido
     if (this.pacienteForm.invalid) {
+      alert('Por favor, completa todos los campos requeridos.');
       return;
     }
 
-    // Aquí puedes manejar los datos del formulario
-    alert('Formulario enviado exitosamente!');
-    console.log(this.pacienteForm.value);
+    // Llamar al método para registrar el paciente
+    this.registro();
   }
 
-  registro(){
-    this.apiService.registerPacient(this.pacient).subscribe(
-      Response => {
-        console.log('Registro Exitoso', Response);
+  // Método para registrar al paciente
+  registro() {
+    this.pacienteService.createPaciente(this.pacienteForm.value).subscribe(
+      (response) => {
+        console.log('Registro Exitoso', response);
+        alert('Registro exitoso');
+
+        // Agregar el paciente al array de pacientes y refrescar la lista
+        this.obtenerPacientes();
+
+        // Limpiar el formulario y el objeto pacient
+        this.pacienteForm.reset();
+        this.submitted = false;
       },
-      Error => {
-        console.error('Error en el Registro', Response);
-        alert('Error enviado exitosamente!');
+      (error) => {
+        console.error('Error en el Registro', error);
+        alert('Error en el registro del paciente');
       }
     );
   }
