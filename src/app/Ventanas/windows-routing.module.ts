@@ -28,47 +28,38 @@ const routes: Routes = [
   {
     path: 'encuestas',
     component: EncuestaComponent,
-    
   },
   {
     path: 'view-person',
     component: VistasComponent,
-    
   },
   {
     path: 'diagnostic',
     component: DiagnosticComponent,
-    
   },
   {
     path: 'list-person',
     component: ListPersonComponent,
-    
   },
   {
     path: 'about',
     component: AboutComponent,
-    
   },
   {
     path: 'encuesta/:categoria',
     component: Category1Component,
-    
   },
   {
     path:'dashboard',
     component: DashboardComponent,
-    
   },
   {
     path: 'profile',
     component: ProfileMedicComponent,
-    
   },
   {
     path: 'resultado',
     component: ResultadosComponent,
-    
   },
 ];
 
