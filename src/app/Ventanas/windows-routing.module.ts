@@ -11,6 +11,9 @@ import { Category1Component } from './Diagnosticos/category1/category1.component
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileMedicComponent } from './profile-medic/profile-medic.component';
 import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
+import { ResultadosComponent } from './Encuesta/resultados/resultados.component';
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -20,39 +23,52 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: PrincipalComponent
+    component: PrincipalComponent,
   },
   {
     path: 'encuestas',
-    component: EncuestaComponent
+    component: EncuestaComponent,
+    
   },
   {
     path: 'view-person',
-    component: VistasComponent
+    component: VistasComponent,
+    
   },
   {
     path: 'diagnostic',
-    component: DiagnosticComponent
+    component: DiagnosticComponent,
+    
   },
   {
     path: 'list-person',
-    component: ListPersonComponent
+    component: ListPersonComponent,
+    
   },
   {
     path: 'about',
-    component: AboutComponent
+    component: AboutComponent,
+    
   },
   {
-    path: 'esfera-cognitiva',
-    component: Category1Component
+    path: 'encuesta/:categoria',
+    component: Category1Component,
+    
   },
   {
     path:'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    
   },
   {
     path: 'profile',
-    component: ProfileMedicComponent
+    component: ProfileMedicComponent,
+    
+  },
+  {
+    path: 'resultado',
+    component: ResultadosComponent,
+    
   },
 ];
 

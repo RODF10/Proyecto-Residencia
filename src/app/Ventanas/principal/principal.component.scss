@@ -26,7 +26,7 @@
     //background: #ACD;
     width: 100%;
     max-width: 350px;
-    margin: auto;
+    margin: 20px auto;
 }
 
 
@@ -112,4 +112,43 @@
   margin: 5px 0;
   padding: 10px;
   border-radius: 5px;
+}
+//Citas
+.citaReciente{
+  margin-bottom: 10px;
+}
+.todo, .content{
+  max-width: 1550px;
+  margin: 0 auto;
+}
+
+@media (min-width: 720px) and (max-width: 1366px) {
+  .content h2{
+    font-size: 15px;
+  }
+  
+  .fecha-hora p, .fecha-hora .reloj{
+    font-size: 25px;
+  }
+  .patients th, .patients td{
+    font-size: 12px;
+  }
+  
+}
+
+@media (max-width: 720px) {
+  .content h2{
+    font-size: 10px;
+  }
+  .fecha-hora p, .fecha-hora .reloj{
+    font-size: 20px;
+  }
+  .content{
+    display: inline-block;
+    width: 100%;
+  }
+  .todos, .patients{
+    width: 100%;
+    margin-bottom: 30px;
+  }
 }

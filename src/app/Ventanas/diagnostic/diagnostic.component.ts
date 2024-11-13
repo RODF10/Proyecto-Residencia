@@ -7,11 +7,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./diagnostic.component.scss']
 })
 export class DiagnosticComponent {
-  e: String = 'Esfera';
+  e: String = 'Esfera'; sub: String = "Subcategoria:";
+  f: String = 'FUNCIONALIDAD'; p: String = 'PSICOAFECTIVA'; sf: String = 'SOCIO FAMILIAR';
   categoria = [
-    { title: this.e +' Cognitiva', cat: 1, content: 'Contenido de la Categoría 1', cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'Mini-COg' },
-    { title: this.e +' Afectiva', cat: 2, content: 'Contenido de la Categoría 2', cont1: 'GDS-15', cont2: 'PHQ9', cont3: 'GAI-SF', cont4: 'Inventario de Ansiedad de Beck', cont5: 'Escala de Soledad de 3 elementos' },
-    { title: this.e +' Funcional', cat: 3, content: 'Contenido de la Categoría 3', cont1: 'Katz', cont2: 'Indice de Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterio de Ensured' },
+    { title: this.f, cat: 1, content: this.sub + ' ' + this.f, cont1: 'Indice de Barthel', cont2: 'Indice de Kartz', cont3: 'Lawton y Brody', cont4: '', cont5: '' },
+    { title: this.p, cat: 2, content: this.sub + ' ' + this.p, cont1: 'MMSE Folsen', cont2: 'Prueba de Dibujo', cont3: 'Escala Depresion', cont4: 'Corta Presion', cont5: 'Gravedad Insomio' },
+    { title: this.sf, cat: 3, content: this.sub + ' ' + this.sf, cont1: 'Sobrecarga Zarit', cont2: 'Valoracion socio-familiar', cont3: 'Sospecha de maltrato', cont4: 'Detección de anciano de riesgo', cont5: 'Recursos sociales Diaz y Vega' },
+  ];
+  urlCat = [
+    {URL: 'funcionalidad'},
+    {URL: 'psicoafectiva'}
   ];
 
   constructor(private router: Router){}
@@ -32,9 +37,11 @@ export class DiagnosticComponent {
       case 1:
         switch(s){
           case 1:
-            this.router.navigate(['home/esfera-cognitiva']);
+            //this.router.navigate(['home/encuesta/{categoria}']);
+            this.cambiarCategoria(this.f.toLowerCase()+'-indice-barthel');
             break;
           case 2:
+            this.cambiarCategoria(this.f.toLowerCase() +'-indice-kartz');
             break;
           case 3:
             break;
@@ -49,6 +56,10 @@ export class DiagnosticComponent {
       case 3:
         break;
     }
+  }
+
+  cambiarCategoria(categoria: string): void {
+    this.router.navigate([`home//encuesta/${categoria}`]);
   }
 
 }

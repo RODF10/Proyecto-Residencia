@@ -31,11 +31,10 @@ const routes: Routes = [
     redirectTo: '/login',
     pathMatch: 'full',
   },
-  
-  /*{path: '', redirectTo:'/login', pathMatch: 'full'},
-  {path:'login', component: LoginComponent},
-  {path: 'home', component: PrincipalComponent},
-  {path: 'view-person', component: VistasComponent},*/
+  {
+    path: '**',
+    redirectTo: '/login', // Redirige cualquier ruta no válida al login
+  },
 ];
 
 @NgModule({
