@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/Service/api.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-list-person',
@@ -59,8 +60,8 @@ export class ListPersonComponent {
 
   // Método para registrar al paciente
   registro() {
-    this.apiService.registerPacient(this.pacienteForm.value).subscribe(
-      response => {
+    this.apiService.registerPatient(this.pacienteForm.value).subscribe(
+      (response: any) => {  // Aquí puedes definir un tipo específico si es necesario
         console.log('Registro Exitoso', response);
         alert('Registro exitoso');
 
@@ -74,7 +75,7 @@ export class ListPersonComponent {
         // Cerrar el modal si es necesario
         // Si tienes algún código para cerrar el modal, añádelo aquí
       },
-      error => {
+      (error: HttpErrorResponse) => {
         console.error('Error en el Registro', error);
         alert('Error en el registro');
       }
