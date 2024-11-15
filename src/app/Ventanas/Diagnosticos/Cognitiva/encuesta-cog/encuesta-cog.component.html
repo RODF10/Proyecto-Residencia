@@ -1,6 +1,6 @@
 <div class="4at">
     <div class="title">
-        Estado de Conciencia
+        4AT
     </div>
     <div class="p">Esto incluye que puedan presentarse somnolencia o ahitado/hiperactivo.</div>
     <div class="opciones">
@@ -13,5 +13,129 @@
         <label for="">
             <input type="checkbox">Claramente Normal
         </label>
+    </div>
+</div>
+
+<!-- Encuesta CAM -->
+<div class="cam">
+    <div class="title">
+        CAM
+    </div>
+    <div class="opciones">
+        <p class="texto">
+            El Diagnostico de Delirium por CAM requeire la presencia de AMBAS caracteristicas A + B
+        </p>
+        <table class="tabla-delirium">
+            <thead>
+              <tr>
+                <th colspan="3">
+                  El diagnóstico de Delirium por CAM requiere la presencia de AMBAS características A + B
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Característica A -->
+              <tr>
+                <td><strong>A. Comienzo agudo y curso fluctuante</strong></td>
+                <td colspan="2">¿Hay evidencia de un cambio agudo en el estado mental del paciente distinto a su basal?</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td colspan="2">El comportamiento anormal...
+                  <div>
+                    <label><input type="radio" name="comportamiento" /> a. Va y viene?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="comportamiento" /> b. Fluctúa durante el día?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="comportamiento" /> c. Aumenta o disminuye en severidad?</label>
+                  </div>
+                </td>
+              </tr>
+              <!-- Característica B -->
+              <tr>
+                <td><strong>B. Inatención</strong></td>
+                <td colspan="2">El paciente...
+                  <div>
+                    <label><input type="radio" name="inatencion" /> a. Tiene dificultad para enfocar su atención?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="inatencion" /> b. Se distrae fácilmente?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="inatencion" /> c. Tiene dificultad para seguir una conversación?</label>
+                  </div>
+                </td>
+              </tr>
+              <!-- Separador -->
+              <tr>
+                <th colspan="3">Y la presencia de al menos una de las características C o D</th>
+              </tr>
+              <!-- Característica C -->
+              <tr>
+                <td><strong>C. Pensamiento desorganizado</strong></td>
+                <td colspan="2">¿El pensamiento del paciente es...
+                  <div>
+                    <label><input type="radio" name="pensamiento" /> a. Desorganizado?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="pensamiento" /> b. Incoherente?</label>
+                  </div>
+                  <p>Por ejemplo, ¿ha visto usted que el paciente tenga...</p>
+                  <div>
+                    <label><input type="radio" name="pensamientoEjemplo" /> a. Discurso divagante / conversaciones irrelevantes?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="pensamientoEjemplo" /> b. Cambios de tema impredecibles durante una conversación?</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="pensamientoEjemplo" /> c. Flujo de ideas ilógico o poco claro?</label>
+                  </div>
+                </td>
+              </tr>
+              <!-- Característica D -->
+              <tr>
+                <td><strong>D. Alteración en el nivel de conciencia</strong></td>
+                <td colspan="2">¿Generalmente cómo consideraría el nivel de conciencia del paciente?
+                  <div>
+                    <label><input type="radio" name="conciencia" /> 1. Alerta (normal)</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="conciencia" /> 2. Vigilante (hiperalerta)</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="conciencia" /> 3. Letárgico (somnoliento pero fácil de despertar)</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="conciencia" /> 4. Estuporoso (difícilmente despertable)</label>
+                  </div>
+                  <div>
+                    <label><input type="radio" name="conciencia" /> 5. Comatoso (no despertable)</label>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>                  
+    </div>
+</div>
+
+<!-- Encuesta AWOL -->
+<div class="awol">
+    <div class="title">Awol</div>
+    <div class="intruccion">
+        <p>Seleccione las letras para cambiar de Color, al estar en gris, se considera 0 puntos, cada color es 1 punto</p>
+    </div>
+    <div class="opciones">
+        <p [ngClass]="{ 'text-green': isSelected['A'] }" (click)="toggleTextColor('A')">A</p>
+        <p [ngClass]="{ 'text-red': isSelected['W'] }" (click)="toggleTextColor('W')">W</p>
+        <p [ngClass]="{ 'text-purple': isSelected['O'] }" (click)="toggleTextColor('O')">O</p>
+        <p [ngClass]="{ 'text-orange': isSelected['L'] }" (click)="toggleTextColor('L')">L</p>
+    </div>
+    <div class="respuesta">
+        <p class="green">A: Edad &#62; 80 A&#241;os</p>
+        <p class="red">W: &#191;Incapaz de deletrear la Palabre: &#34;MUNDO&#34; al reves&#63;</p>
+        <p class="purple">O: &#191;Desorientado en Ciudad, Estado, Pa&#237;s, Hospital y Piso&#63;</p>
+        <p class="orange">L: Evaluacion Enfermedad &#191;Moderado, Grave o Moribundo&#36;</p>
     </div>
 </div>

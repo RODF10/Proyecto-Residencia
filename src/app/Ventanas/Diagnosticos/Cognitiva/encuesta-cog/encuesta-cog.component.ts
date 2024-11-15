@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./encuesta-cog.component.scss']
 })
 export class EncuestaCogComponent {
+  isSelected: { [key: string]: boolean } = {};
+
+  // Función para alternar el color
+  toggleTextColor(textKey: string): void {
+    this.isSelected[textKey] = !this.isSelected[textKey];
+  }
 
 }

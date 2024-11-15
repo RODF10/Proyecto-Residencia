@@ -28,9 +28,9 @@ export class EncuestaComponent implements OnInit{
       // Recibir en nombre Clave del componente Diagnostico 
       this.encuestaService.selectEncuest$.subscribe(encuesta => {
         this.name = encuesta; //Recibe Name la clave de encuesta
-        console.log(`Categoria recibida en Category1Component: ${this.name}`); // Debug
+        console.log(`Categoria recibida en EncuestaComponent: ${this.name}`); // Debug
         
-        this.mostrarEncuesta(this.name); //Lammar metodo de acuerdo al name recibido
+        this.mostrarEncuesta(encuesta); //Lammar metodo de acuerdo al name recibido
         // this.link.name = encuesta;
       });
       console.log("Msj: "+this.link.name);//Imprime en consola
@@ -42,13 +42,20 @@ export class EncuestaComponent implements OnInit{
   }
 
   mostrarEncuesta(n: String){
+    console.log('Parametro del Switch: '+n);
     switch(n){
       case '4at':
         this.link.name = 'encuesta-cog';
+        console.log('Selecciono 4AT | '+ this.link.name);
         break;  
+      case 'cam':
+        this.link.name = 'encuesta-cog';
+        console.log('Selecciono CAM | '+ this.link.name);
+        break;
       defaul:
         this.link.name = 'Hola';
         break;
     }
+    console.log('Salida del Switch: ' + this.link.name);
   }
 }
