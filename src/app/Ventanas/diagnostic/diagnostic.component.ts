@@ -43,10 +43,12 @@ export class DiagnosticComponent {
         switch(s){
           case 1:
             //this.router.navigate(['home/encuesta/{categoria}']);
-            this.cambiarCategoria(this.ec.toLowerCase()+'-4at');
+            this.cambiarCategoria(this.ec.toLowerCase()+'-4at.php'); //Enviar tipo URL
+            this.seleccionarSubCategoria('4at'); //Enciat nombre (Clave) para cada encuesta
             break;
           case 2:
-            this.cambiarCategoria(this.ec.toLowerCase() +'-cam');
+            this.cambiarCategoria(this.ec.toLowerCase() +'-cam.php');
+            this.seleccionarSubCategoria('cam');
             break;
           case 3:
             break;
@@ -77,10 +79,12 @@ export class DiagnosticComponent {
     }
   }
 
+  //URL Dinamica de acuerdo a la encuesta seleccionada
   cambiarCategoria(categoria: string): void {
-    this.router.navigate([`home//encuesta/${categoria}`]);
+    this.router.navigate([`home/encuesta/${categoria}`]);
   }
 
+  //Selecciona el Nombre de la Encuesta
   seleccionarSubCategoria(encuesta: String){
     this.encuestaService.seleccionarEncuesta(encuesta);
     console.log(`Categoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug

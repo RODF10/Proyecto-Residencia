@@ -17,5 +17,5 @@ export interface Resultado {
 }
 
 export interface categoria{
-  nombre: String;
+  name: String;
 }

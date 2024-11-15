@@ -2,6 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 
+//Ad Guard para verificar Login
+import { AuthGuard } from '../guards/auth.guard';
+
+//Componentes del HTML
 import { PrincipalComponent } from './principal/principal.component';
 import { VistasComponent } from './vistas/vistas.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
@@ -13,7 +17,10 @@ import { ProfileMedicComponent } from './profile-medic/profile-medic.component';
 import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
 import { ResultadosComponent } from './Encuesta/resultados/resultados.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from '../guards/auth.guard';
+
+//Componentes de la encuesta
+import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
+
 
 const routes: Routes = [
   {
@@ -24,11 +31,6 @@ const routes: Routes = [
   {
     path: '',
     component: PrincipalComponent,
-  },
-  {
-    path: 'encuestas',
-    component: EncuestaComponent,
-    canActivate: [AuthGuard]
   },
   {
     path: 'view-person',
@@ -51,11 +53,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'encuesta/:categoria',
-    component: Category1Component,
-    canActivate: [AuthGuard]
-  },
-  {
     path:'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard]
@@ -68,6 +65,22 @@ const routes: Routes = [
   {
     path: 'resultado',
     component: ResultadosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta/:categoria',
+    component: EncuestaComponent,
+    canActivate: [AuthGuard]
+  },
+  //Encuestas de los URL
+  {
+    path: 'encuesta-cog', 
+    component: EncuestaCogComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'category1',
+    component: Category1Component,
     canActivate: [AuthGuard]
   },
 ];

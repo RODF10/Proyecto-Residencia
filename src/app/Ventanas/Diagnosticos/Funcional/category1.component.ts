@@ -26,7 +26,7 @@ interface EncuestaForm {
   styleUrls: ['./category1.component.scss'],
 })
 export class Category1Component implements OnInit {
-  encuestaSelect?: String;
+  encuestaSelect: String = '';
   @ViewChild('katz') katz!: ElementRef;
   @ViewChild('barthel') barthel!: ElementRef;
   @ViewChild('lawton') lawton!: ElementRef;
@@ -56,7 +56,7 @@ export class Category1Component implements OnInit {
     this.categoria = this.route.snapshot.paramMap.get('categoria')!;
     this.encuestaService.selectEncuest$.subscribe(cat => {
       this.encuestaSelect = cat;
-      console.log(`Categoria recibida en Category1Component: ${this.encuestaSelect}`); // Debug
+      
       //this.mostrarEncuesta(cat);
     });
   }
