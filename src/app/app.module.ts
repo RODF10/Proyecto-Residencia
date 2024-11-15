@@ -17,7 +17,7 @@ import { WindowsRoutingModule } from './Ventanas/windows-routing.module';
 import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component';
 import { ListPersonComponent } from './Ventanas/list-person/list-person.component';
 import { AboutComponent } from './Ventanas/about/about.component';
-import { Category1Component } from './Ventanas/Diagnosticos/category1/category1.component';
+import { Category1Component } from './Ventanas/Diagnosticos/Funcional/category1.component';
 import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.component';
 
 //Incorporacion de Fecha
@@ -29,6 +29,9 @@ import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.co
 
 //Conexio  Http
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { ResultadosComponent } from './Ventanas/Encuesta/resultados/resultados.component';
+import { EncuestaCogComponent } from './Ventanas/Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
+//import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
 registerLocaleData(localeEs, 'es');
@@ -49,7 +52,10 @@ registerLocaleData(localeEs, 'es');
     Category1Component,
     DashboardComponent,
     ProfileMedicComponent,
-    EncuestaComponent
+    EncuestaComponent,
+    ResultadosComponent,
+    EncuestaCogComponent,
+    //NotFoundComponent,
   ],
   imports: [
     BrowserModule,

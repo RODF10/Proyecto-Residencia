@@ -1,0 +1,105 @@
+//Titulo General
+.title {
+  background: #dedede;
+  opacity: 0.7;
+  padding: 0.5rem;
+  text-align: center;
+  margin: 1rem auto;
+}
+
+// Boton Finalizar
+.boton{
+  width: 100%;
+  max-width: max-content;
+  margin: 1rem auto;
+}
+
+label {
+  display: block;
+  cursor: pointer;
+  width: max-content;
+}
+
+/* Estilos de la Encuesta CAM */
+.cam .tabla-delirium {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cam .tabla-delirium th,
+.cam .tabla-delirium td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+.cam .tabla-delirium th {
+  background-color: #ddd;
+  font-weight: bold;
+  text-align: center;
+}
+.cam .tabla-delirium td div {
+  margin-bottom: 5px;
+}
+
+.cam .tabla-delirium label {
+  font-weight: normal;
+}
+
+/* Estilos de Encuesta AWOL */
+.awol .text-green {
+  color: green;
+  font-weight: bold;
+  border: green solid 5px;
+}
+
+.awol .text-orange {
+  color: orange;
+  font-weight: bold;
+  border: orange solid 5px;
+}
+
+.awol .text-purple {
+  color: purple;
+  font-weight: bold;
+  border: purple solid 5px;
+}
+.awol .text-red {
+  color: red;
+  font-weight: bold;
+  border: red solid 5px;
+}
+.awol .opciones p{
+    font-size: 3rem;
+    margin: 10px 2rem;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    opacity: 0.5;
+}
+.awol .opciones p:hover{
+  opacity: 1;
+}
+.awol .opciones{
+    display: flex;
+    width: 100%;
+    max-width: 500px;
+    margin: 25px auto;
+}
+.awol .respuesta p{
+    font-size: 15px;
+    margin: 5px 0px;
+    padding: 10px 5px;
+}
+.awol .green{
+    background: #82e0aa;
+}
+.awol .red{
+    background: #FF6565;
+}
+.awol .orange{
+    background: orange;
+}
+.awol .purple{
+    background: rgba(128, 0, 128, 0.7);
+}

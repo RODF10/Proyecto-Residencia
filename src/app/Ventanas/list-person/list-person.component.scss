@@ -23,3 +23,14 @@
 .text-danger{
     font-size: 10px;
 }
+
+.paciente{
+    display: inline-flex;
+    width: 100%;
+    max-width: 1366px;
+    margin-left: calc(50% - 720px);
+    margin-bottom: 20%;
+}
+.card{
+    margin: 0px 15px;
+}

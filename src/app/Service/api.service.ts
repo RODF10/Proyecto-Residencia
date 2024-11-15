@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private urlweb = 'http://127.0.0.1:8000/api/web';  // Cambiar según tus rutas en Laravel
+  private urlApi = 'http://127.0.0.1:8000/web';
+  private selectSubCat = new BehaviorSubject<String>('Undefinid');
+  selectEncuest$ = this.selectSubCat.asObservable();
 
   constructor(private http: HttpClient) {}
 
@@ -33,5 +35,9 @@ export class ApiService {
   // Método para eliminar un paciente
   deletePatient(id: number): Observable<any> {
     return this.http.delete(`${this.urlweb}/patients/${id}`);
+  }
+
+  seleccionarEncuesta(encuesta: String){
+    this.selectSubCat.next(encuesta);
   }
 }
