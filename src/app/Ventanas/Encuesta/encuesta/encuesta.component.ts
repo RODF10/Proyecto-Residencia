@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
 import { categoria } from 'src/app/Shared/Data';
+import { EncuestaCogComponent } from '../../Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 
 @Component({
   selector: 'app-encuesta',
@@ -11,6 +12,9 @@ import { categoria } from 'src/app/Shared/Data';
 })
 
 export class EncuestaComponent implements OnInit{
+  //Recibe Parametro ENtrante del Componente
+  @ViewChild('encuestaComponent') encuestaComponent!: EncuestaCogComponent;
+
   name?: String;
   categoria?: String;
   public link: categoria={'name': ''};
@@ -57,5 +61,10 @@ export class EncuestaComponent implements OnInit{
         break;
     }
     console.log('Salida del Switch: ' + this.link.name);
+  }
+
+  cambiarCategoria(categoria: string) {
+    this.encuestaComponent.actualizarEncuesta(categoria);
+    this.name = categoria;
   }
 }

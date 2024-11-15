@@ -1,4 +1,4 @@
-<div class="4at">
+<div class="4at" *ngIf="caregoria == '4at'">
     <div class="title">
         4AT
     </div>
@@ -17,7 +17,7 @@
 </div>
 
 <!-- Encuesta CAM -->
-<div class="cam">
+<div class="cam" *ngIf="caregoria == 'cam'">
     <div class="title">
         CAM
     </div>
@@ -121,10 +121,10 @@
 </div>
 
 <!-- Encuesta AWOL -->
-<div class="awol">
+<div class="awol" *ngIf="caregoria == 'awol'">
     <div class="title">Awol</div>
     <div class="intruccion">
-        <p>Seleccione las letras para cambiar de Color, al estar en gris, se considera 0 puntos, cada color es 1 punto</p>
+        <p>Seleccione las letras para cambiar de <b>COLOR</b>, al estar en gris, se considera 0 puntos, cada color es 1 punto</p>
     </div>
     <div class="opciones">
         <p [ngClass]="{ 'text-green': isSelected['A'] }" (click)="toggleTextColor('A')">A</p>
@@ -139,3 +139,8 @@
         <p class="orange">L: Evaluacion Enfermedad &#191;Moderado, Grave o Moribundo&#36;</p>
     </div>
 </div>
+
+<!-- Boton de Envio -->
+ <div class="boton">
+   <button type="button" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
+ </div>

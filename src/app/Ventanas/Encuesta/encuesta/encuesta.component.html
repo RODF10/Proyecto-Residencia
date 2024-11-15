@@ -1,7 +1,9 @@
 <div class="tituloEncuesta">
   <h1>Encuesta {{link.name}}</h1>
-</div>
+</div> 
+<!--
 <div class="iframe">
   <iframe [src]="safeUrl" frameborder="0" class="ventana"></iframe>
-</div>
-
+</div>-->
+<!-- <app-diagnostic (categoriaSeleccionada)="cambiarCategoria($event.toString())"></app-diagnostic> -->
+<app-encuesta-cog #encuestaComponent></app-encuesta-cog>

@@ -30,4 +30,15 @@ export class ResultadosComponent implements OnInit{
       this.observacion = observacion;
     }
   }
+
+  funcionBoton(n: number): void{
+    switch(n){
+      case 1:
+        this.router.navigate(['home/encuesta-cog']);
+        break;
+      case 2:
+        this.router.navigate(['home/diagnostic']);
+        break;
+    }
+  }
 }

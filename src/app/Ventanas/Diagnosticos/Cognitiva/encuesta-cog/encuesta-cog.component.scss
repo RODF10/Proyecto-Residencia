@@ -7,6 +7,13 @@
   margin: 1rem auto;
 }
 
+// Boton Finalizar
+.boton{
+  width: 100%;
+  max-width: max-content;
+  margin: 1rem auto;
+}
+
 label {
   display: block;
   cursor: pointer;
@@ -44,27 +51,23 @@ label {
   color: green;
   font-weight: bold;
   border: green solid 5px;
-  //cursor: pointer;
 }
 
 .awol .text-orange {
   color: orange;
   font-weight: bold;
   border: orange solid 5px;
-  //cursor: pointer;
 }
 
 .awol .text-purple {
   color: purple;
   font-weight: bold;
   border: purple solid 5px;
-  //cursor: pointer;
 }
 .awol .text-red {
   color: red;
   font-weight: bold;
   border: red solid 5px;
-  //cursor: pointer;
 }
 .awol .opciones p{
     font-size: 3rem;
@@ -72,7 +75,10 @@ label {
     padding: 1rem;
     cursor: pointer;
     border-radius: 50%;
-
+    opacity: 0.5;
+}
+.awol .opciones p:hover{
+  opacity: 1;
 }
 .awol .opciones{
     display: flex;

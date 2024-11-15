@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
 
@@ -8,6 +8,9 @@ import { ApiService } from 'src/app/Service/api.service';
   styleUrls: ['./diagnostic.component.scss']
 })
 export class DiagnosticComponent {
+  //Salida de Datos del Componente
+  @Output() categoriaSeleccionada = new EventEmitter<String>();
+
   //Nombre de las Categorias
   ec: String = 'Esfera Cognitiva'; sub: String = "Subcategoria:"; ea: String = "Esfera Afectiva"; ef: String = "Esfera Funcional"; en: String = "Esfera Nutricional";
   //Otros
@@ -53,6 +56,8 @@ export class DiagnosticComponent {
           case 3:
             break;
           case 4:
+            this.cambiarCategoria(this.ec.toLowerCase()+'-awol.php');
+            this.seleccionarSubCategoria('awol');
             break;
           case 5:
             break;
@@ -87,6 +92,7 @@ export class DiagnosticComponent {
   //Selecciona el Nombre de la Encuesta
   seleccionarSubCategoria(encuesta: String){
     this.encuestaService.seleccionarEncuesta(encuesta);
+    this.categoriaSeleccionada.emit(encuesta);
     console.log(`Categoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
   }
 }
