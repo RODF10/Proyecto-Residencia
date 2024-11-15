@@ -62,6 +62,8 @@
 .logo .icono {
 	background: white;
 	border-radius: 50%;
+    width: 100%;
+    max-width: 40px;
 }
 .logo:hover{
 	cursor: pointer;

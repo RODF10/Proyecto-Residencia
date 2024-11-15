@@ -15,3 +15,7 @@ export interface Resultado {
     puntaje: number;
     observacion: string;
 }
+
+export interface categoria{
+  nombre: String;
+}

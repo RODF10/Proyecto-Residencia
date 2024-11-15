@@ -1,0 +1,289 @@
+<div class="barthel" id="katz" *ngIf="encuestaSelect == 'katz'">
+  <div class="titulo">
+    <h2>Indice de KATZ</h2>
+  </div>
+  <form [formGroup]="encuestaForm">
+    <!-- Pregunta de Alimentación -->
+    <div>
+      <label>Alimentación</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="alimentacion" value="10"> Totalmente independiente (10 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="alimentacion" value="5"> Necesita ayuda para cortar carne, el pan, etc
+          (5 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="alimentacion" value="0"> Dependiente (0 puntos)
+        </label>
+      </div>
+      <div *ngIf="encuestaForm.get('alimentacion')?.touched && encuestaForm.get('alimentacion')?.invalid">
+        <span style="color:red;">Este campo es obligatorio</span>
+      </div>
+    </div>
+
+    <!-- Pregunta de Bañarse -->
+    <div>
+      <label>Bañarse</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="banarse" value="5"> Independiente: entra y sale solo del baño (5
+          puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="banarse" value="0"> Dependiente (0 puntos)
+        </label>
+      </div>
+    </div>
+
+    <!-- Pregunta de Vestirse -->
+    <div>
+      <label>Vestirse</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="vestirse" value="10"> Independiente: capaz de ponerse y de quitarse la
+          ropa, abotonarse, atarse los zapatos (10 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="vestirse" value="5"> Necesita ayuda (5 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="vestirse" value="0"> Dependiente (0 puntos)
+        </label>
+      </div>
+    </div>
+
+    <!-- Repite esta estructura para cada sección de la encuesta -->
+
+    <div>
+      <label>Arreglarse</label>
+      <div>
+        <label><input type="radio" formControlName="arreglarse" value="5"> Independiente: se lava la cara, manos, se
+          peina, se afeita (5 puntos)</label>
+        <label><input type="radio" formControlName="arreglarse" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Deposiciones</label>
+      <div>
+        <label><input type="radio" formControlName="deposiciones" value="10"> Continencia normal (10 puntos)</label>
+        <label><input type="radio" formControlName="deposiciones" value="5"> Episodio ocasional de incontinencia (5
+          puntos)</label>
+        <label><input type="radio" formControlName="deposiciones" value="0"> Incontinencia (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Micción</label>
+      <div>
+        <label><input type="radio" formControlName="miccion" value="10"> Continencia normal (10 puntos)</label>
+        <label><input type="radio" formControlName="miccion" value="5"> Un episodio diario como máximo de
+          incontinencia (5 puntos)</label>
+        <label><input type="radio" formControlName="miccion" value="0"> Incontinencia (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Usar el retrete</label>
+      <div>
+        <label><input type="radio" formControlName="retrete" value="10"> Independiente para ir al cuarto de aseo (10
+          puntos)</label>
+        <label><input type="radio" formControlName="retrete" value="5"> Necesita ayuda para ir al retrete (5
+          puntos)</label>
+        <label><input type="radio" formControlName="retrete" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Traslado sillón-cama</label>
+      <div>
+        <label><input type="radio" formControlName="sillonCama" value="15"> Independiente para ir del sillón a la cama
+          (15 puntos)</label>
+        <label><input type="radio" formControlName="sillonCama" value="10"> Mínima ayuda física o supervisión (10
+          puntos)</label>
+        <label><input type="radio" formControlName="sillonCama" value="5"> Necesita gran ayuda (5 puntos)</label>
+        <label><input type="radio" formControlName="sillonCama" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Deambulación</label>
+      <div>
+        <label><input type="radio" formControlName="deambulacion" value="15"> Independiente, camina solo 50 metros (15
+          puntos)</label>
+        <label><input type="radio" formControlName="deambulacion" value="10"> Necesita ayuda física o supervisión (10
+          puntos)</label>
+        <label><input type="radio" formControlName="deambulacion" value="5"> Independiente en silla de ruedas (5
+          puntos)</label>
+        <label><input type="radio" formControlName="deambulacion" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Escalones</label>
+      <div>
+        <label><input type="radio" formControlName="escalones" value="10"> Independiente para bajar y subir escaleras
+          (10 puntos)</label>
+        <label><input type="radio" formControlName="escalones" value="5"> Necesita ayuda física o supervisión (5
+          puntos)</label>
+        <label><input type="radio" formControlName="escalones" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <button type="button" (click)="calcularPuntaje()">Calcular Puntaje</button>
+  </form>
+
+</div>
+<div class="barthel" id="barthel">
+  <div class="titulo">
+    <h2>Indice de Barthel</h2>
+  </div>
+  <form [formGroup]="encuestaForm">
+    <!-- Pregunta de Alimentación -->
+    <div>
+      <label>Alimentación</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="alimentacion" value="10"> Totalmente independiente (10 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="alimentacion" value="5"> Necesita ayuda para cortar carne, el pan, etc
+          (5 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="alimentacion" value="0"> Dependiente (0 puntos)
+        </label>
+      </div>
+      <div *ngIf="encuestaForm.get('alimentacion')?.touched && encuestaForm.get('alimentacion')?.invalid">
+        <span style="color:red;">Este campo es obligatorio</span>
+      </div>
+    </div>
+
+    <!-- Pregunta de Bañarse -->
+    <div>
+      <label>Bañarse</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="banarse" value="5"> Independiente: entra y sale solo del baño (5
+          puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="banarse" value="0"> Dependiente (0 puntos)
+        </label>
+      </div>
+    </div>
+
+    <!-- Pregunta de Vestirse -->
+    <div>
+      <label>Vestirse</label>
+      <div>
+        <label>
+          <input type="radio" formControlName="vestirse" value="10"> Independiente: capaz de ponerse y de quitarse la
+          ropa, abotonarse, atarse los zapatos (10 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="vestirse" value="5"> Necesita ayuda (5 puntos)
+        </label>
+        <label>
+          <input type="radio" formControlName="vestirse" value="0"> Dependiente (0 puntos)
+        </label>
+      </div>
+    </div>
+
+    <!-- Repite esta estructura para cada sección de la encuesta -->
+
+    <div>
+      <label>Arreglarse</label>
+      <div>
+        <label><input type="radio" formControlName="arreglarse" value="5"> Independiente: se lava la cara, manos, se
+          peina, se afeita (5 puntos)</label>
+        <label><input type="radio" formControlName="arreglarse" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Deposiciones</label>
+      <div>
+        <label><input type="radio" formControlName="deposiciones" value="10"> Continencia normal (10 puntos)</label>
+        <label><input type="radio" formControlName="deposiciones" value="5"> Episodio ocasional de incontinencia (5
+          puntos)</label>
+        <label><input type="radio" formControlName="deposiciones" value="0"> Incontinencia (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Micción</label>
+      <div>
+        <label><input type="radio" formControlName="miccion" value="10"> Continencia normal (10 puntos)</label>
+        <label><input type="radio" formControlName="miccion" value="5"> Un episodio diario como máximo de
+          incontinencia (5 puntos)</label>
+        <label><input type="radio" formControlName="miccion" value="0"> Incontinencia (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Usar el retrete</label>
+      <div>
+        <label><input type="radio" formControlName="retrete" value="10"> Independiente para ir al cuarto de aseo (10
+          puntos)</label>
+        <label><input type="radio" formControlName="retrete" value="5"> Necesita ayuda para ir al retrete (5
+          puntos)</label>
+        <label><input type="radio" formControlName="retrete" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Traslado sillón-cama</label>
+      <div>
+        <label><input type="radio" formControlName="sillonCama" value="15"> Independiente para ir del sillón a la cama
+          (15 puntos)</label>
+        <label><input type="radio" formControlName="sillonCama" value="10"> Mínima ayuda física o supervisión (10
+          puntos)</label>
+        <label><input type="radio" formControlName="sillonCama" value="5"> Necesita gran ayuda (5 puntos)</label>
+        <label><input type="radio" formControlName="sillonCama" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Deambulación</label>
+      <div>
+        <label><input type="radio" formControlName="deambulacion" value="15"> Independiente, camina solo 50 metros (15
+          puntos)</label>
+        <label><input type="radio" formControlName="deambulacion" value="10"> Necesita ayuda física o supervisión (10
+          puntos)</label>
+        <label><input type="radio" formControlName="deambulacion" value="5"> Independiente en silla de ruedas (5
+          puntos)</label>
+        <label><input type="radio" formControlName="deambulacion" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <div>
+      <label>Escalones</label>
+      <div>
+        <label><input type="radio" formControlName="escalones" value="10"> Independiente para bajar y subir escaleras
+          (10 puntos)</label>
+        <label><input type="radio" formControlName="escalones" value="5"> Necesita ayuda física o supervisión (5
+          puntos)</label>
+        <label><input type="radio" formControlName="escalones" value="0"> Dependiente (0 puntos)</label>
+      </div>
+    </div>
+
+    <button type="button" (click)="calcularPuntaje()">Calcular Puntaje</button>
+  </form>
+
+</div>
+<div class="barthel" id="lawton">
+  <div class="titulo">
+    <h2>Lawton y brody</h2>
+  </div>
+</div>
+
+<!-- Solo muestra el componente Resultado si 'mostrarResultado' es verdadero 
+<app-resultados 
+  *ngIf="mostrarResultado" 
+  [nombreEncuesta]="'Encuesta de Dependencia'"
+  [puntajeTotal]="puntajeTotal"
+  [observacion]="observacion">
+</app-resultados>-->

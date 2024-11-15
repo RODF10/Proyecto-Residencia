@@ -22,13 +22,13 @@ form {
   }
   
   /* Estilo para las opciones de respuesta */
-  div > div {
+  .bartehl div > div {
     display: flex;
     flex-direction: column;
     gap: 8px;
   }
   
-  input[type="radio"] {
+  .barthel input[type="radio"] {
     margin-right: 10px;
   }
   
@@ -95,4 +95,18 @@ form {
       flex-direction: column;
     }
   }
-  
+
+.barthel .titulo{
+  width: 100%;
+  max-width: 720px;
+  margin: 1.5rem auto;
+  background: #19C3FF;
+  padding: 10px 5px;
+}
+.barthel h2{
+  margin-left: 3rem;
+  font-size: 1.7rem;
+  margin-top: 5px;
+  font-weight: bold;
+  color: #FBFCFC;
+}

@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { ApiService } from 'src/app/Service/api.service';
 
 @Component({
   selector: 'app-diagnostic',
@@ -7,19 +8,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./diagnostic.component.scss']
 })
 export class DiagnosticComponent {
-  e: String = 'Esfera'; sub: String = "Subcategoria:";
+  //Nombre de las Categorias
+  ec: String = 'Esfera Cognitiva'; sub: String = "Subcategoria:"; ea: String = "Esfera Afectiva"; ef: String = "Esfera Funcional"; en: String = "Esfera Nutricional";
+  //Otros
   f: String = 'FUNCIONALIDAD'; p: String = 'PSICOAFECTIVA'; sf: String = 'SOCIO FAMILIAR';
+  //Lista de la Categoria a Mostrar
   categoria = [
-    { title: this.f, cat: 1, content: this.sub + ' ' + this.f, cont1: 'Indice de Barthel', cont2: 'Indice de Kartz', cont3: 'Lawton y Brody', cont4: '', cont5: '' },
-    { title: this.p, cat: 2, content: this.sub + ' ' + this.p, cont1: 'MMSE Folsen', cont2: 'Prueba de Dibujo', cont3: 'Escala Depresion', cont4: 'Corta Presion', cont5: 'Gravedad Insomio' },
-    { title: this.sf, cat: 3, content: this.sub + ' ' + this.sf, cont1: 'Sobrecarga Zarit', cont2: 'Valoracion socio-familiar', cont3: 'Sospecha de maltrato', cont4: 'Detección de anciano de riesgo', cont5: 'Recursos sociales Diaz y Vega' },
+    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP' },
+    { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario ANsiedad Beck' },
+    { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud' },
   ];
+  //Ignorar
   urlCat = [
     {URL: 'funcionalidad'},
     {URL: 'psicoafectiva'}
   ];
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private encuestaService: ApiService){}
 
   selectedCategoryIndex: number | null = null;
 
@@ -38,10 +43,10 @@ export class DiagnosticComponent {
         switch(s){
           case 1:
             //this.router.navigate(['home/encuesta/{categoria}']);
-            this.cambiarCategoria(this.f.toLowerCase()+'-indice-barthel');
+            this.cambiarCategoria(this.ec.toLowerCase()+'-4at');
             break;
           case 2:
-            this.cambiarCategoria(this.f.toLowerCase() +'-indice-kartz');
+            this.cambiarCategoria(this.ec.toLowerCase() +'-cam');
             break;
           case 3:
             break;
@@ -54,6 +59,20 @@ export class DiagnosticComponent {
       case 2:
         break;
       case 3:
+        switch(s){
+          case 1:
+            this.cambiarCategoria(this.ef.toLowerCase()+'-katz.php');
+            this.seleccionarSubCategoria('katz');
+            break;
+          case 2:
+            this.cambiarCategoria(this.ef.toLowerCase()+'-indice-barthel.php')
+            this.seleccionarSubCategoria('barthel');
+            break;
+          case 3:
+            this.cambiarCategoria(this.ef.toLowerCase()+'-lawton-y-brody.php');
+            this.seleccionarSubCategoria('lawton');
+            break
+        }
         break;
     }
   }
@@ -62,4 +81,8 @@ export class DiagnosticComponent {
     this.router.navigate([`home//encuesta/${categoria}`]);
   }
 
+  seleccionarSubCategoria(encuesta: String){
+    this.encuestaService.seleccionarEncuesta(encuesta);
+    console.log(`Categoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
+  }
 }
