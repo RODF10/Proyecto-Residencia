@@ -7,7 +7,7 @@ import { VistasComponent } from './vistas/vistas.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
 import { ListPersonComponent } from './list-person/list-person.component';
 import { AboutComponent } from './about/about.component';
-import { Category1Component } from './Diagnosticos/category1/category1.component';
+import { Category1Component } from './Diagnosticos/Funcional/category1.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileMedicComponent } from './profile-medic/profile-medic.component';
 import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
