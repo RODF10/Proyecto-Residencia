@@ -54,6 +54,8 @@ export class DiagnosticComponent {
             this.seleccionarSubCategoria('cam');
             break;
           case 3:
+            this.cambiarCategoria(this.ec.toLowerCase() + 'cam-icu.php');
+            this.seleccionarSubCategoria('camicu');
             break;
           case 4:
             this.cambiarCategoria(this.ec.toLowerCase()+'-awol.php');

@@ -48,11 +48,11 @@ export class EncuestaComponent implements OnInit{
   mostrarEncuesta(n: String){
     console.log('Parametro del Switch: '+n);
     switch(n){
-      case '4at':
-        this.link.name = 'encuesta-cog';
+      case '4at': case 'awol': case 'camicu': case 'cam':
+        this.link.name = 'Cognitiva';
         console.log('Selecciono 4AT | '+ this.link.name);
         break;  
-      case 'cam':
+      case 'undefinied':
         this.link.name = 'encuesta-cog';
         console.log('Selecciono CAM | '+ this.link.name);
         break;

@@ -19,3 +19,8 @@ export interface Resultado {
 export interface categoria{
   name: String;
 }
+
+export interface PreguntaDosOpc{
+  texto: String;
+  respuesta: String;
+}
