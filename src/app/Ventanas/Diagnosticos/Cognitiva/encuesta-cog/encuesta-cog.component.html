@@ -136,10 +136,14 @@
         <div class="opciones">
           <input type="radio" [name]="'pregunta-' + i" [id]="'si-' + i" value="si" [(ngModel)]="pregunta.respuesta"
             required />
-          <label [for]="'si-' + i">Sí</label>
+          <label [for]="'si-' + i">Si</label>
           <input type="radio" [name]="'pregunta-' + i" [id]="'no-' + i" value="no" [(ngModel)]="pregunta.respuesta"
             required />
           <label [for]="'no-' + i">No</label>
+        </div>
+        <!-- Mensaje de error para preguntas no respondidas -->
+        <div *ngIf="!pregunta.respuesta && showErrors" class="text-danger small">
+          Por favor selecciona una respuesta.
         </div>
       </div>
     </form>
@@ -169,5 +173,5 @@
 
 <!-- Boton de Envio -->
 <div class="boton">
-  <button type="button" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
+  <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
 </div>

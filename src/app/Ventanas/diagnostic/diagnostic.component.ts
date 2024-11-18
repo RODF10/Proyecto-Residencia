@@ -95,6 +95,7 @@ export class DiagnosticComponent {
   seleccionarSubCategoria(encuesta: String){
     this.encuestaService.seleccionarEncuesta(encuesta);
     this.categoriaSeleccionada.emit(encuesta);
+    localStorage.setItem('subCatSeleccionada', encuesta.toString());
     console.log(`Categoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-resultados',
@@ -7,28 +7,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./resultados.component.scss']
 })
 export class ResultadosComponent implements OnInit{
-  /*@Input() nombreEncuesta: String = '';
-  @Input() puntajeTotal: number = 0;
-  @Input() observacion: String = '';*/
+  nombreEncuesta: string = ''; //Encuesta
+  puntaje: number = 0; //Control del Puntaje
+  observacion: string = ''; //Observacion
+  porcentaje: number = 0;
 
-  nombreEncuesta: string = '';
-  puntaje: number = 0;
-  observacion: string = '';
-
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: ActivatedRoute) {
     //const navigation = this.router.getCurrentNavigation();
     //this.encuestas = navigation?.extras.state?.['encuestas'] || [];
   }
 
   ngOnInit(): void {
-    // Recupera los datos enviados desde el componente encuesta
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state) {
-      const { nombreEncuesta, puntaje, observacion } = navigation.extras.state;
-      this.nombreEncuesta = nombreEncuesta;
-      this.puntaje = puntaje;
-      this.observacion = observacion;
-    }
+    // Obtener los puntos desde los queryParams
+    this.route.queryParams.subscribe(params => {
+      this.puntaje = params['puntaje'] || 0;  // Si no hay puntos, se asigna 0
+      this.nombreEncuesta = params['nameEncuesta'] || '';
+      this.porcentaje = params['porcentaje'] || '';
+      this.observacion = params['observacion'] || '';
+    });
   }
 
   funcionBoton(n: number): void{

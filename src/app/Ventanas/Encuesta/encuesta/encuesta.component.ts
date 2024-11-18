@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
@@ -11,7 +11,7 @@ import { EncuestaCogComponent } from '../../Diagnosticos/Cognitiva/encuesta-cog/
   styleUrls: ['./encuesta.component.scss']
 })
 
-export class EncuestaComponent implements OnInit{
+export class EncuestaComponent implements OnInit, OnDestroy{
   //Recibe Parametro ENtrante del Componente
   @ViewChild('encuestaComponent') encuestaComponent!: EncuestaCogComponent;
 
@@ -19,7 +19,7 @@ export class EncuestaComponent implements OnInit{
   categoria?: String;
   public link: categoria={'name': ''};
   public safeUrl!: SafeResourceUrl;
-  private  BaseURL?: String = ''; //URL Fijo  
+  private  BaseURL?: String = 'http://localhost:4200/'; //URL Fijo  
 
   constructor(private router: Router, private encuestaService: ApiService, private route: ActivatedRoute, private sanitazer: DomSanitizer) {
     
@@ -34,33 +34,12 @@ export class EncuestaComponent implements OnInit{
         this.name = encuesta; //Recibe Name la clave de encuesta
         console.log(`Categoria recibida en EncuestaComponent: ${this.name}`); // Debug
         
-        this.mostrarEncuesta(encuesta); //Lammar metodo de acuerdo al name recibido
-        // this.link.name = encuesta;
       });
-      console.log("Msj: "+this.link.name);//Imprime en consola
-      // Construir la URL segura usando la encuesta como parte dinámica
-      const URL = 'http://localhost:4200/encuesta-cog' + this.link.name;
-      console.log(URL);
-      this.safeUrl = this.sanitazer.bypassSecurityTrustResourceUrl(URL);
       
   }
 
-  mostrarEncuesta(n: String){
-    console.log('Parametro del Switch: '+n);
-    switch(n){
-      case '4at': case 'awol': case 'camicu': case 'cam':
-        this.link.name = 'Cognitiva';
-        console.log('Selecciono 4AT | '+ this.link.name);
-        break;  
-      case 'undefinied':
-        this.link.name = 'encuesta-cog';
-        console.log('Selecciono CAM | '+ this.link.name);
-        break;
-      defaul:
-        this.link.name = 'Hola';
-        break;
-    }
-    console.log('Salida del Switch: ' + this.link.name);
+  ngOnDestroy(): void {
+    localStorage.removeItem('subCatSeleccionada'); // Limpia selección
   }
 
   cambiarCategoria(categoria: string) {

@@ -20,6 +20,7 @@ import { LoginComponent } from './login/login.component';
 
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
+import { checkRedirectGuard } from '../guards/check-redirect.guard';
 
 
 const routes: Routes = [
@@ -70,7 +71,7 @@ const routes: Routes = [
   {
     path: 'encuesta/:categoria',
     component: EncuestaComponent,
-    canActivate: [AuthGuard]
+    canActivate: [checkRedirectGuard]
   },
   //Encuestas de los URL
   {
