@@ -20,7 +20,8 @@
   margin: 1rem auto;
 }
 
-.opciones label {
+.opciones label,
+.opciones input {
   display: block;
   cursor: pointer;
   width: max-content;
@@ -111,9 +112,14 @@
 .awol .purple{
     background: rgba(128, 0, 128, 0.5);
 }
-
-.camicu .opciones{
-  display: flex;
-  gap: 15px; /* Espaciado entre las opciones */
-  align-items: center;
+.containerEncuesta .opciones .opcSi,
+.containerEncuesta .opciones .opcNo{
+  display: inline-flex;
+  margin: 0px 10px 0px 15px;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+.spmsqp .opciones input,
+.camicu .opciones input{
+  margin-right: 10px;
 }

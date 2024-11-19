@@ -1,5 +1,5 @@
 <!-- Necuesta 4AT -->
-<div class="4at containerEncuesta" *ngIf="caregoria == '4at'">
+<div class="4at containerEncuesta" *ngIf="categoria == '4at'">
   <div class="title">
     4AT
   </div>
@@ -18,7 +18,7 @@
 </div>
 
 <!-- Encuesta CAM -->
-<div class="cam containerEncuesta" *ngIf="caregoria == 'cam'">
+<div class="cam containerEncuesta" *ngIf="categoria == 'cam'">
   <div class="title">
     CAM
   </div>
@@ -124,7 +124,7 @@
 </div>
 
 <!-- Encuesta CAM-ICU -->
-<div class="camicu containerEncuesta" *ngIf="caregoria == 'camicu'">
+<div class="camicu containerEncuesta" *ngIf="categoria == 'camicu'">
   <div class="title">
     CAM-ICU
   </div>
@@ -134,12 +134,14 @@
       <div *ngFor="let pregunta of preguntasCamIcu; let i = index" class="pregunta">
         <label [for]="'pregunta-' + i" class="preguntas">{{ pregunta.texto }}</label>
         <div class="opciones">
-          <input type="radio" [name]="'pregunta-' + i" [id]="'si-' + i" value="si" [(ngModel)]="pregunta.respuesta"
-            required />
-          <label [for]="'si-' + i">Si</label>
-          <input type="radio" [name]="'pregunta-' + i" [id]="'no-' + i" value="no" [(ngModel)]="pregunta.respuesta"
-            required />
-          <label [for]="'no-' + i">No</label>
+          <div class="opcSi" (click)="pregunta.respuesta = 'si'" [class.selected]="pregunta.respuesta == 'si'">
+            <input type="radio" [name]="'pregunta-' + i" [id]="'si-' + i" value="si" [(ngModel)]="pregunta.respuesta" required />
+            <label [for]="'si-' + i">Si</label>
+          </div>
+          <div class="opcNo" (click)="pregunta.respuesta = 'no'" [class.selected]="pregunta.respuesta == 'no'">
+            <input type="radio" [name]="'pregunta-' + i" [id]="'no-' + i" value="no" [(ngModel)]="pregunta.respuesta" required />
+            <label [for]="'no-' + i">No</label>
+          </div>
         </div>
         <!-- Mensaje de error para preguntas no respondidas -->
         <div *ngIf="!pregunta.respuesta && showErrors" class="text-danger small">
@@ -151,7 +153,7 @@
 </div>
 
 <!-- Encuesta AWOL -->
-<div class="awol containerEncuesta" *ngIf="caregoria == 'awol'">
+<div class="awol containerEncuesta" *ngIf="categoria == 'awol'">
   <div class="title">Awol</div>
   <div class="intruccion">
     <p>Seleccione las letras para cambiar de <b>COLOR</b>, al estar en gris, se considera 0 puntos, cada color es 1
@@ -171,6 +173,30 @@
   </div>
 </div>
 
+<div class="spmsqp containerEncuesta" *ngIf="categoria == 'spmsqp'">
+  <div class="title">Short Portable Mental State Questionnaire Pfeiffer</div>
+  <div class="encuesta">
+    <div class="instruccion">Responde la pregintas de acuerdo a la respuesta del Paciente</div>
+    <form>
+      <div class="pregunta" *ngFor="let pregunta of preguntasMMSE; let i = index">
+        <label [for]="'pregunta-' + i" class="preguntas">{{pregunta.texto}}</label>
+        <div class="opciones">
+          <div class="opcSi" (click)="pregunta.respuesta = 'si'" [class.selected]="pregunta.respuesta == 'si'">
+            <input type="radio" [name]="'pregunta-'+ i" [id]="'si-'+i" value="si" [(ngModel)]="pregunta.respuesta" required />
+            <label [for]="'si-'+ i">Si</label>
+          </div>
+          <div class="opcNo" (click)="pregunta.respuesta = 'no'" [class.selected]="pregunta.respuesta == 'no'">
+            <input type="radio" [name]="'pregunta-'+ i" [id]="'si-'+ i" value="no" [(ngModel)]="pregunta.respuesta" required />
+            <label [for]="'no-'+ i">No</label>
+          </div>
+        </div>
+        <div class="text-danger samll" *ngIf="!pregunta.respuesta && showErrors">
+          Por favor responde todas las preguntas
+        </div>
+      </div>
+    </form>
+  </div>  
+</div>
 <!-- Boton de Envio -->
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>

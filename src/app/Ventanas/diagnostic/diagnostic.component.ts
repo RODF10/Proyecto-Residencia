@@ -62,6 +62,8 @@ export class DiagnosticComponent {
             this.seleccionarSubCategoria('awol');
             break;
           case 5:
+            this.cambiarCategoria(this.ec.toLowerCase() + 'spmsqp.php');
+            this.seleccionarSubCategoria('spmsqp');
             break;
         }
         break;

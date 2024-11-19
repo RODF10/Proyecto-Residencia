@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { left } from '@popperjs/core';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { ApiService } from 'src/app/Service/api.service';
 import { PreguntaDosOpc } from 'src/app/Shared/Data';
@@ -10,13 +11,14 @@ import { PreguntaDosOpc } from 'src/app/Shared/Data';
   styleUrls: ['./encuesta-cog.component.scss']
 })
 export class EncuestaCogComponent implements OnInit{
-  isSelected: { [key: string]: boolean } = {};
+  isSelected: { [key: string]: boolean } = {};// Validacion de color de AWOL false/true
   puntos: number = 0; //Puntaje
-  caregoria: String = 'Undefinid';//Recibir nombre clave
-  totalPreguntas: number = 9;
+  categoria: String = 'Undefinid';//Recibir nombre clave
+  cons: String[] = ['Entrastes en: ', 'Salida de: '];
   nameEncuesta?: String;
   observacion: String ='';
 
+  //Preguntas Si No
   preguntasCamIcu: PreguntaDosOpc[] = [
     {texto: 'Existencia de Cambio agudo del Estado Mental', respuesta:''},
     {texto: 'Estado Mental del Paciente ha fluctuado durante las últimas 24hrs', respuesta:''},
@@ -24,10 +26,22 @@ export class EncuestaCogComponent implements OnInit{
     {texto: 'Diga al Paciente que Deletree C-A-S-A-B-L-A-N-C-A', respuesta:''},
     {texto: 'Vigile al pacinete y verifique: Alerta de RASS0', respuesta:''},
     {texto: 'Las Piedras flotan en el Agua', respuesta:''},
-    { texto: 'Hay Peces en el mar', respuesta: '' },
-    { texto: '1kg pesa más que 2kg', respuesta: '' },
-    { texto: 'Los martillos sirven para poner clavos', respuesta: '' }
-  ] //Preguntas del SI o NO
+    {texto: 'Hay Peces en el mar', respuesta: '' },
+    {texto: '1kg pesa más que 2kg', respuesta: '' },
+    {texto: 'Los martillos sirven para poner clavos', respuesta: '' }
+  ]
+  preguntasMMSE: PreguntaDosOpc[] = [
+    {texto: 'Que fecha es hoy (dia, mes, año)', respuesta:''},
+    {texto: 'Que dia de la semana es hoy', respuesta:''},
+    {texto: 'Donde estamos ahora (Lugar o Edificio)', respuesta:''},
+    {texto: 'Cual es su numero de telefono (O idreccion si no tiene uno)', respuesta:''},
+    {texto: 'Que edad tiene', respuesta:''},
+    {texto: 'La fecha cuando nacio', respuesta:''},
+    {texto: 'Como se llama el presidente del Gobierno', respuesta: '' },
+    {texto: 'Como se llama el anterior presidente', respuesta: '' },
+    {texto: 'Primer apellido de su Madre', respuesta: '' },
+    {texto: 'Pudo restar de tres en tres desde veite', respuesta: ''}
+  ]
   showErrors= false;
 
   constructor(private router: Router, private categoriaEncuestaComponenet: ApiService){
@@ -36,9 +50,9 @@ export class EncuestaCogComponent implements OnInit{
 
   ngOnInit(): void {
       this.categoriaEncuestaComponenet.selectEncuest$.subscribe(subCategoria => { 
-        this.caregoria = subCategoria;
+        this.categoria = subCategoria;
       });
-      console.log(this.caregoria)
+      console.log(this.categoria)
   }
 
   // Función para alternar el color
@@ -54,15 +68,16 @@ export class EncuestaCogComponent implements OnInit{
   }
   //Metodo del boton Finalizar
   finalizarEncuesta(){
-    this.encuestas('camicu');
+    this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
    
   }
   
   //Receptaculo Categoria
   actualizarEncuesta(encuestaS: String){
-    this.caregoria = encuestaS;
+    this.categoria = encuestaS;
   }
 
+  //Envia los parametros al Componente Resultado segun reciba
   encuestaResulto(puntos: number, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
      if(this.showErrors){
       // Al navegar, enviamos los puntos al componente de resultado
@@ -80,15 +95,16 @@ export class EncuestaCogComponent implements OnInit{
   encuestas(enc: String){
     switch(enc){
       case 'camicu':
-        console.log('Entrastes en: ' + this.caregoria);
-        const todasRespondidas = this.preguntasCamIcu.every(p => p.respuesta !== null && p.respuesta !== undefined && p.respuesta !== '');
-        console.log(todasRespondidas); 
+        console.log(this.cons[0], this.categoria);
+        const todasRespondidas = this.preguntasCamIcu.every(p => p.respuesta != null && p.respuesta != undefined && p.respuesta != '');
+        console.log('Preguntas CAM-ICU: '+ todasRespondidas); 
         
         if (!todasRespondidas) {
           // Mostrar errores si hay preguntas sin responder
           this.showErrors = true;
           return;
         } else{ this.showErrors = true}
+
         let puntajeSi = 0;
         for (const pregunta of this.preguntasCamIcu) {
           if (pregunta.respuesta == 'si') {
@@ -97,11 +113,12 @@ export class EncuestaCogComponent implements OnInit{
         }
 
         this.encuestaResulto(puntajeSi, 'CAM-ICU','Sin observaciones',(puntajeSi/9)*100);
-        console.log('Salida CAM-ICU');
+        console.log(this.cons[1], 'CAM-ICU');
         break;
       case 'awol':
-        var del: String = 'Riesgo de Delirium: ';
-        console.log('Entrastes en: ' + this.caregoria);
+        var del: String = 'Riesgo de Delirium: '; //Validacion riesgo
+        console.log(this.cons[0], this.categoria); //Verificar si funciona en consola
+        //Calcular la observacion segun el puntaje
         if (this.puntos >= 4) {
           this.observacion = del + '64%';
         } else if (this.puntos == 3) {
@@ -113,9 +130,41 @@ export class EncuestaCogComponent implements OnInit{
         } else {
           this.observacion = del + '2%';
         }
-        this.showErrors = true;
-        console.log('Salida 4AT');
-        this.encuestaResulto(this.puntos, '4AT', this.observacion, (this.puntos/4)/100);
+
+        this.showErrors = true;// An finalizar marca verdadero si, dependiendo si selecciona la letra
+        console.log(this.cons[1], 'AWL');//Verificar que si hay salida
+        this.encuestaResulto(this.puntos, '4AT', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
+        break;
+      case 'spmsqp':
+        var err: String = 'Errores Obtenido: ';//Acortar observacion
+        console.log(this.cons[0], this.categoria);
+        const questionAll = this.preguntasMMSE.every(p => p.respuesta != null && p.respuesta != undefined && p.respuesta != '');// No se acepta respuestas sin responder
+        console.log('Pregunats MMSE: '+ questionAll);
+        //Validar que todas las opciones sean seleccionadas
+        if(!questionAll){
+          this.showErrors = true;
+          return;
+        } else { this.showErrors = true}
+        // Sumar si el puntaje es Si
+        let respuestaNo = 0;
+        for(const pregunta of this.preguntasMMSE){
+          if(pregunta.respuesta == 'no'){
+            respuestaNo++;
+          }
+        }
+        //Calculo de observacion segun el puntaje
+        if(respuestaNo >= 8){
+          this.observacion = err + 'Importante, deterioro Congnitivo';
+        } else if(respuestaNo >= 5 && respuestaNo <= 7){
+          this.observacion = err + 'Moderado, Deteriodocognitivo, patologico';
+        } else if(respuestaNo <= 2){
+          this.observacion = err + 'Normal, Sin deteriodo'
+        } else {
+          this.observacion = err + 'Leve, Deteriodo cognitivo'
+        }
+
+        this.encuestaResulto(respuestaNo, 'Question Pfeiffer', this.observacion, (respuestaNo/10)*100); //Envio de los parametros
+        console.log(this.cons[1], 'spmsqp');
         break;
     }
 
