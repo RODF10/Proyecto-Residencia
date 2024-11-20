@@ -18,8 +18,16 @@ import { EncuestaComponent } from './Encuesta/encuesta/encuesta.component';
 import { ResultadosComponent } from './Encuesta/resultados/resultados.component';
 import { LoginComponent } from './login/login.component';
 
+import { EncuestaAfcComponent } from './Diagnosticos/Afectiva/encuesta-afc/encuesta-afc.component';
+import { EncuestaCESD7Component } from './Diagnosticos/Afectiva/encuesta-ces-d7/encuesta-ces-d7.component';
+import { EncuestaPhq9Component } from './Diagnosticos/Afectiva/encuesta-phq9/encuesta-phq9.component';
+import { EncuestaGaiSfComponent } from './Diagnosticos/Afectiva/encuesta-gai-sf/encuesta-gai-sf.component';
+import { EncuestaEscalaSoledadComponent } from './Diagnosticos/Afectiva/encuesta-escala-soledad/encuesta-escala-soledad.component';
+import { EncuestaSADPERSONSComponent } from './Diagnosticos/Afectiva/encuesta-sad-persons/encuesta-sad-persons.component';
+import { EncuestaCornellComponent } from './Diagnosticos/Afectiva/encuesta-cornell/encuesta-cornell.component';
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
+import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
 
 
 const routes: Routes = [
@@ -81,6 +89,46 @@ const routes: Routes = [
   {
     path: 'category1',
     component: Category1Component,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-afc', 
+    component: EncuestaAfcComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-ces-d7', 
+    component: EncuestaCESD7Component,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-phq9', 
+    component: EncuestaPhq9Component,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-gai-sf', 
+    component: EncuestaGaiSfComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-beck', 
+    component: EncuestaBeckAnxietyComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-soledad', 
+    component: EncuestaEscalaSoledadComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-Sad', 
+    component: EncuestaSADPERSONSComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-cornell', 
+    component: EncuestaCornellComponent,
     canActivate: [AuthGuard]
   },
 ];

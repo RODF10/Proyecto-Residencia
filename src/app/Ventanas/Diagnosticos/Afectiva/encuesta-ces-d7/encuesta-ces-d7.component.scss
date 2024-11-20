@@ -1,0 +1,28 @@
+.table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    font-size: 0.9rem;
+  
+    @media (max-width: 768px) {
+      font-size: 0.8rem;
+    }
+  }
+  
+  .btn {
+    font-size: 1rem;
+  
+    @media (max-width: 768px) {
+      font-size: 0.9rem;
+    }
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+  
+    @media (max-width: 768px) {
+      font-size: 1.2rem;
+    }
+  }
+  

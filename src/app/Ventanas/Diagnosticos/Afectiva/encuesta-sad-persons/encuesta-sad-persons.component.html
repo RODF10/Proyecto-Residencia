@@ -1,0 +1,48 @@
+<div class="container">
+    <h2>Escala SAD PERSONS</h2>
+    <p>
+      Por favor, responda las siguientes preguntas indicando "Sí" o "No" según corresponda.
+      Cada respuesta afirmativa suma 1 punto.
+    </p>
+    <form #sadForm="ngForm" (ngSubmit)="calcularPuntaje()">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Factor de riesgo</th>
+            <th>Sí (1)</th>
+            <th>No (0)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pregunta of preguntas; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pregunta.texto }}</td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-1'"
+                name="pregunta-{{ i }}"
+                value="1"
+                [(ngModel)]="pregunta.respuesta"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-0'"
+                name="pregunta-{{ i }}"
+                value="0"
+                [(ngModel)]="pregunta.respuesta"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary" [disabled]="!sadForm.valid">
+        Finalizar Encuesta
+      </button>
+    </form>
+  </div>
+  

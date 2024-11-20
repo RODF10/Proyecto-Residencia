@@ -1,0 +1,62 @@
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 10px;
+  }
+  
+  /* Encabezado */
+  h2 {
+    text-align: center;
+    color: #0a38ce;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Preguntas */
+  label {
+    font-size: 1rem;
+    color: #555555;
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  /* Opciones de respuesta */
+  .form-check {
+    margin-bottom: 10px;
+  }
+  
+  .form-check-input {
+    margin-right: 8px;
+  }
+  
+  .form-check-label {
+    font-size: 0.95rem;
+    color: #333333;
+  }
+  
+  /* Botón de finalizar */
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  button[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }

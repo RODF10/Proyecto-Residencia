@@ -1,0 +1,41 @@
+.cornell-scale {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    text-align: center;
+  }
+  
+  .question {
+    margin-bottom: 1em;
+  }
+  
+  .options label {
+    display: inline-block;
+    margin-right: 15px;
+  }
+  
+  button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 1em;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .result {
+    margin-top: 20px;
+    padding: 10px;
+    border-top: 2px solid #ddd;
+  }
+  

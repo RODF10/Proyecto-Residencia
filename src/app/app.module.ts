@@ -31,6 +31,14 @@ import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.co
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ResultadosComponent } from './Ventanas/Encuesta/resultados/resultados.component';
 import { EncuestaCogComponent } from './Ventanas/Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
+import { EncuestaAfcComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-afc/encuesta-afc.component';
+import { EncuestaCESD7Component } from './Ventanas/Diagnosticos/Afectiva/encuesta-ces-d7/encuesta-ces-d7.component';
+import { EncuestaPhq9Component } from './Ventanas/Diagnosticos/Afectiva/encuesta-phq9/encuesta-phq9.component';
+import { EncuestaGaiSfComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-gai-sf/encuesta-gai-sf.component';
+import { EncuestaBeckAnxietyComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
+import { EncuestaEscalaSoledadComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-escala-soledad/encuesta-escala-soledad.component';
+import { EncuestaSADPERSONSComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-sad-persons/encuesta-sad-persons.component';
+import { EncuestaCornellComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-cornell/encuesta-cornell.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -55,6 +63,14 @@ registerLocaleData(localeEs, 'es');
     EncuestaComponent,
     ResultadosComponent,
     EncuestaCogComponent,
+    EncuestaAfcComponent,
+    EncuestaCESD7Component,
+    EncuestaPhq9Component,
+    EncuestaGaiSfComponent,
+    EncuestaBeckAnxietyComponent,
+    EncuestaEscalaSoledadComponent,
+    EncuestaSADPERSONSComponent,
+    EncuestaCornellComponent,
     //NotFoundComponent,
   ],
   imports: [

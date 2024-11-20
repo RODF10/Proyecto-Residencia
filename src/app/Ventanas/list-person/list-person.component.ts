@@ -55,11 +55,11 @@ export class ListPersonComponent {
     }
 
     // Llamar al método para registrar el paciente
-    this.registro();
+   // this.registro();
   }
 
   // Método para registrar al paciente
-  registro() {
+  /*registro() {
     this.apiService.registerPatient(this.pacienteForm.value).subscribe(
       (response: any) => {  // Aquí puedes definir un tipo específico si es necesario
         console.log('Registro Exitoso', response);
@@ -80,6 +80,6 @@ export class ListPersonComponent {
         alert('Error en el registro');
       }
     );
-  }
+  }*/
 }
 
