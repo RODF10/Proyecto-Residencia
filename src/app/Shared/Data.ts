@@ -34,3 +34,8 @@ export interface Question{
   text: String;
   options: Option[];
 }
+// OPCOINES BOOLEANAS
+export interface Checkbox{
+  text: String;
+  seleccionada: boolean;
+}

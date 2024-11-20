@@ -17,7 +17,6 @@ export class EncuestaComponent implements OnInit, OnDestroy{
 
   name?: String;
   categoria?: String;
-  public link: categoria={'name': ''};
   public safeUrl!: SafeResourceUrl;
   private  BaseURL?: String = 'http://localhost:4200/'; //URL Fijo  
 

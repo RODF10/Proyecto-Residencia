@@ -14,7 +14,7 @@ export class DiagnosticComponent {
   //Nombre de las Categorias
   ec: String = 'Esfera Cognitiva'; sub: String = "Subcategoria:"; ea: String = "Esfera Afectiva"; ef: String = "Esfera Funcional"; en: String = "Esfera Nutricional";
   //Otros
-  f: String = 'FUNCIONALIDAD'; p: String = 'PSICOAFECTIVA'; sf: String = 'SOCIO FAMILIAR';
+  //f: String = 'FUNCIONALIDAD'; p: String = 'PSICOAFECTIVA'; sf: String = 'SOCIO FAMILIAR';
   //Lista de la Categoria a Mostrar
   categoria = [
     { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj' },
@@ -92,8 +92,8 @@ export class DiagnosticComponent {
             this.seleccionarSubCategoria('frail');
             break;
           case 5:
-            this.cambiarCategoria(this.ef.toLowerCase()+ '-criterios-ensurud.php');
-            this.seleccionarSubCategoria('ensurud');
+            this.cambiarCategoria(this.ef.toLowerCase()+ '-criterios-ensrud.php');
+            this.seleccionarSubCategoria('ensrud');
             break;
           case 6:
             this.cambiarCategoria(this.ef.toLowerCase()+ '-time-up-and-go.php');

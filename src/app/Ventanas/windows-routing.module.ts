@@ -80,7 +80,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'category1',
+    path: 'encuesta-func',
     component: Category1Component,
     canActivate: [AuthGuard]
   },
