@@ -112,6 +112,8 @@
 .awol .purple{
     background: rgba(128, 0, 128, 0.5);
 }
+
+/* Opciones a Si No a lado */
 .containerEncuesta .opciones .opcSi,
 .containerEncuesta .opciones .opcNo{
   display: inline-flex;
@@ -122,4 +124,34 @@
 .spmsqp .opciones input,
 .camicu .opciones input{
   margin-right: 10px;
+}
+
+/* Estilo de Prueba reloj */
+.reloj .opciones .question label{
+  display: flex;
+  margin: 7px 0px;
+}
+.reloj .opciones .question input{
+  margin-right: 1rem;
+}
+.reloj .opciones .question label input[type="radio"]{
+  margin-top: 0.2rem;
+  align-self: start;
+}
+.reloj {
+  .instruccion p{
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  .image{
+    width: 35%;
+    margin: 2rem auto;
+  }
+  .instruccion{
+    text-align: center;
+    margin: 1.7rem 0px;
+  }
+  .opciones{
+    margin-top: 1rem;
+  }
 }

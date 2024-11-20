@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validator, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { left } from '@popperjs/core';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { ApiService } from 'src/app/Service/api.service';
-import { PreguntaDosOpc } from 'src/app/Shared/Data';
+import { PreguntaDosOpc, Question } from 'src/app/Shared/Data';
 
 @Component({
   selector: 'app-encuesta-cog',
@@ -42,9 +43,43 @@ export class EncuestaCogComponent implements OnInit{
     {texto: 'Primer apellido de su Madre', respuesta: '' },
     {texto: 'Pudo restar de tres en tres desde veite', respuesta: ''}
   ]
-  showErrors= false;
+  //Preguntas Reloj
+  questionnaireForm: FormGroup;
+  questions: Question[] = [
+    { text: 'Dibujo del Reloj',
+      options: [
+        { label: 'El círculo está bien dibujado o cercanamente a lo redondo', score: 2 },
+        { label: 'El círculo está dibujado, pero de manera irregular', score: 1 },
+        { label: 'Figura irregular o no compatible con un semi-círculo', score: 0 }
+      ]
+    },
+    { text: 'Presencia y secuencia de números',
+      options: [
+        { label: 'Todos los números están presentes. Puede aceptarse un error mínimo en la disposición espacial.', score: 4 },
+        { label: 'Todos los números están presentes. Errores en la disposición espacial.', score: 3 },
+        { label: 'Algunas de las Siguientes:\nNúmeros faltantes o adicionales aunque sin distorsiones groseras de los números restantes.\nLos números están ubicados en sentido anti-horario.\nLos números están presentes pero hay una seria alteración en la disposición general.', score: 2 },
+        { label: 'Números faltantes o adicionales y errores espaciales serios', score: 1 },
+        { label: 'Ausencia o pobre representación de los números.', score: 0 }
+      ]
+    },
+    { text: 'Presencia y ubicación de las agujas',
+      options: [
+        { label: 'Las agujas están en la posición correcta y la diferencia en tamaño está respetada.', score: 4 },
+        { label: 'Errores discretos en la representación de las agujas o la diferencia de tamaño entre las agujas.', score: 3 },
+        { label: 'Errores mayores en la ubicación de las agujas (de manera significativa, incluyendo 10 a 11).', score: 2 },
+        { label: 'Se dibuja solamente UNA aguja o el dibujo de ambas agujas es notoriamente pobre.', score: 1 },
+        { label: 'No se dibujan las agujas o se dibujan varias de manera perseverativa.', score: 0 }
+      ]
+    }
+  ];
+  showErrors: boolean = false;
 
-  constructor(private router: Router, private categoriaEncuestaComponenet: ApiService){
+  constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder){
+    this.questionnaireForm = this.fb.group({
+      question1: [null, Validators.required],
+      question2: [null, Validators.required],
+      question3: [null, Validators.required],
+    });
 
   }
 
@@ -52,43 +87,18 @@ export class EncuestaCogComponent implements OnInit{
       this.categoriaEncuestaComponenet.selectEncuest$.subscribe(subCategoria => { 
         this.categoria = subCategoria;
       });
-      console.log(this.categoria)
+      console.log(this.categoria);
   }
 
-  // Función para alternar el color
-  toggleTextColor(textKey: string): void {
-    this.isSelected[textKey] = !this.isSelected[textKey];
-
-    //Al estar en color se suma 1 punto, en caso contrario 0
-    if (this.isSelected[textKey]) {
-      this.puntos += 1;  // Si se selecciona, suma un punto
-    } else {
-      this.puntos -= 1;  // Si se deselecciona, resta un punto
-    }
-  }
   //Metodo del boton Finalizar
   finalizarEncuesta(){
-    this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
+    this.encuestas('reloj');// Entrar a la encuesta segun sea seleccionada
    
   }
   
   //Receptaculo Categoria
   actualizarEncuesta(encuestaS: String){
     this.categoria = encuestaS;
-  }
-
-  //Envia los parametros al Componente Resultado segun reciba
-  encuestaResulto(puntos: number, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
-     if(this.showErrors){
-      // Al navegar, enviamos los puntos al componente de resultado
-      this.router.navigate(['home/resultado'], {queryParams: {
-        puntaje: puntos, //Puntaje Obtenido
-        nameEncuesta: nameEncuesta, //Nombre de la Encuesta
-        porcentaje: porcentaje.toFixed(2),
-        observacion: observacion //Observaciones
-      }});
-      localStorage.removeItem('subCatSeleccionada'); 
-    }
   }
 
   /* METODOS DE LAS ENCUESTAS PARA CALCULAR LOS PUNTOS OBTENIDO */
@@ -166,8 +176,77 @@ export class EncuestaCogComponent implements OnInit{
         this.encuestaResulto(respuestaNo, 'Question Pfeiffer', this.observacion, (respuestaNo/10)*100); //Envio de los parametros
         console.log(this.cons[1], 'spmsqp');
         break;
+      case 'reloj':
+        this.showErrors = true;
+        console.log(this.cons[0], this.categoria);
+        if(this.questionnaireForm.valid){
+          this.puntos = 0; //Reiniciar los puntos
+          
+          // Iterar sobre las claves del formulario
+          for(const key in this.questionnaireForm.controls){
+            if(this.questionnaireForm.controls[key].value != null && this.questionnaireForm.controls[key].value != ''){
+              this.puntos += this.questionnaireForm.controls[key].value;
+            }
+          }
+          this.showErrors = false;
+        }
+
+        if(this.puntos >= 9){
+          this.observacion = 'NORMAL';
+        } else if(this.puntos == 8){
+          this.observacion = 'DEFICIT LIMITE';
+        } else if(this.puntos == 6 || this.puntos == 7){
+          this.observacion = 'DEFICIT LEVE';
+        } else if(this.puntos == 4 || this.puntos == 5){
+          this.observacion = 'DEFICIT MODERADO';
+        } else {
+          this.observacion = 'DEFICIT SEVERO';
+        }
+
+        //Control de Envio si esta respondido la encuesta
+        if(!this.showErrors){
+          console.log('Entrada If del Reloj');
+          this.showErrors = true; //Convertirse en verdadero antes de llamar al metod, para enviar al siguiente componente
+          this.encuestaResulto(this.puntos, 'Prueba de Reloj',this.observacion, (this.puntos/10)*100);
+        }
+        console.log(this.cons[1], 'Prueba Reloj');
+        break;
     }
 
+  }
+
+  /* ALGUNOS METODOS POR CADA ENCUESTA A REALIZAR */
+
+   //Envia los parametros al Componente Resultado segun reciba
+   encuestaResulto(puntos: number, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
+    if(this.showErrors){
+     // Al navegar, enviamos los puntos al componente de resultado
+     this.router.navigate(['home/resultado'], {queryParams: {
+       puntaje: puntos, //Puntaje Obtenido
+       nameEncuesta: nameEncuesta, //Nombre de la Encuesta
+       porcentaje: porcentaje.toFixed(2),
+       observacion: observacion //Observaciones
+     }});
+     localStorage.removeItem('subCatSeleccionada'); 
+   }
+ }
+
+  // Función para alternar el color
+  toggleTextColor(textKey: string): void {
+    this.isSelected[textKey] = !this.isSelected[textKey];
+
+    //Al estar en color se suma 1 punto, en caso contrario 0
+    if (this.isSelected[textKey]) {
+      this.puntos += 1;  // Si se selecciona, suma un punto
+    } else {
+      this.puntos -= 1;  // Si se deselecciona, resta un punto
+    }
+  }
+
+  // Método para verificar que la respuesta de la pregunta este seleccionado
+  hasError(fieldName: string): boolean {
+    const control = this.questionnaireForm.get(fieldName);
+    return !!control?.invalid && (control?.touched || this.showErrors);
   }
 
 }

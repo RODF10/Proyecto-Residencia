@@ -17,9 +17,9 @@ export class DiagnosticComponent {
   f: String = 'FUNCIONALIDAD'; p: String = 'PSICOAFECTIVA'; sf: String = 'SOCIO FAMILIAR';
   //Lista de la Categoria a Mostrar
   categoria = [
-    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP' },
-    { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario ANsiedad Beck' },
-    { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud' },
+    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj' },
+    { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario ANsiedad Beck', cont6: 'Escala Soledad 3 Elementos' },
+    { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go' },
   ];
   //Ignorar
   urlCat = [
@@ -65,6 +65,10 @@ export class DiagnosticComponent {
             this.cambiarCategoria(this.ec.toLowerCase() + 'spmsqp.php');
             this.seleccionarSubCategoria('spmsqp');
             break;
+          case 6:
+            this.cambiarCategoria(this.ec.toLowerCase()+ '-prueba-reloj.php');
+            this.seleccionarSubCategoria('reloj');
+            break;
         }
         break;
       case 2:
@@ -83,6 +87,18 @@ export class DiagnosticComponent {
             this.cambiarCategoria(this.ef.toLowerCase()+'-lawton-y-brody.php');
             this.seleccionarSubCategoria('lawton');
             break
+          case 4:
+            this.cambiarCategoria(this.ef.toLowerCase()+ '-frail.php');
+            this.seleccionarSubCategoria('frail');
+            break;
+          case 5:
+            this.cambiarCategoria(this.ef.toLowerCase()+ '-criterios-ensurud.php');
+            this.seleccionarSubCategoria('ensurud');
+            break;
+          case 6:
+            this.cambiarCategoria(this.ef.toLowerCase()+ '-time-up-and-go.php');
+            this.seleccionarSubCategoria('timeup');
+            break;
         }
         break;
     }

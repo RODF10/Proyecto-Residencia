@@ -24,3 +24,13 @@ export interface PreguntaDosOpc{
   texto: String;
   respuesta: String;
 }
+
+// OPCIONES Y RESULTADO DE LA ENCUESTA [PRUEBA DE RELOJ] PUNTAJE Y PREGUNTAS
+export interface Option{
+  label: String;
+  score: number;
+}
+export interface Question{
+  text: String;
+  options: Option[];
+}

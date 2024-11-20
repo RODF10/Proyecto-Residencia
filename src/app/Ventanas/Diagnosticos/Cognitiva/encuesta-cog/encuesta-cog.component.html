@@ -1,4 +1,4 @@
-<!-- Necuesta 4AT -->
+<!-- Encuesta 4AT -->
 <div class="4at containerEncuesta" *ngIf="categoria == '4at'">
   <div class="title">
     4AT
@@ -173,6 +173,7 @@
   </div>
 </div>
 
+<!-- Encuesta Question Pfeiffer -->
 <div class="spmsqp containerEncuesta" *ngIf="categoria == 'spmsqp'">
   <div class="title">Short Portable Mental State Questionnaire Pfeiffer</div>
   <div class="encuesta">
@@ -197,6 +198,64 @@
     </form>
   </div>  
 </div>
+
+<!-- Prueba del Reloj -->
+ <div class="reloj containerEncuesta" *ngIf="categoria == 'reloj'">
+  <div class="title">Prueba del Reloj</div>
+  <div class="instruccion">
+    <p>Dibuje un reloj de manecillas, coloque todos los n&#250;meros que lleva y marque con agujas la hora &#8220;11&#58;10&#8221;</p>
+    <img src="assets/Imagenes/reloj.jpg" alt="" class="image">
+    <p>De acuerdo al paciente, seleccione las opciones que considere que hizo correctamente</p>
+  </div>
+  <div class="opciones">
+    <form [formGroup]="questionnaireForm" (ngSubmit)="encuestas('reloj')">
+      <!-- Pregunta 1 -->
+    <div class="question">
+      <p><strong>{{questions[0].text}}</strong></p>
+      <div *ngFor="let option of questions[0].options" class="question1">
+        <label>
+          <input type="radio" [formControlName]="'question1'" [value]="option.score" />
+          {{ option.label }}
+        </label>
+      </div>
+    </div>
+    <div *ngIf="hasError('question1')" class="text-danger small">
+      Por favor selecciona una respuesta.
+    </div>
+    
+
+    <!-- Pregunta 2 -->
+    <div class="question">
+      <p><strong>{{questions[1].text}}</strong></p>
+      <div *ngFor="let option of questions[1].options">
+        <label [ngStyle]="{ 'white-space': 'pre-line' }">
+          <input type="radio" [formControlName]="'question2'" [value]="option.score"/>
+          {{ option.label }}
+        </label>
+      </div>
+    </div>
+    <div *ngIf="hasError('question1')" class="text-danger small">
+      Por favor selecciona una respuesta.
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="question">
+      <p><strong>{{questions[2].text}}</strong></p>
+      <div *ngFor="let option of questions[2].options">
+        <label>
+          <input type="radio" [formControlName]="'question3'" [value]="option.score"/>
+          {{ option.label }}
+        </label>
+      </div>
+    </div>
+    <div *ngIf="hasError('question1') && showErrors" class="text-danger small">
+      Por favor selecciona una respuesta.
+    </div>
+
+    </form>
+  </div>
+ </div>
+ 
 <!-- Boton de Envio -->
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
