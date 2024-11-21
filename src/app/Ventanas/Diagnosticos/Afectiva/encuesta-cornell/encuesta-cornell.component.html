@@ -1,18 +1,21 @@
 <div class="cornell-scale">
   <h2>Escala de Cornell</h2>
-  <p>Seleccione el puntaje adecuado para cada ítem.</p>
+  <p>Manifestaciones.</p>
 
   <div *ngFor="let question of questions; let i = index" class="question">
     <label>{{ i + 1 }}. {{ question.text }}</label>
     <div class="options">
       <label>
-        <input type="radio" name="q{{ i }}" (change)="setScore(i, 0)" /> 0 - Ausente
+        <input type="radio" name="q{{ i }}" /> No Valorable
       </label>
       <label>
-        <input type="radio" name="q{{ i }}" (change)="setScore(i, 1)" /> 1 - Leve
+        <input type="radio" name="q{{ i }}" (change)="setScore(i, 0)" /> Ausente
       </label>
       <label>
-        <input type="radio" name="q{{ i }}" (change)="setScore(i, 2)" /> 2 - Severo
+        <input type="radio" name="q{{ i }}" (change)="setScore(i, 1)" /> Leve
+      </label>
+      <label>
+        <input type="radio" name="q{{ i }}" (change)="setScore(i, 2)" /> Grave
       </label>
     </div>
   </div>
