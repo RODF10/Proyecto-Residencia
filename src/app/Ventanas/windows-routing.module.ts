@@ -25,6 +25,7 @@ import { EncuestaGaiSfComponent } from './Diagnosticos/Afectiva/encuesta-gai-sf/
 import { EncuestaEscalaSoledadComponent } from './Diagnosticos/Afectiva/encuesta-escala-soledad/encuesta-escala-soledad.component';
 import { EncuestaSADPERSONSComponent } from './Diagnosticos/Afectiva/encuesta-sad-persons/encuesta-sad-persons.component';
 import { EncuestaCornellComponent } from './Diagnosticos/Afectiva/encuesta-cornell/encuesta-cornell.component';
+import { EncuestaOkeeffeComponent } from './Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
@@ -129,6 +130,11 @@ const routes: Routes = [
   {
     path: 'encuesta-cornell', 
     component: EncuestaCornellComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-okeeffe', 
+    component: EncuestaOkeeffeComponent,
     canActivate: [AuthGuard]
   },
 ];

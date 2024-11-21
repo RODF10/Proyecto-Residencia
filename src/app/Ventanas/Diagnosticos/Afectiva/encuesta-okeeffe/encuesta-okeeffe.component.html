@@ -1,0 +1,43 @@
+<div class="container mt-4">
+    <h2 class="text-center">Escala Corta de Depresión por Observación Hammond-O'Keeffe</h2>
+  
+    <form [formGroup]="encuestaForm">
+      <div class="table-responsive">
+        <table class="table table-bordered text-center">
+          <thead class="table-light">
+            <tr>
+              <th>Pregunta</th>
+              <th>NO (0 puntos)</th>
+              <th>SI (1 punto)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pregunta of preguntas; let i = index">
+              <td>{{ pregunta.texto }}</td>
+              <td>
+                <input
+                  type="radio"
+                  [value]="0"
+                  [formControlName]="'pregunta' + i"
+                />
+              </td>
+              <td>
+                <input
+                  type="radio"
+                  [value]="1"
+                  [formControlName]="'pregunta' + i"
+                />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="text-center mt-3">
+        <button type="button" class="btn btn-success" (click)="finalizarEncuesta()">
+          Finalizar Encuesta
+        </button>
+      </div>
+    </form>
+  </div>
+  
