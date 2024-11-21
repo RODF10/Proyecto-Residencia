@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-encuesta-ces-d7',
@@ -19,8 +20,9 @@ export class EncuestaCESD7Component implements OnInit {
   ];
   resultado: number = 0;
   interpretacion: string = '';
+  showErrors: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     // Crea un grupo de controles para cada pregunta
@@ -32,11 +34,11 @@ export class EncuestaCESD7Component implements OnInit {
     );
   }
 
+  // Método para calcular la puntuación
   calcularPuntuacion(): void {
-    // Obtiene los valores del formulario
     const respuestas = this.cesForm.value;
 
-    // Calcula la puntuación total y asegura que acc siempre es un número
+    // Calcula la puntuación total
     this.resultado = (Object.values(respuestas) as (number | null)[]).reduce(
       (acc: number, val: number | null) => acc + (val || 0),
       0 // Inicializa el acumulador con 0
@@ -48,4 +50,37 @@ export class EncuestaCESD7Component implements OnInit {
         ? 'Síntomas depresivos significativos'
         : 'Normal';
   }
+
+  // Método para enviar los resultados
+  enviarResultados(): void {
+    if (this.resultado === 0 && !this.showErrors) {
+      alert('Primero calcula el puntaje antes de enviar los resultados.');
+      this.showErrors = true;
+      return;
+    }
+
+    console.log('Puntaje: ', this.resultado, '\nObservación: ', this.interpretacion);
+
+    // Redirige al componente Resultados con los datos mediante el estado
+    this.router.navigate(['/resultado'], {
+      queryParams: {
+        nombreEncuesta: 'CES-D7',
+        puntaje: this.resultado,
+        observacion: this.interpretacion,
+        porcentaje: ((this.resultado / 21) * 100).toFixed(2) // Porcentaje basado en 7 preguntas con valor máximo de 3 cada una
+      }
+    });
+  }
+
+  // Método para finalizar la encuesta: calcula el puntaje y luego envía los resultados
+  finalizarEncuesta(): void {
+    if (this.cesForm.valid) {
+      this.calcularPuntuacion();  // Calcula la puntuación
+      this.enviarResultados();    // Envía los resultados
+    } else {
+      alert('Por favor, complete todas las preguntas antes de finalizar.');
+    }
+  }
 }
+
+

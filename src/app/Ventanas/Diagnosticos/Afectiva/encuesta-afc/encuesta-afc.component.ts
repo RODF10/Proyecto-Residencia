@@ -28,6 +28,7 @@ export class EncuestaAfcComponent implements OnInit {
   ];
   puntaje: number | null = null;
   observacion: string = '';
+  showErrors = false;
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
@@ -61,24 +62,34 @@ export class EncuestaAfcComponent implements OnInit {
       this.puntaje <= 4
         ? 'Normal'
         : 'Presencia de síntomas depresivos';
+    
+    this.enviarResultados(this.puntaje, this.observacion);
   }
 
-  enviarResultados(): void {
-    if (this.puntaje === null) {
+  enviarResultados(puntaje: number, observacion: string): void {
+    if (puntaje === null) {
       alert('Primero calcula el puntaje antes de enviar los resultados.');
       return;
+    } else {
+      this.showErrors = true;
     }
 
+    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+
     // Redirige al componente Resultados con los datos mediante el estado
-    this.router.navigateByUrl('resultado', {
-      state: {
-        nombreEncuesta: 'GDS',
-        puntaje: this.puntaje,
-        observacion: this.observacion
-      }
-    });
+    if (this.showErrors) {
+      this.router.navigate(['home/resultado'], {
+        queryParams: {
+          nombreEncuesta: 'Escala AFC',
+          puntaje: puntaje,
+          observacion: observacion,
+          porcentaje: ((puntaje / 100) * 15).toFixed(2)
+        }
+      });
+    }
   }
 }
+
 
 
 

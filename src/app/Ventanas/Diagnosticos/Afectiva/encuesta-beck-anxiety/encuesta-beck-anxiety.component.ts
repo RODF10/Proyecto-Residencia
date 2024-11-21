@@ -7,55 +7,84 @@ import { Router } from '@angular/router';
   styleUrls: ['./encuesta-beck-anxiety.component.scss']
 })
 export class EncuestaBeckAnxietyComponent {
-// Preguntas del inventario
-preguntas = [
-  { texto: 'Torpe o entumecido.', respuesta: null },
-  { texto: 'Acalorado.', respuesta: null },
-  { texto: 'Con temblor en las piernas.', respuesta: null },
-  { texto: 'Incapaz de relajarse.', respuesta: null },
-  { texto: 'Con temor a que ocurra lo peor.', respuesta: null },
-  { texto: 'Mareado, o que se le va la cabeza.', respuesta: null },
-  { texto: 'Con latidos fuertes del corazón y acelerados.', respuesta: null },
-  { texto: 'Inestable.', respuesta: null },
-  { texto: 'Atemorizado o asustado.', respuesta: null },
-  { texto: 'Nervioso.', respuesta: null },
-  { texto: 'Con sensación de bloqueo.', respuesta: null },
-  { texto: 'Con temblores en las manos.', respuesta: null },
-  { texto: 'Inquieto, inseguro.', respuesta: null },
-  { texto: 'Con miedo a perder el control.', respuesta: null },
-  { texto: 'Con sensación de ahogo.', respuesta: null },
-  { texto: 'Con temor a morir.', respuesta: null },
-  { texto: 'Con miedo.', respuesta: null },
-  { texto: 'Con problemas digestivos.', respuesta: null },
-  { texto: 'Con desvanecimientos.', respuesta: null },
-  { texto: 'Con rubor facial.', respuesta: null },
-  { texto: 'Con sudores, fríos o calientes.', respuesta: null }
-];
+  // Preguntas del inventario
+  preguntas = [
+    { texto: 'Torpe o entumecido.', respuesta: null },
+    { texto: 'Acalorado.', respuesta: null },
+    { texto: 'Con temblor en las piernas.', respuesta: null },
+    { texto: 'Incapaz de relajarse.', respuesta: null },
+    { texto: 'Con temor a que ocurra lo peor.', respuesta: null },
+    { texto: 'Mareado, o que se le va la cabeza.', respuesta: null },
+    { texto: 'Con latidos fuertes del corazón y acelerados.', respuesta: null },
+    { texto: 'Inestable.', respuesta: null },
+    { texto: 'Atemorizado o asustado.', respuesta: null },
+    { texto: 'Nervioso.', respuesta: null },
+    { texto: 'Con sensación de bloqueo.', respuesta: null },
+    { texto: 'Con temblores en las manos.', respuesta: null },
+    { texto: 'Inquieto, inseguro.', respuesta: null },
+    { texto: 'Con miedo a perder el control.', respuesta: null },
+    { texto: 'Con sensación de ahogo.', respuesta: null },
+    { texto: 'Con temor a morir.', respuesta: null },
+    { texto: 'Con miedo.', respuesta: null },
+    { texto: 'Con problemas digestivos.', respuesta: null },
+    { texto: 'Con desvanecimientos.', respuesta: null },
+    { texto: 'Con rubor facial.', respuesta: null },
+    { texto: 'Con sudores, fríos o calientes.', respuesta: null }
+  ];
 
-constructor(private router: Router) {}
+  puntaje: number = 0;
+  observacion: string = '';
+  showErrors: boolean = false;
 
-// Calcular el puntaje total y redirigir al componente de resultados
-calcularPuntaje() {
-  const puntaje = this.preguntas.reduce((total, pregunta) => total + (Number(pregunta.respuesta) || 0), 0);
+  constructor(private router: Router) {}
 
-  let observacion: string;
-  if (puntaje <= 5) {
-    observacion = 'Ausente o mínima ansiedad.';
-  } else if (puntaje <= 15) {
-    observacion = 'Ansiedad leve.';
-  } else if (puntaje <= 30) {
-    observacion = 'Ansiedad moderada.';
-  } else {
-    observacion = 'Ansiedad grave.';
+  // Método para calcular el puntaje
+  calcularPuntaje(): void {
+    this.puntaje = this.preguntas.reduce((total, pregunta) => total + (Number(pregunta.respuesta) || 0), 0);
+
+    if (this.puntaje <= 5) {
+      this.observacion = 'Ausente o mínima ansiedad.';
+    } else if (this.puntaje <= 15) {
+      this.observacion = 'Ansiedad leve.';
+    } else if (this.puntaje <= 30) {
+      this.observacion = 'Ansiedad moderada.';
+    } else {
+      this.observacion = 'Ansiedad grave.';
+    }
+
+    console.log('Puntaje calculado: ', this.puntaje, 'Observación: ', this.observacion);
   }
 
-  // Redirigir al componente de resultados con los datos
-  this.router.navigate(['/resultado'], {
-    queryParams: {
-      nombreEncuesta: 'Inventario de Ansiedad de Beck',
-      puntaje,
-      observacion
+  // Método para enviar resultados al componente de resultados
+  enviarResultados(puntaje: number, observacion: string): void {
+    if (puntaje === null) {
+      alert('Primero calcula el puntaje antes de enviar los resultados.');
+      return;
+    } else {
+      this.showErrors = true;
     }
-  });
-}
+
+    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+
+    // Redirige al componente Resultados con los datos mediante el estado
+    if (this.showErrors) {
+      this.router.navigate(['home/resultado'], {
+        queryParams: {
+          nombreEncuesta: 'Inventario de Ansiedad de Beck',
+          puntaje: puntaje,
+          observacion: observacion,
+          porcentaje: ((puntaje / 100) * 15).toFixed(2)
+        }
+      });
+    }
+  }
+
+  // Método que combina el cálculo y el envío de los resultados
+  finalizarEncuesta(): void {
+    // Calcular el puntaje
+    this.calcularPuntaje();
+
+    // Enviar los resultados al componente de resultados
+    this.enviarResultados(this.puntaje, this.observacion);
+  }
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 
 @Component({
   selector: 'app-resultados',
@@ -14,21 +15,22 @@ export class ResultadosComponent implements OnInit{
   nombreEncuesta: string = '';
   puntaje: number = 0;
   observacion: string = '';
+  porcentaje: FLOAT = 0.0;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private route: ActivatedRoute) {
     //const navigation = this.router.getCurrentNavigation();
     //this.encuestas = navigation?.extras.state?.['encuestas'] || [];
   }
 
   ngOnInit(): void {
     // Recupera los datos enviados desde el componente encuesta
-    const navigation = this.router.getCurrentNavigation();
-    if (navigation?.extras?.state) {
-      const { nombreEncuesta, puntaje, observacion } = navigation.extras.state;
-      this.nombreEncuesta = nombreEncuesta;
-      this.puntaje = puntaje;
-      this.observacion = observacion;
-    }
+    this.route.queryParams.subscribe(params => {
+      this.puntaje = params['puntaje'] || 0;  // Si no hay puntos, se asigna 0
+      this.nombreEncuesta = params['nameEncuesta'] || '';
+      this.porcentaje = params['porcentaje'] || '';
+      this.observacion = params['observacion'] || '';
+    });
+
   }
 
   funcionBoton(n: number): void{

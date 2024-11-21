@@ -1,68 +1,60 @@
 <div class="container mt-4">
-    <h2 class="text-center">CES – D 7 Escala de Depresión</h2>
-    <p class="text-center">Durante la última semana, ¿usted...?</p>
-  
-    <form [formGroup]="cesForm" (ngSubmit)="calcularPuntuacion()">
-      <div class="table-responsive">
-        <table class="table table-bordered text-center">
-          <thead class="table-light">
-            <tr>
-              <th>Preguntas</th>
-              <th>Rara vez o nunca<br>(menos de 1 día)<br>0 puntos</th>
-              <th>Pocas veces<br>(1-2 días)<br>1 punto</th>
-              <th>Un número considerable<br>(3-4 días)<br>2 puntos</th>
-              <th>Todo el tiempo<br>(5-7 días)<br>3 puntos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let pregunta of preguntas; let i = index">
-              <td>{{ pregunta.texto }}</td>
-              <td>
-                <input
-                  type="radio"
-                  [value]="0"
-                  [formControlName]="'pregunta' + i"
-                />
-              </td>
-              <td>
-                <input
-                  type="radio"
-                  [value]="1"
-                  [formControlName]="'pregunta' + i"
-                />
-              </td>
-              <td>
-                <input
-                  type="radio"
-                  [value]="2"
-                  [formControlName]="'pregunta' + i"
-                />
-              </td>
-              <td>
-                <input
-                  type="radio"
-                  [value]="3"
-                  [formControlName]="'pregunta' + i"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <div class="text-center mt-3">
-        <button type="submit" class="btn btn-primary">Calcular Puntuación</button>
-      </div>
-    </form>
-  
-    <div *ngIf="resultado !== null" class="text-center mt-4">
-      <h3>Resultado: {{ resultado }}/21</h3>
-      <p class="fw-bold">{{ interpretacion }}</p>
-      <p>
-        <strong>Interpretación:</strong><br />
-        - <span class="text-success">Normal:</span> &lt; 5 puntos<br />
-        - <span class="text-danger">Síntomas depresivos significativos:</span> Igual o mayor a 5 puntos
-      </p>
+  <h2 class="text-center">CES – D 7 Escala de Depresión</h2>
+  <p class="text-center">Durante la última semana, ¿usted...?</p>
+
+  <form [formGroup]="cesForm">
+    <div class="table-responsive">
+      <table class="table table-bordered text-center">
+        <thead class="table-light">
+          <tr>
+            <th>Preguntas</th>
+            <th>Rara vez o nunca<br>(menos de 1 día)<br>0 puntos</th>
+            <th>Pocas veces<br>(1-2 días)<br>1 punto</th>
+            <th>Un número considerable<br>(3-4 días)<br>2 puntos</th>
+            <th>Todo el tiempo<br>(5-7 días)<br>3 puntos</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pregunta of preguntas; let i = index">
+            <td>{{ pregunta.texto }}</td>
+            <td>
+              <input
+                type="radio"
+                [value]="0"
+                [formControlName]="'pregunta' + i"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [value]="1"
+                [formControlName]="'pregunta' + i"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [value]="2"
+                [formControlName]="'pregunta' + i"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [value]="3"
+                [formControlName]="'pregunta' + i"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
+
+    <div class="text-center mt-3">
+      <button type="button" class="btn btn-success" (click)="finalizarEncuesta()">
+        Finalizar Encuesta
+      </button>
+    </div>
+  </form>
+
   
