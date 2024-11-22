@@ -62,14 +62,6 @@ export class ListPersonComponent {
   }
 
   registro(){
-    this.apiService.registerPacient(this.pacient).subscribe(
-      Response => {
-        console.log('Registro Exitoso', Response);
-      },
-      Error => {
-        console.error('Error en el Registro', Response);
-        alert('Error enviado exitosamente!');
-      }
-    );
+    
   }
 }

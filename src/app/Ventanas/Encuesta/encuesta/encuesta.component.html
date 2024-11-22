@@ -6,5 +6,5 @@
   <iframe [src]="safeUrl" frameborder="0" class="ventana"></iframe>
 </div>-->
 <!-- <app-diagnostic (categoriaSeleccionada)="cambiarCategoria($event.toString())"></app-diagnostic> -->
-<app-encuesta-cog #encuestaComponent></app-encuesta-cog>
-<app-category1></app-category1>
+<app-encuesta-cog #encuestaComponent *ngIf="categoria == 'cognitiva'"></app-encuesta-cog>
+<app-category1 *ngIf="categoria == 'funcional'"></app-category1>

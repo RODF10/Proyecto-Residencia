@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DiagnosticComponent } from '../../diagnostic/diagnostic.component';
 import { ApiService } from 'src/app/Service/api.service';
 import { Checkbox, Question } from 'src/app/Shared/Data';
-import { FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
+import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 
 @Component({
   selector: 'app-category1',
@@ -21,6 +21,17 @@ export class Category1Component implements OnInit {
   showErrors: boolean = false;
   categoria?: String;
   mensajeError: string = '';
+
+  // Propiedades para los valores de peso
+  peso1: FLOAT = 0.0; // Year
+  peso2: FLOAT = 0.0; // Actual
+  pesoYear: string = '';
+  pesoActual: string = '';
+  // Mensajes de error
+  pesoHaceUnAnioError: string = '';
+  pesoActualError: string = '';
+  //Validacion de Numero
+  pesoIn: boolean = false; pesoIn2: boolean = false;
 
   //Preguntas y Opciones de Barthel
   preguntasBarthel: Question[] = [
@@ -101,6 +112,16 @@ export class Category1Component implements OnInit {
     { text: '2.- Inhabilitado para levantarse de una silla 5 veces sin emplear los brazos', seleccionada: false },
     { text: '3.- Pobre energía identificado con una respuesta negativa: "¿Siente usted con energía?"', seleccionada: false },
   ];
+    // Respuestas de las preguntas Ensrud
+    answers: {[key: string]:number | null} = {
+      resistance: null,
+      aerobic: null,
+      illnesses: null,
+      fatigue: null
+    };
+
+    // Mensaje de error por campo
+    fieldErrors: { [key: string]: string } = {};
 
   constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private render: Renderer2) {
     
@@ -117,7 +138,8 @@ export class Category1Component implements OnInit {
 
   // En el componente 'Category1Component'
   finalizarEncuesta() {
-   this.encuesta('ensrud');
+    this.puntos = 0;
+    this.encuesta(this.encuestaSelect);
   }
 
   cambiarCategoria(categoria: String){
@@ -164,7 +186,56 @@ export class Category1Component implements OnInit {
       case 'lawton':
         break;
       case 'frail':
-        break;
+          console.log('Entrada de: FRAIL');
+          
+          let allAnswered = true;
+          // Validar cada pregunta
+          for (const question in this.answers) {
+            if (this.answers[question] === null) {
+              this.fieldErrors[question] = 'Por favor, seleccione una opción.';
+              allAnswered = false;
+            } else {
+              this.fieldErrors[question] = ''; // Limpia errores si hay respuesta
+            }
+          }
+
+          if(allAnswered){
+            this.mensajeError = '';
+            //Calculo del Peso
+            if(this.pesoIn && this.pesoIn2){
+              this.peso1 = parseFloat(this.pesoYear); //Year Anterior
+              this.peso2 = parseFloat(this.pesoActual);//Actual
+            } else { this.peso1 = 0.0; this.peso2 = 0.0}
+            const value = (((this.peso1 - this.peso2)/this.peso1)*100).toFixed(2); //Convertir para validar en if
+            if(parseFloat(value) >= 5){
+              // Cuando el peso cumple la condicion pasaa ser 1
+              this.puntos =+ 1;
+            }
+            //Calcular Puntaje
+            for (const question in this.answers) {
+              if (this.answers[question] == 1) {
+                this.puntos += 1; // Suma 1 por cada respuesta positiva
+              }
+            }            
+            this.showErrors = true;
+            
+
+          } else {
+            this.mensajeError = 'Por favor, responda todas las preguntas.';
+          }
+
+          if(this.puntos >= 5){
+            this.observacion = 'Probable Fragilidad';
+          } else if(this.puntos <= 0){
+            this.observacion = 'Sin fragilidad o robuztez';
+          } else {
+            this.observacion = 'Probable pre-fatiga'
+          }
+          
+          this.encuestaResultado(this.puntos, 'FRAIL', this.observacion, (this.puntos/5)*100);
+
+          console.log("Salida de Frail | ", this.puntos);
+          break;
       case 'ensrud':
         console.log('Entrada de: Ensrud');
         this.puntos = this.preguntasEnsrud.filter(p => p.seleccionada).length;
@@ -177,7 +248,7 @@ export class Category1Component implements OnInit {
           this.observacion = 'Estado Ningun criterio (Robusto)';
         }
         console.log('Salida de: Ensrud');
-        this.encuestaResultado(this.puntos, 'Criterio Ensrud', this.observacion, (this.puntos*100)/3);
+        this.encuestaResultado(this.puntos, 'Criterio Ensrud', this.observacion, (this.puntos*3)/100);
         break;
     }
   }
@@ -202,5 +273,45 @@ export class Category1Component implements OnInit {
   //Si esta seleccionado el checkbox se suma 1 punto
   toggleCheckbox(index: number, event: any): void {
     this.preguntasEnsrud[index].seleccionada = event.target.checked;
+  }
+  //Valida la entrada del usuario para que solo acepte números y un punto decimal.
+  validateInput(event: Event, field: string): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value;
+    // Mensaje de error por defecto
+    let errorMessage = '';
+
+    // Permitir solo números y un punto decimal
+    if (!/^\d*\.?\d*$/.test(value)) {
+      errorMessage = 'Solo se permiten números y un punto decimal.';
+      value = value.replace(/[^0-9.]/g, ''); // Eliminar caracteres no válidos
+    }
+
+    // Permitir solo un punto decimal
+    const parts = value.split('.');
+    if (parts.length > 2) {
+      value = parts[0] + '.' + parts[1]; // Mantener solo el primer punto decimal
+    }
+
+    // Limitar a 4 caracteres como máximo
+    if (value.length > 4) {
+      value = value.slice(0, 4);
+    }
+
+    // Actualizar el valor en el modelo y muestra mensage de error
+    if (field == 'pesoYear') {
+      this.pesoYear = value;
+      this.pesoHaceUnAnioError = errorMessage;
+      this.pesoIn = true;
+    } else if (field == 'pesoActual') {
+      this.pesoActual = value;
+      this.pesoActualError = errorMessage;
+      this.pesoIn2 = true;
+    }
+  }
+  onAnswerChange(question: string, value: number): void {
+    this.answers[question] = value;
+    this.fieldErrors[question] = ''; // Limpia errores si selecciona respuesta
+    this.mensajeError ='';
   }
 }

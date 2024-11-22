@@ -15,12 +15,12 @@ export class EncuestaComponent implements OnInit, OnDestroy{
   //Recibe Parametro ENtrante del Componente
   @ViewChild('encuestaComponent') encuestaComponent!: EncuestaCogComponent;
 
-  name?: String;
-  categoria?: String;
+  name?: String; //Nombre Categoria
+  categoria?: String; // Guardar Categoria
   public safeUrl!: SafeResourceUrl;
   private  BaseURL?: String = 'http://localhost:4200/'; //URL Fijo  
 
-  constructor(private router: Router, private encuestaService: ApiService, private route: ActivatedRoute, private sanitazer: DomSanitizer) {
+  constructor(private router: Router, private serviceApi: ApiService, private route: ActivatedRoute, private sanitazer: DomSanitizer) {
     
   }
 
@@ -29,20 +29,38 @@ export class EncuestaComponent implements OnInit, OnDestroy{
       this.categoria = this.route.snapshot.paramMap.get('categoria')!;
     
       // Recibir en nombre Clave del componente Diagnostico 
-      this.encuestaService.selectEncuest$.subscribe(encuesta => {
-        this.name = encuesta; //Recibe Name la clave de encuesta
-        console.log(`Categoria recibida en EncuestaComponent: ${this.name}`); // Debug
-        
+      this.serviceApi.categoriaSeleccionada$.subscribe(cat => {
+        this.categoria = cat; //Recibe clave de Categoria
+        this.updateTitle(cat);
+        console.log(`Categoria recibida en EncuestaComponent: ${this.categoria,' | ', cat}`); // Debug
       });
       
   }
 
   ngOnDestroy(): void {
     localStorage.removeItem('subCatSeleccionada'); // Limpia selección
+    localStorage.removeItem('categoriaSeleccionada')
   }
 
   cambiarCategoria(categoria: string) {
     this.encuestaComponent.actualizarEncuesta(categoria);
     this.name = categoria;
+  }
+
+  updateTitle(categoria: String): void{
+    switch (categoria) {
+      case 'cognitiva':
+        this.name = 'COGNITIVA';
+        break;
+      case 'afectiva':
+        this.name = 'AFECTIVA';
+        break;
+      case 'funcional':
+        this.name = 'FUNCIONAL';
+        break;
+      default:
+        this.name = 'None'; // Valor predeterminado
+        break;
+    }
   }
 }

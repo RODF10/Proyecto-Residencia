@@ -27,7 +27,7 @@ export class DiagnosticComponent {
     {URL: 'psicoafectiva'}
   ];
 
-  constructor(private router: Router, private encuestaService: ApiService){}
+  constructor(private router: Router, private serviceApi: ApiService){}
 
   selectedCategoryIndex: number | null = null;
 
@@ -43,6 +43,7 @@ export class DiagnosticComponent {
     console.log(c,s);
     switch(c){
       case 1:
+        this.seleccionarCategoria('cognitiva');
         switch(s){
           case 1:
             //this.router.navigate(['home/encuesta/{categoria}']);
@@ -72,8 +73,10 @@ export class DiagnosticComponent {
         }
         break;
       case 2:
+        this.seleccionarCategoria('afectiva');
         break;
       case 3:
+        this.seleccionarCategoria('funcional');
         switch(s){
           case 1:
             this.cambiarCategoria(this.ef.toLowerCase()+'-katz.php');
@@ -111,9 +114,13 @@ export class DiagnosticComponent {
 
   //Selecciona el Nombre de la Encuesta
   seleccionarSubCategoria(encuesta: String){
-    this.encuestaService.seleccionarEncuesta(encuesta);
+    this.serviceApi.seleccionarEncuesta(encuesta);
     this.categoriaSeleccionada.emit(encuesta);
     localStorage.setItem('subCatSeleccionada', encuesta.toString());
     console.log(`Categoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
+  }
+
+  seleccionarCategoria(categoria: string){
+    this.serviceApi.seleccionarCategoria(categoria);
   }
 }

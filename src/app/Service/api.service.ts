@@ -7,16 +7,29 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 })
 export class ApiService {
   private urlApi = 'http://127.0.0.1:8000/web';
+  //Selecciona Subcategoria
   private selectSubCat = new BehaviorSubject<String>('Undefinid');
   selectEncuest$ = this.selectSubCat.asObservable();
+  //Selecciona la Categoria
+  private categoriaSeleccionadaSource: BehaviorSubject<String> = new BehaviorSubject<String>('Undefinid');
+  categoriaSeleccionada$: Observable<String>; 
 
-  constructor(private http: HttpClient) { }
-
-  registerPacient(userData: any):Observable<any> {
-    return this.http.post(`${this.urlApi}/pacientes`, userData);
+  constructor(private http: HttpClient) {
+    // Recuperar la categoría seleccionada del Local Storage o establecer un valor predeterminado
+    const categoriaGuardada = localStorage.getItem('categoriaSeleccionada') || 'undefinid';
+    // Inicializar BehaviorSubject con el valor recuperado
+    this.categoriaSeleccionadaSource = new BehaviorSubject<String>(categoriaGuardada);
+    // Asignar el observable a una propiedad pública
+    this.categoriaSeleccionada$ = this.categoriaSeleccionadaSource.asObservable();
   }
 
   seleccionarEncuesta(encuesta: String){
     this.selectSubCat.next(encuesta);
+  }
+
+  seleccionarCategoria(categoria: string){
+    // Actualizar la categoría y persistirla en Local Storage
+    this.categoriaSeleccionadaSource.next(categoria);
+    localStorage.setItem('categoriaSeleccionada', categoria.toString());
   }
 }

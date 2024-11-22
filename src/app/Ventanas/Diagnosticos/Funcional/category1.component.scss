@@ -89,3 +89,29 @@ label{
     font-size: 1.3rem;
   }
 }
+/* ESTILOS DE FRAIL */
+.frail .opciones {
+  .table-header th {
+    background: rgb(0, 176, 255);
+    color: white;
+    font-weight: bold;
+    font-size: 1.3rem;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 13px 0;
+  }
+  
+  /* Colores de las filas */
+  .row-blue td{
+    background: rgb(202, 237, 251); /* Azul claro */
+  }
+  
+  .row-gray td{
+    background: rgb(242, 243, 244); /* Gris claro */
+  }
+  
+  /* Ajustes adicionales */
+  .table td {
+    vertical-align: middle; /* Centrar verticalmente las celdas */
+  }
+}

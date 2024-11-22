@@ -1,9 +1,12 @@
-<div class="katz containerEncuesta">
+<!-- Encuesta de KATZ -->
+<div class="katz containerEncuesta" *ngIf="encuestaSelect == 'katz'">
   <div class="titulo">
     <h2>Indice de KATZ</h2>
   </div>
 </div>
-<div class="barthel containerEncuesta" *ngIf="categoria == 'bartehl'">
+
+<!-- Encuesta de Barthel -->
+<div class="barthel containerEncuesta" *ngIf="encuestaSelect == 'barthel'">
   <div class="titulo">
     <h2>Indice de Barthel</h2>
   </div>
@@ -23,12 +26,16 @@
     </div>
   </div>
 </div>
-<div class="lawton containerEncuesta">
+
+<!-- Encuesta de Lawton y Brody -->
+<div class="lawton containerEncuesta" *ngIf="encuestaSelect == 'lawton'">
   <div class="titulo">  
     <h2>Lawton y brody</h2>
   </div>
 </div>
-<div class="ensrud containerEncuesta" *ngIf="categoria == 'ensrud'">
+
+<!-- Encuesta de Ensrud -->
+<div class="ensrud containerEncuesta" *ngIf="encuestaSelect == 'ensrud'">
   <div class="title">
     <h2>Criterios de Ensrud</h2>
   </div>
@@ -42,6 +49,140 @@
   </div>
   </div>
 </div>
+
+<!-- Encuesta FRAIL -->
+ <div class="frail containerEncuesta" *ngIf="encuestaSelect == 'frail'">
+  <div class="titulo">
+    <h2>FRAIL</h2>
+  </div>
+  <div class="opciones">
+    <div class="container mt-4">    
+      <!-- Tabla con colores personalizados -->
+      <form>
+        <table class="table table-bordered">
+          <thead class="table-light">
+            <tr class="table-header">
+              <th class="text-center">Observación</th>
+              <th class="text-center">Puntuación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- FATIGA -->
+            <tr class="row-blue">
+              <td>
+                <strong>[Fatigue (fatiga)]</strong><br />
+                En las últimas 4 semanas, ¿Qué tanto tiempo se sintió?
+              </td>
+              <td>
+                <div class="form-check">
+                  <input type="radio" id="todoTiempo" name="fatigue" value="Todo el tiempo" class="form-check-input" (change)="onAnswerChange('fatigue', 1)"/>
+                  <label for="todoTiempo" class="form-check-label">Todo el tiempo</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="mayorParte" name="fatigue" value="La mayor parte del tiempo" class="form-check-input" (change)="onAnswerChange('fatigue', 1)"/>
+                  <label for="mayorParte" class="form-check-label">La mayor parte del tiempo</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="algoTiempo" name="fatigue" value="Algo de tiempo" class="form-check-input" (change)="onAnswerChange('fatigue', 0)" />
+                  <label for="algoTiempo" class="form-check-label">Algo de tiempo</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="muyPoco" name="fatigue" value="Muy poco tiempo" class="form-check-input" (change)="onAnswerChange('fatigue', 0)" />
+                  <label for="muyPoco" class="form-check-label">Muy poco tiempo</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="nadaTiempo" name="fatigue" value="Nada de tiempo" class="form-check-input" (change)="onAnswerChange('fatigue', 0)" />
+                  <label for="nadaTiempo" class="form-check-label">Nada de tiempo</label>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- RESISTENCIA -->
+            <tr class="row-gray">
+              <td>
+                <strong>[Resistance (resistencia)]</strong><br />
+                ¿Tiene dificultad para subir 10 escalones (una escalera)?
+              </td>
+              <td>
+                <div class="form-check">
+                  <input type="radio" id="resistanceSi" name="resistance" value="1" class="form-check-input" (change)="onAnswerChange('resistance', 1)"/>
+                  <label for="resistanceSi" class="form-check-label">Sí</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="resistanceNo" name="resistance" value="0" class="form-check-input" (change)="onAnswerChange('resistance', 0)"/>
+                  <label for="resistanceNo" class="form-check-label">No</label>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- ACTIVIDAD -->
+            <tr class="row-blue">
+              <td>
+                <strong>[Aerobic (actividad aeróbica)]</strong><br />
+                ¿Tiene dificultad para caminar 100 metros (dos cuadras) sin descansar?
+              </td>
+              <td>
+                <div class="form-check">
+                  <input type="radio" id="aerobicSi" name="aerobic" value="1" class="form-check-input" (change)="onAnswerChange('aerobic', 1)"/>
+                  <label for="aerobicSi" class="form-check-label">Sí</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="aerobicNo" name="aerobic" value="0" class="form-check-input" (change)="onAnswerChange('aerobic', 0)"/>
+                  <label for="aerobicNo" class="form-check-label">No</label>
+                </div>  
+              </td>
+            </tr>
+    
+            <!-- ENFERMEDADES -->
+            <tr class="row-gray">
+              <td>
+                <strong>[Illnesses (enfermedades)]</strong><br />
+                ¿Algún doctor o médico le ha comentado que tiene [mencionar la enfermedad]?
+              </td>
+              <td>
+                <div class="form-check">
+                  <input type="radio" id="illnessesSi" name="illnesses" value="1" class="form-check-input" (change)="onAnswerChange('illnesses', 1)"/>
+                  <label for="illnessesSi" class="form-check-label">Sí</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" id="illnessesNo" name="illnesses" value="0" class="form-check-input" (change)="onAnswerChange('illnesses', 0)"/>
+                  <label for="illnessesNo" class="form-check-label">No</label>
+                </div>
+              </td>
+            </tr>
+    
+            <!-- PESO -->
+            <tr class="row-blue">
+              <td>
+                <strong>[Lost of weight (pérdida de peso)]</strong><br/>
+                El paciente no debe portar los zapatos al momento de ser pesado
+              </td>
+              <td>
+                <label for="pesoHaceUnAnio" class="form-label">&#191;Cuánto pesaba hace un a&#241;o&#63;</label>
+                <input type="text" id="pesoHaceUnAnio" class="form-control mb-2" placeholder="Peso hace un año" maxlength="4" (input)="validateInput($event, 'pesoYear')"/>
+                 <!-- Mensaje de error -->
+                <div *ngIf="pesoHaceUnAnioError" class="text-danger mt-1">
+                  {{ pesoHaceUnAnioError }}
+                </div>
+                <label for="pesoActual" class="form-label">&#191;Cuánto pesa ahora&#63;</label>
+                <input type="text" id="pesoActual" class="form-control" placeholder="Peso actual" maxlength="4" (input)="validateInput($event, 'pesoActual')"/>
+                <!-- Mensaje de error -->
+                <div *ngIf="pesoActualError" class="text-danger mt-1">
+                  {{ pesoActualError }}
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="mensajeError" class="alert alert-danger mt-3">
+          {{ mensajeError }}
+        </div>
+      </form>
+    </div>
+    
+        
+  </div>
+ </div>
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
 </div>
