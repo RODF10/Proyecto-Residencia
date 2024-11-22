@@ -20,6 +20,7 @@ export class DiagnosticComponent {
     { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj' },
     { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario ANsiedad Beck', cont6: 'Escala Soledad 3 Elementos' },
     { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go' },
+    { title: this.en.toUpperCase(), cat: 4, content: this.sub + ' ' + this.en, cont1:'Mini Nutritional Assessment SF', cont2:'Mini Nutritional Assessment', cont3:'MUST', cont4:'Criterios Glim', cont5:'Sarc-F',cont6:'EAT-10'},
   ];
   //Ignorar
   urlCat = [
