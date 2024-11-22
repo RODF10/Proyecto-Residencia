@@ -16,7 +16,8 @@ export class EncuestaComponent implements OnInit, OnDestroy{
   @ViewChild('encuestaComponent') encuestaComponent!: EncuestaCogComponent;
 
   name?: String; //Nombre Categoria
-  categoria?: String; // Guardar Categoria
+  categoria?: String; // Categoria
+  subCat?: String; // Subcategoria
   public safeUrl!: SafeResourceUrl;
   private  BaseURL?: String = 'http://localhost:4200/'; //URL Fijo  
 
@@ -34,12 +35,17 @@ export class EncuestaComponent implements OnInit, OnDestroy{
         this.updateTitle(cat);
         console.log(`Categoria recibida en EncuestaComponent: ${this.categoria,' | ', cat}`); // Debug
       });
+
+      this.serviceApi.selectEncuest$.subscribe(subC => {
+        this.subCat = subC;
+        console.log('SubCat: ',subC);
+      });
       
   }
 
   ngOnDestroy(): void {
-    localStorage.removeItem('subCatSeleccionada'); // Limpia selección
-    localStorage.removeItem('categoriaSeleccionada')
+    localStorage.removeItem('subCatSeleccionada'); // Limpia selección SubCategoria
+    localStorage.removeItem('categoriaSeleccionada')// Limpiar seleccion Categoria
   }
 
   cambiarCategoria(categoria: string) {

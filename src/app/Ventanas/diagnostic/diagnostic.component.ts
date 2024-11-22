@@ -18,7 +18,7 @@ export class DiagnosticComponent {
   //Lista de la Categoria a Mostrar
   categoria = [
     { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj' },
-    { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario ANsiedad Beck', cont6: 'Escala Soledad 3 Elementos' },
+    { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario Ansiedad Beck', cont6: 'Escala Soledad 3 Elementos' },
     { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go' },
   ];
   //Ignorar
@@ -74,6 +74,33 @@ export class DiagnosticComponent {
         break;
       case 2:
         this.seleccionarCategoria('afectiva');
+        // this.seleccionarSubCategoria('Undefinied');
+        switch(s){
+          case 1:
+            this.cambiarCategoria(this.ea.toLowerCase()+'gds-15.php');
+            this.seleccionarSubCategoria('gds15');
+            break;
+          case 2:
+            this.cambiarCategoria(this.ea.toLowerCase()+'ces-d7-depresion-epidemioloicos.php');
+            this.seleccionarSubCategoria('cesd7');
+            break;
+          case 3:
+            this.cambiarCategoria(this.ea.toLowerCase()+'phq9.php');
+            this.seleccionarSubCategoria('phq9');
+            break;
+          case 4:
+            this.cambiarCategoria(this.ea.toLowerCase()+'gai-sf.php');
+            this.seleccionarSubCategoria('gaisf');
+            break;
+          case 5:
+            this.cambiarCategoria(this.ea.toLowerCase()+'ansiedad-becky.php');
+            this.seleccionarSubCategoria('ansbeck');
+            break;
+          case 6:
+            this.cambiarCategoria(this.ea.toLowerCase()+'soledad-3-elementos.php');
+            this.seleccionarSubCategoria('soledad3');
+            break;
+        }
         break;
       case 3:
         this.seleccionarCategoria('funcional');

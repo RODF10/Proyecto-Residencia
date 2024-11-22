@@ -8,3 +8,11 @@
 <!-- <app-diagnostic (categoriaSeleccionada)="cambiarCategoria($event.toString())"></app-diagnostic> -->
 <app-encuesta-cog #encuestaComponent *ngIf="categoria == 'cognitiva'"></app-encuesta-cog>
 <app-category1 *ngIf="categoria == 'funcional'"></app-category1>
+<!-- ENCUESTAS DE LA CATEGORIA AFECTIVA -->
+<app-encuesta-afc *ngIf="subCat == 'gds15'"></app-encuesta-afc>
+<app-encuesta-beck-anxiety *ngIf="subCat == 'ansbeck'"></app-encuesta-beck-anxiety>
+<app-encuesta-sad-persons *ngIf="subCat == 'sadperson'"></app-encuesta-sad-persons>
+<app-encuesta-ces-d7 *ngIf="subCat == 'cesd7'"></app-encuesta-ces-d7>
+<app-encuesta-phq9 *ngIf="subCat == 'phq9'"></app-encuesta-phq9>
+<app-encuesta-escala-soledad *ngIf="subCat == 'soledad3'"></app-encuesta-escala-soledad>
+<app-encuesta-gai-sf *ngIf="subCat == 'gaisf'"></app-encuesta-gai-sf>
