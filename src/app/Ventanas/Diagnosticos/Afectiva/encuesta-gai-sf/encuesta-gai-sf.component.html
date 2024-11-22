@@ -1,0 +1,45 @@
+<div class="container">
+    <h2>Inventario de Ansiedad Geriátrica Versión Corta (GAI-SF)</h2>
+    <p>Conteste los enunciados de acuerdo con cómo se sintió la semana pasada.</p>
+    <form #gaiForm="ngForm" (ngSubmit)="calcularPuntaje()">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Enunciados</th>
+            <th>Coincide</th>
+            <th>No coincide</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pregunta of preguntas; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pregunta.texto }}</td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-coincide'"
+                name="pregunta-{{ i }}"
+                value="1"
+                [(ngModel)]="pregunta.respuesta"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-no-coincide'"
+                name="pregunta-{{ i }}"
+                value="0"
+                [(ngModel)]="pregunta.respuesta"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary" [disabled]="!gaiForm.valid">
+        Finalizar Encuesta
+      </button>
+    </form>
+  </div>
+  

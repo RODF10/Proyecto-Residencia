@@ -1,0 +1,95 @@
+/* Contenedor principal */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Encabezado */
+  h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+  }
+  
+  /* Tabla */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+  
+  thead th {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  tr:hover {
+    background-color: #f1f1f1;
+  }
+  
+  /* Botón */
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  button[type="submit"]:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* Estilos Responsivos */
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.5rem;
+    }
+  
+    th, td {
+      font-size: 0.9rem;
+    }
+  
+    button[type="submit"] {
+      font-size: 0.9rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    h2 {
+      font-size: 1.3rem;
+    }
+  
+    th, td {
+      font-size: 0.85rem;
+    }
+  
+    button[type="submit"] {
+      font-size: 0.85rem;
+      padding: 8px;
+    }
+  }

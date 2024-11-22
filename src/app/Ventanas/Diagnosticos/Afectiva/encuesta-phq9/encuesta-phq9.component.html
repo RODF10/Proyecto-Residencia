@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>PHQ-9</h2>
+    <form #phqForm="ngForm" (ngSubmit)="calcularPuntaje()">
+      <div *ngFor="let pregunta of preguntas; let i = index" class="mb-3">
+        <label>{{ i + 1 }}. {{ pregunta.texto }}</label>
+        <div class="form-check" *ngFor="let opcion of opciones">
+          <input
+            type="radio"
+            [id]="'pregunta-' + i + '-opcion-' + opcion.valor"
+            class="form-check-input"
+            name="pregunta-{{ i }}"
+            [value]="opcion.valor"
+            [(ngModel)]="pregunta.respuesta"
+            required
+          />
+          <label
+            class="form-check-label"
+            [for]="'pregunta-' + i + '-opcion-' + opcion.valor"
+          >
+            {{ opcion.texto }}
+          </label>
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="!phqForm.valid">
+        Finalizar Encuesta
+      </button>
+    </form>
+  </div>
+  

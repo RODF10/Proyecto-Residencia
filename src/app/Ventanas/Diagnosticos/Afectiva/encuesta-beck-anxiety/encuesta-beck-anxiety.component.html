@@ -1,0 +1,73 @@
+<div class="container">
+  <h2>Inventario de Ansiedad de Beck</h2>
+  <p>
+    Lea cada enunciado e indique cuál ha sido el nivel de afectación en la última semana, incluyendo el día de hoy.
+  </p>
+  <form #beckForm="ngForm" (ngSubmit)="finalizarEncuesta()">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Enunciado</th>
+          <th>En absoluto (0)</th>
+          <th>Levemente (1)</th>
+          <th>Moderadamente (2)</th>
+          <th>Severamente (3)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pregunta of preguntas; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pregunta.texto }}</td>
+          <td>
+            <input
+              type="radio"
+              [id]="'pregunta-' + i + '-0'"
+              name="pregunta-{{ i }}"
+              value="0"
+              [(ngModel)]="pregunta.respuesta"
+              required
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              [id]="'pregunta-' + i + '-1'"
+              name="pregunta-{{ i }}"
+              value="1"
+              [(ngModel)]="pregunta.respuesta"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              [id]="'pregunta-' + i + '-2'"
+              name="pregunta-{{ i }}"
+              value="2"
+              [(ngModel)]="pregunta.respuesta"
+            />
+          </td>
+          <td>
+            <input
+              type="radio"
+              [id]="'pregunta-' + i + '-3'"
+              name="pregunta-{{ i }}"
+              value="3"
+              [(ngModel)]="pregunta.respuesta"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Botón para finalizar encuesta -->
+    <button
+      type="button"
+      class="btn btn-success"
+      (click)="finalizarEncuesta()"
+      [disabled]="!beckForm.valid"
+    >
+      Finalizar Encuesta
+    </button>
+  </form>
+</div>
+

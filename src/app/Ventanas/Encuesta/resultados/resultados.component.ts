@@ -35,6 +35,9 @@ export class ResultadosComponent implements OnInit{
       case 2:
         this.router.navigate(['home/diagnostic']);
         break;
+      case 3:
+        this.router.navigate(['home/encuesta-afc']);
+        break;
     }
   }
 }

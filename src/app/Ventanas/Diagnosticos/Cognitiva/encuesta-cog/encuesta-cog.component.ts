@@ -92,6 +92,7 @@ export class EncuestaCogComponent implements OnInit{
 
   //Metodo del boton Finalizar
   finalizarEncuesta(){
+    this.puntos = 0;
     this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
    
   }

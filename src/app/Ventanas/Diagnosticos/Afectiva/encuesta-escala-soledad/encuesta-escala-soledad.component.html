@@ -1,0 +1,57 @@
+<div class="container">
+    <h2>Escala de Soledad de 3 Elementos</h2>
+    <p>
+      indicaciones: se le dira a la persona lo siguiente "estas preguntas son sobre como se siente sobre los diferentes aspectos de su vida. para cada pregunta responda con que frecuencia se siente asi".
+    </p>
+    <form #soledadForm="ngForm" (ngSubmit)="calcularPuntaje()">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Pregunta</th>
+            <th>Casi nunca (1)</th>
+            <th>A veces (2)</th>
+            <th>A Menudo (3)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pregunta of preguntas; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pregunta.texto }}</td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-1'"
+                name="pregunta-{{ i }}"
+                value="1"
+                [(ngModel)]="pregunta.respuesta"
+                required
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-2'"
+                name="pregunta-{{ i }}"
+                value="2"
+                [(ngModel)]="pregunta.respuesta"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [id]="'pregunta-' + i + '-3'"
+                name="pregunta-{{ i }}"
+                value="3"
+                [(ngModel)]="pregunta.respuesta"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="submit" class="btn btn-primary" [disabled]="!soledadForm.valid">
+        Finalizar Encuesta
+      </button>
+    </form>
+  </div>
+  

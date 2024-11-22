@@ -1,0 +1,162 @@
+// Variables para la paleta de colores
+$primary-color: #007bff;
+$success-color: #28a745;
+$danger-color: #dc3545;
+$neutral-color: #6c757d;
+$background-color: #f8f9fa;
+$border-color: #dee2e6;
+
+// Estilo general para el contenedor
+.container {
+  margin-top: 40px;
+  background-color: $background-color;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// Título de la encuesta
+h2 {
+  font-size: 1.75rem;
+  color: $primary-color;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+// Instrucciones debajo del título
+p {
+  font-size: 1rem;
+  color: $neutral-color;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+// Tabla de preguntas
+.table {
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 20px;
+
+  th {
+    background-color: #f1f3f5;
+    font-weight: bold;
+    color: #343a40;
+  }
+
+  td {
+    vertical-align: middle;
+  }
+
+  td input[type="radio"] {
+    margin-right: 10px;
+  }
+
+  // Estilo para la tabla cuando es de formulario
+  tbody tr {
+    background-color: white;
+    border-bottom: 1px solid $border-color;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #f1f3f5;
+    }
+  }
+}
+
+// Botones
+button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 5px;
+  border: none;
+  transition: background-color 0.3s ease;
+
+  &.btn-success {
+    background-color: $success-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($success-color, 10%);
+    }
+  }
+
+  &.btn-danger {
+    background-color: $danger-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($danger-color, 10%);
+    }
+  }
+
+  &.btn-primary {
+    background-color: $primary-color;
+    color: white;
+
+    &:hover {
+      background-color: darken($primary-color, 10%);
+    }
+  }
+}
+
+// Resultados
+.text-center {
+  margin-top: 30px;
+}
+
+h3 {
+  font-size: 1.25rem;
+  color: $primary-color;
+  font-weight: 500;
+}
+
+.fw-bold {
+  font-weight: bold;
+}
+
+p {
+  font-size: 1rem;
+  color: $neutral-color;
+  margin-bottom: 20px;
+}
+
+// Mensajes de error o advertencia
+.alert {
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: white;
+  background-color: $danger-color;
+}
+
+// Estilo de los radio buttons cuando son seleccionados
+input[type="radio"]:checked {
+  background-color: #28a745;
+}
+
+// Estilos responsivos para pantallas más pequeñas
+@media (max-width: 767px) {
+  .container {
+    padding: 15px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .table th, .table td {
+    font-size: 0.875rem;
+  }
+
+  button {
+    font-size: 0.875rem;
+    padding: 8px 15px;
+  }
+}

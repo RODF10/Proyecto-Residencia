@@ -23,6 +23,10 @@ export class ApiService {
     this.categoriaSeleccionada$ = this.categoriaSeleccionadaSource.asObservable();
   }
 
+  /* Método para eliminar un paciente
+  deletePatient(id: number): Observable<any> {
+    return this.http.delete(`${this.}/patients/${id}`);
+  }*/
   seleccionarEncuesta(encuesta: String){
     this.selectSubCat.next(encuesta);
   }
