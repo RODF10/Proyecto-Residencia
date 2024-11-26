@@ -6,7 +6,9 @@
   <iframe [src]="safeUrl" frameborder="0" class="ventana"></iframe>
 </div>-->
 <!-- <app-diagnostic (categoriaSeleccionada)="cambiarCategoria($event.toString())"></app-diagnostic> -->
+ <!-- ENCUESTA COGNITIVA -->
 <app-encuesta-cog #encuestaComponent *ngIf="categoria == 'cognitiva'"></app-encuesta-cog>
+<!-- ENCUESTA FUNCIONAL -->
 <app-category1 *ngIf="categoria == 'funcional'"></app-category1>
 <!-- ENCUESTAS DE LA CATEGORIA AFECTIVA -->
 <app-encuesta-afc *ngIf="subCat == 'gds15'"></app-encuesta-afc>
@@ -16,3 +18,5 @@
 <app-encuesta-phq9 *ngIf="subCat == 'phq9'"></app-encuesta-phq9>
 <app-encuesta-escala-soledad *ngIf="subCat == 'soledad3'"></app-encuesta-escala-soledad>
 <app-encuesta-gai-sf *ngIf="subCat == 'gaisf'"></app-encuesta-gai-sf>
+<app-encuesta-cornell *ngIf="subCat == 'cornell'"></app-encuesta-cornell>
+<app-encuesta-okeeffe *ngIf="subCat == 'cortdepresion'"></app-encuesta-okeeffe>
