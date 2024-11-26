@@ -21,6 +21,7 @@ export class Category1Component implements OnInit {
   showErrors: boolean = false;
   categoria?: String;
   mensajeError: string = '';
+  ent: String [] = ['Entrada de ', 'Salida de ']
 
   // Propiedades para los valores de peso
   peso1: FLOAT = 0.0; // Year
@@ -130,7 +131,7 @@ export class Category1Component implements OnInit {
   corriendo: boolean = false;
     
   //Encuesta KATZ
-    preguntasKATZ: Question[] = [
+  preguntasKATZ: Question[] = [
       { text: 'BAÑO (Esponja, regadera o tina)',
         options: [
           { label: 'No recibe asistencia (puede entrar y salir de la tina u otra forma de baño).', score: 1 },
@@ -173,9 +174,86 @@ export class Category1Component implements OnInit {
           { label: 'Que reciba asistencia en la alimentación o que se alimente parcial o totalmente por vía enteral o parenteral.', score: 0 }
         ]
       },
-    ]
+  ];
   selectedOptions: number[] = Array(this.preguntasKATZ.length).fill(-1);
   errors: boolean[] = Array(this.preguntasKATZ.length).fill(false); // Array para rastrear errores por pregunta
+
+  //Encuesta Brody
+  preguntasLowton: Question[] = [
+    {
+      text: 'CAPACIDAD PARA USAR TELÉFONO',
+      options: [
+        { label: 'Lo opera por iniciativa propia, lo marca sin problemas.', score: 1 },
+        { label: 'Marca sólo unos cuantos números bien conocidos.', score: 1 },
+        { label: 'Contesta el teléfono pero no llama.', score: 1 },
+        { label: 'No usa el teléfono.', score: 0 }
+      ]
+    },
+    {
+      text: 'COMPRAS',
+      options: [
+        { label: 'Vigila sus necesidades independientemente.', score: 1 },
+        { label: 'Hace independientemente sólo pequeñas compras.', score: 0 },
+        { label: 'Necesita compañía para cualquier compra.', score: 0 },
+        { label: 'Incapaz de cualquier compra.', score: 0 }
+      ]
+    },
+    {
+      text: 'COCINA',
+      options: [
+        { label: 'Planea, prepara y sirve los alimentos correctamente.', score: 1 },
+        { label: 'Prepara los alimentos sólo si se le provee lo necesario.', score: 0 },
+        { label: 'Calienta, sirve y prepara pero no lleva una dieta adecuada.', score: 0 },
+        { label: 'Necesita que le preparen los alimentos.', score: 0 }
+      ]
+    },
+    {
+      text: 'CUIDADO DEL HOGAR',
+      options: [
+        { label: 'Mantiene la casa solo o con ayuda mínima.', score: 1 },
+        { label: 'Efectúa diariamente trabajo ligero eficientemente.', score: 1 },
+        { label: 'Efectúa diariamente trabajo ligero sin eficiencia.', score: 1 },
+        { label: 'Necesita ayuda en todas las actividades.', score: 0 },
+        { label: 'No participa.', score: 0 }
+      ]
+    },
+    {
+      text: 'LAVANDERÍA',
+      options: [
+        { label: 'Se ocupa de su ropa independientemente.', score: 1 },
+        { label: 'Lava sólo pequeñas cosas.', score: 1 },
+        { label: 'Todos se lo tienen que lavar.', score: 0 }
+      ]
+    },
+    {
+      text: 'TRANSPORTE',
+      options: [
+        { label: 'Se transporta solo/a.', score: 1 },
+        { label: 'Se transporta solo/a, únicamente en taxi pero no puede usar otros recursos.', score: 1 },
+        { label: 'Viaja en transporte colectivo acompañado.', score: 1 },
+        { label: 'Viaja en taxi o auto acompañado.', score: 0 },
+        { label: 'No sale.', score: 0 }
+      ]
+    },
+    {
+      text: 'MEDICACIÓN',
+      options: [
+        { label: 'Es capaz de tomarla a su hora y dosis correctas.', score: 1 },
+        { label: 'Se hace responsable sólo si le preparan por adelantado.', score: 0 },
+        { label: 'Es incapaz de hacerse cargo.', score: 0 }
+      ]
+    },
+    {
+      text: 'FINANZAS',
+      options: [
+        { label: 'Maneja sus asuntos independientemente.', score: 1 },
+        { label: 'Sólo puede manejar lo necesario para pequeñas compras.', score: 1 },
+        { label: 'Es incapaz de manejar dinero.', score: 0 }
+      ]
+    }
+  ];
+  optionL: number[] = Array(this.preguntasLowton.length).fill(-1);
+  errorsLowton: boolean[] = Array(this.preguntasLowton.length).fill(false);
 
   /* ------------------------------- CONSTRUC DE LA CLASE --------------------------- */
   constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private render: Renderer2) {
@@ -203,9 +281,8 @@ export class Category1Component implements OnInit {
   encuesta(enc: String){
     switch(enc){
       case 'katz':
-        console.log('Entrada de: ', this.encuestaSelect);
+        console.log(this.ent[0], this.encuestaSelect);
         //VERIFICAR SI LAS OPCIONES ESTEN SELECCIONADAS
-        // Verifica si cada pregunta tiene una respuesta seleccionada
         this.errors = this.selectedOptions.map(score => score == -1);
 
         let katzT = 0;
@@ -217,11 +294,11 @@ export class Category1Component implements OnInit {
           this.puntos = katzT;//Pasa los puntos obtenido al puntos
           this.showErrors = true;
           this.encuestaResultado(this.puntos, 'Indice de KATZ', 'Letra Asignada: ' + letter,(this.puntos/6)*100)
-          console.log('Salida de: KATZ', this.puntos,': ',letter);
+          console.log(this.ent[1] + 'KATZ');
         }
         break;
       case 'barthel':
-        console.log('Entrada de: ', this.encuestaSelect);
+        console.log(this.ent[0], this.encuestaSelect);
         // Verifica si todas las preguntas tienen respuesta seleccionada
         for (let i = 0; i < this.respuestas.length; i++) {
           if (this.respuestas[i] == -1) {
@@ -230,7 +307,7 @@ export class Category1Component implements OnInit {
             return;
           } else {
             this.showErrors = true
-            this.mensajeError = '1';} //En caso de que se respondas todos, desbloquea el metodo encuestaResultado
+            this.mensajeError = '';} //En caso de que se respondas todos, desbloquea el metodo encuestaResultado
         }
         // Calcula el puntaje total sumando los valores seleccionados
         let total = 0;
@@ -252,9 +329,34 @@ export class Category1Component implements OnInit {
         }
 
         this.encuestaResultado(this.puntos, 'Indice de Barthel', this.observacion, (this.puntos/100)*100);
-        console.log('Salida de: Barthel', this.puntos);
+        console.log(this.ent[1] + 'Barthel');
         break;
       case 'lawton':
+        console.log(this.ent[0], this.encuestaSelect);
+        this.errorsLowton = this.optionL.map(score => score == -1);
+
+        let lowtonT = 0;
+        for (let i = 0; i < this.optionL.length; i++) {
+          lowtonT += this.optionL[i];
+        }
+        this.puntos = lowtonT;
+
+        if(this.puntos == 8){
+          this.observacion = 'Muy activos: actividades instrumentales completas';
+        } else if(this.puntos >= 5 && this.puntos <= 7){
+          this.observacion = 'Activos: actividades limitadas';
+        } else if(this.puntos <= 0){
+          this.observacion = 'Inactivos: no realizan actividades instrumentales'
+        } else {
+          this.observacion = 'Poco activos: limitación del 50 % o más de esas actividades';
+        }
+
+        if(!this.errorsLowton.includes(true)){
+          this.showErrors = true;
+          this.encuestaResultado(this.puntos,'Escala Lowton y Brody', this.observacion, (this.puntos/8)*100);
+        }
+      
+        console.log(this.ent[1] + 'Brody y Lowton');
         break;
       case 'frail':
           console.log('Entrada de: FRAIL');

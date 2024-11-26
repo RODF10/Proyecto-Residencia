@@ -54,3 +54,74 @@
       </tbody>
     </table>
 </div>
+
+<div class="tableHistory">
+  <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
+    <tr style="background-color: #0095ff; color: white;">
+      <th colspan="7">COGNITIVA</th>
+    </tr>
+    <tr style="background-color: #ff8cff; color: black;">
+      <th>Encuestas</th>
+      <th>Matrícula</th>
+      <th>Nombre</th>
+      <th>Fecha</th>
+      <th>Puntos</th>
+      <th>Observación</th>
+      <th>Porcentaje</th>
+    </tr>
+    <tr *ngFor="let survey of surveys.cognitive">
+      <td>{{ survey.survey }}</td>
+      <td>{{ survey.matricula }}</td>
+      <td>{{ survey.nombre }}</td>
+      <td>{{ survey.fecha }}</td>
+      <td>{{ survey.puntos }}</td>
+      <td>{{ survey.observacion }}</td>
+      <td>{{ survey.porcentaje }}</td>
+    </tr>
+  
+    <tr style="background-color: #0095ff; color: white;">
+      <th colspan="7">FUNCIONAL</th>
+    </tr>
+    <!--<tr style="background-color: #ff8cff; color: black;">
+      <th>Encuestas</th>
+      <th>Matrícula</th>
+      <th>Nombre</th>
+      <th>Fecha</th>
+      <th>Puntos</th>
+      <th>Observación</th>
+      <th>Porcentaje</th>
+    </tr>-->
+    <tr *ngFor="let survey of surveys.functional">
+      <td>{{ survey.survey }}</td>
+      <td>{{ survey.matricula }}</td>
+      <td>{{ survey.nombre }}</td>
+      <td>{{ survey.fecha }}</td>
+      <td>{{ survey.puntos }}</td>
+      <td>{{ survey.observacion }}</td>
+      <td>{{ survey.porcentaje }}</td>
+    </tr>
+  
+    <tr style="background-color: #0095ff; color: white;">
+      <th colspan="7">NUTRICIONAL</th>
+    </tr>
+    <!--<tr style="background-color: #ff8cff; color: black;">
+      <th>Encuestas</th>
+      <th>Matrícula</th>
+      <th>Nombre</th>
+      <th>Fecha</th>
+      <th>Puntos</th>
+      <th>Observación</th>
+      <th>Porcentaje</th>
+    </tr>-->
+    <tr *ngFor="let survey of surveys.nutritional">
+      <td>{{ survey.survey }}</td>
+      <td>{{ survey.matricula }}</td>
+      <td>{{ survey.nombre }}</td>
+      <td>{{ survey.fecha }}</td>
+      <td>{{ survey.puntos }}</td>
+      <td>{{ survey.observacion }}</td>
+      <td>{{ survey.porcentaje }}</td>
+    </tr>
+  </table>
+  
+</div>

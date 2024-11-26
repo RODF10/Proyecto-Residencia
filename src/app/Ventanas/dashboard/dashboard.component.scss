@@ -27,3 +27,21 @@
   max-width: 1500px;
   margin: 15px auto;
 }
+
+.tableHistory{
+  table {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  th {
+    background-color: #0095ff;
+    color: white;
+  }
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+}

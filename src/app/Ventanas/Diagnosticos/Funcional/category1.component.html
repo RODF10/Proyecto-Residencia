@@ -49,6 +49,24 @@
   <div class="titulo">  
     <h2>Lawton y brody</h2>
   </div>
+  <div class="opciones">
+    <div class="container mt-4">
+      <div *ngFor="let question of preguntasLowton; let i = index" class="question mb-3">
+        <h5>{{ question.text }}</h5>
+        <div *ngFor="let option of question.options" class="form-check">
+          <label>
+            <input type="radio" name="question{{i}}" [value]="option.score" (change)="optionL[i] = option.score; errorsLowton[i] = false"/>
+            {{ option.label }}
+          </label>
+        </div>
+
+        <div *ngIf="errorsLowton[i]" class="alert alert-danger mt-2">
+          Por favor, selecciona una opción para esta pregunta.
+        </div>
+      </div>
+    
+  </div>
+  </div>
 </div>
 
 <!-- Encuesta de Ensrud -->

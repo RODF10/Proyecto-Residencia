@@ -36,6 +36,33 @@ export class DashboardComponent {
     // Agrega más registros si es necesario
   ];
 
+  surveys = {
+    cognitive: [
+      { survey: '4AT', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'CAM-ICU', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'AWOL', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Question Pfeiffer', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Prueba Reloj', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' }
+    ],
+    functional: [
+      { survey: 'GDS-15', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'CES - D7', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'PHQ9', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'GAI -SF', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Ansiedad de Beck', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Soledad 3 Elemnto', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Sad Person', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' }
+    ],
+    nutritional: [
+      { survey: 'KATZ', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Barthel', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Lawton y Brody', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'FRAIL', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Criterio Ensrud', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' },
+      { survey: 'Time Up and Go', matricula: '', nombre: '', fecha: '', puntos: '', observacion: '', porcentaje: '' }
+    ]
+  };
+
   constructor(){
     
   }
