@@ -3,10 +3,27 @@
   <div class="titulo">
     <h2>Indice de KATZ</h2>
   </div>
+  <div class="opciones">
+    <div *ngFor="let question of preguntasKATZ; let i = index" class="question">
+      <p class="preguntas">{{ question.text }}</p>
+      <div *ngFor="let option of question.options">
+        <label>
+          <input type="radio" name="question{{i}}" [value]="option.score" (change)="selectedOptions[i] = option.score; errors[i] = false"/>
+          {{ option.label }}
+        </label>
+      </div>
+      
+      <!-- Mensaje de error específico para la pregunta -->
+    <div *ngIf="errors[i]" class="alert alert-danger mt-2">
+      Por favor, selecciona una opción para esta pregunta.
+    </div>
+    </div>
+    
+  </div>
 </div>
 
 <!-- Encuesta de Barthel -->
-<div class="barthel containerEncuesta" *ngIf="encuestaSelect == 'barthel'">
+<div class="barthel containerEncuesta"*ngIf="encuestaSelect == 'barthel'">
   <div class="titulo">
     <h2>Indice de Barthel</h2>
   </div>
@@ -21,7 +38,7 @@
         </label>
       </div>
     </div>
-    <div *ngIf="mensajeError != ''" class="alert alert-danger mt-3">
+    <div *ngIf="mensajeError != ''" class="alert alert-danger">
       {{ mensajeError }}
     </div>
   </div>
@@ -183,6 +200,26 @@
         
   </div>
  </div>
+
+ <!-- Time Up and Go -->
+ <div class="cronometro" *ngIf="encuestaSelect == 'timeup'">
+  <h1>{{ tiempo | date:'mm:ss.SSS':'UTC' }}</h1>
+  <button (click)="iniciarPausar()">
+    {{ corriendo ? 'Pause' : 'Start' }}
+  </button>
+  <button (click)="reiniciar()">Reset</button>
+  <button (click)="capturarTiempo()" [disabled]="!corriendo">Time Capture</button>
+  <button (click)="deleteScore()">Default</button>
+  
+  <div *ngIf="capturas.length">
+    <h3>Tiempos Capturados:</h3>
+    <ul>
+      <li *ngFor="let captura of capturas; let i = index">
+        Captura {{ i + 1 }}: {{ captura }}
+      </li>
+    </ul>
+  </div>
+</div>
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
 </div>

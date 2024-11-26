@@ -144,10 +144,11 @@ export class DiagnosticComponent {
     this.serviceApi.seleccionarEncuesta(encuesta);
     this.categoriaSeleccionada.emit(encuesta);
     localStorage.setItem('subCatSeleccionada', encuesta.toString());
-    console.log(`Categoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
+    console.log(`Subcategoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
   }
 
   seleccionarCategoria(categoria: string){
     this.serviceApi.seleccionarCategoria(categoria);
+    console.log('Categoria recibida en EncuestaComponent: ',categoria)
   }
 }

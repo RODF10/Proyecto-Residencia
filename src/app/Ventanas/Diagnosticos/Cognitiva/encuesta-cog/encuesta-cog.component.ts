@@ -92,7 +92,7 @@ export class EncuestaCogComponent implements OnInit{
 
   //Metodo del boton Finalizar
   finalizarEncuesta(){
-    this.puntos = 0;
+    //this.puntos = 0;
     this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
    
   }
@@ -143,8 +143,8 @@ export class EncuestaCogComponent implements OnInit{
         }
 
         this.showErrors = true;// An finalizar marca verdadero si, dependiendo si selecciona la letra
-        console.log(this.cons[1], 'AWL');//Verificar que si hay salida
-        this.encuestaResulto(this.puntos, '4AT', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
+        console.log(this.cons[1], 'AWOL');//Verificar que si hay salida
+        this.encuestaResulto(this.puntos, 'AWOL', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
         break;
       case 'spmsqp':
         var err: String = 'Errores Obtenido: ';//Acortar observacion
@@ -228,7 +228,7 @@ export class EncuestaCogComponent implements OnInit{
        porcentaje: porcentaje.toFixed(2),
        observacion: observacion //Observaciones
      }});
-     localStorage.removeItem('subCatSeleccionada'); 
+     //localStorage.removeItem('subCatSeleccionada'); 
    }
  }
 

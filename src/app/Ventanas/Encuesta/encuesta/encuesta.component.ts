@@ -38,7 +38,7 @@ export class EncuestaComponent implements OnInit, OnDestroy{
 
       this.serviceApi.selectEncuest$.subscribe(subC => {
         this.subCat = subC;
-        console.log('SubCat: ',subC);
+        console.log('Subcategoria recibida en EncuestaComponent: ',subC);
       });
       
   }
