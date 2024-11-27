@@ -1,0 +1,120 @@
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card shadow">
+          <div class="card-header bg-primary text-white text-center">
+            <h3>Registro de Doctor</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="registerForm" (ngSubmit)="registro()">
+              <!-- Nombre -->
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input id="nombre" type="text" class="form-control" formControlName="nombre" />
+                <div *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched" class="text-danger">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+  
+              <!-- Apellido -->
+              <div class="mb-3">
+                <label for="apellido" class="form-label">Apellido</label>
+                <input id="apellido" type="text" class="form-control" formControlName="apellido" />
+                <div *ngIf="registerForm.get('apellido')?.invalid && registerForm.get('apellido')?.touched" class="text-danger">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+  
+              <!-- Cédula -->
+              <div class="mb-3">
+                <label for="cedula" class="form-label">Cédula</label>
+                <input id="cedula" type="text" class="form-control" formControlName="cedula" />
+                <div *ngIf="registerForm.get('cedula')?.invalid && registerForm.get('cedula')?.touched" class="text-danger">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+  
+              <!-- Profesión -->
+              <div class="mb-3">
+                <label for="profesion" class="form-label">Profesión</label>
+                <input id="profesion" type="text" class="form-control" formControlName="profesion" />
+                <div *ngIf="registerForm.get('profesion')?.invalid && registerForm.get('profesion')?.touched" class="text-danger">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+  
+              <!-- Edad -->
+              <div class="mb-3">
+                <label for="edad" class="form-label">Edad</label>
+                <input id="edad" type="number" class="form-control" formControlName="edad" />
+                <div *ngIf="registerForm.get('edad')?.invalid && registerForm.get('edad')?.touched" class="text-danger">
+                  La edad debe ser entre 18 y 99 años.
+                </div>
+              </div>
+  
+              <!-- Género -->
+              <div class="mb-3">
+                <label for="genero" class="form-label">Género</label>
+                <select id="genero" class="form-select" formControlName="genero">
+                  <option value="">Seleccione...</option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Femenino">Femenino</option>
+                </select>
+                <div *ngIf="registerForm.get('genero')?.invalid && registerForm.get('genero')?.touched" class="text-danger">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+  
+              <!-- Email -->
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input id="email" type="email" class="form-control" formControlName="email" />
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="text-danger">
+                  Ingrese un email válido.
+                </div>
+              </div>
+  
+              <!-- Contraseña -->
+              <div class="mb-3">
+                <label for="password" class="form-label">Contraseña</label>
+                <input id="password" type="password" class="form-control" formControlName="password" />
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
+                  La contraseña debe tener al menos 6 caracteres.
+                </div>
+              </div>
+  
+              <!-- Teléfono -->
+              <div class="mb-3">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input id="telefono" type="text" class="form-control" formControlName="telefono" />
+                <div *ngIf="registerForm.get('telefono')?.invalid && registerForm.get('telefono')?.touched" class="text-danger">
+                  Ingrese solo números.
+                </div>
+              </div>
+  
+              <!-- Dirección -->
+              <div class="mb-3">
+                <label for="direccion" class="form-label">Dirección</label>
+                <textarea id="direccion" class="form-control" formControlName="direccion"></textarea>
+                <div *ngIf="registerForm.get('direccion')?.invalid && registerForm.get('direccion')?.touched" class="text-danger">
+                  Este campo es obligatorio.
+                </div>
+              </div>
+  
+              <!-- Imagen -->
+              <div class="mb-3">
+                <label for="imagen" class="form-label">Imagen (opcional)</label>
+                <input id="imagen" type="file" class="form-control" (change)="onImageChange($event)" accept="image/*" />
+              </div>
+  
+              <!-- Botón de Envío -->
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Registrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

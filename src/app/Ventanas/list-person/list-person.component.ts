@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/Service/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
@@ -8,10 +8,14 @@ import { HttpErrorResponse } from '@angular/common/http';
   templateUrl: './list-person.component.html',
   styleUrls: ['./list-person.component.scss']
 })
-export class ListPersonComponent {
+export class ListPersonComponent implements OnInit{
   pacienteForm: FormGroup;
   submitted = false;
   pacientes: any[] = []; // Array para almacenar los pacientes registrados
+  // Doctorea
+  users: any[] = [];
+  user: any = {};
+  selectedFile: File | null = null;
 
   // Objeto para almacenar los datos del formulario
   pacient = {
@@ -27,10 +31,7 @@ export class ListPersonComponent {
     caracteristicas: ''
   };
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private apiService: ApiService
-  ) {
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService) {
     // Definición del formulario reactivo
     this.pacienteForm = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -44,6 +45,10 @@ export class ListPersonComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.fetchUsers();
+  }
+
   // Método para manejar el envío del formulario
   onSubmit() {
     this.submitted = true;
@@ -53,33 +58,16 @@ export class ListPersonComponent {
       alert('Por favor, completa todos los campos requeridos.');
       return;
     }
-
-    // Llamar al método para registrar el paciente
-   // this.registro();
   }
 
-  // Método para registrar al paciente
-  /*registro() {
-    this.apiService.registerPatient(this.pacienteForm.value).subscribe(
-      (response: any) => {  // Aquí puedes definir un tipo específico si es necesario
-        console.log('Registro Exitoso', response);
-        alert('Registro exitoso');
+  fetchUsers() {
+    this.apiService.getUsers().subscribe((data) => {
+      this.users = data;
+    });
+  }
 
-        // Agregar el paciente al array de pacientes
-        this.pacientes.push({ ...this.pacient });
-
-        // Limpiar el formulario y el objeto pacient
-        this.pacienteForm.reset();
-        this.submitted = false;
-
-        // Cerrar el modal si es necesario
-        // Si tienes algún código para cerrar el modal, añádelo aquí
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error en el Registro', error);
-        alert('Error en el registro');
-      }
-    );
-  }*/
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 }
 

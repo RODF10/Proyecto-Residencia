@@ -1,0 +1,90 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ApiService } from 'src/app/Service/api.service';
+import Swal from 'sweetalert2';
+
+@Component({
+  selector: 'app-registro',
+  templateUrl: './registro.component.html',
+  styleUrls: ['./registro.component.scss']
+})
+export class RegistroComponent implements OnInit{
+  registerForm!: FormGroup;
+  submitted = false;
+  errors: any = {}; // Almacena mensajes de error personalizados
+  selectedImage!: File | null; // Almacena la imagen seleccionada
+  
+
+   constructor(private fb: FormBuilder,private  doctorsApi: ApiService, private router: Router){}
+
+   ngOnInit(): void {
+    this.registerForm = this.fb.group({
+      nombre: ['', Validators.required],
+      apellido: ['', Validators.required],
+      cedula: ['', Validators.required],
+      profesion: ['', Validators.required],
+      edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
+      genero: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      direccion: ['', Validators.required],
+      imagen: [''], // Imagen es opcional
+    });
+   }
+
+   
+   registro(){
+    if (this.registerForm.invalid) {
+      console.log('Formulario no válido');
+      return;
+    }
+
+    const formData = new FormData();
+    Object.keys(this.registerForm.value).forEach((key) => {
+      if (key !== 'imagen') {
+        formData.append(key, this.registerForm.get(key)?.value || '');
+      }
+    });
+
+    // Si se seleccionó una imagen, añadirla al FormData
+    if (this.selectedImage) {
+      formData.append('imagen', this.selectedImage);
+    }
+
+
+    if (this.registerForm.valid) {
+      this.doctorsApi.registerDoctor(formData).subscribe(
+        (response) => {
+          console.log('Doctor registrado:', response);
+          this.router.navigate(['/login']);
+        },
+        (error) => {
+          console.error('Error al registrar doctor:', error);
+          Swal.fire({
+            title: "Failed Register",
+            text: "Error al registrar al doctor, Intente de Nuevo",
+            icon: "error"
+          });
+        }
+      );
+    } else {
+      console.log('Formulario no válido');
+      Swal.fire({
+        title: "Failed Register",
+        text: "Error de Formulario",
+        icon: "warning"
+      });
+    }
+   }
+
+
+   onImageChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedImage = file;
+    }
+  }
+
+}

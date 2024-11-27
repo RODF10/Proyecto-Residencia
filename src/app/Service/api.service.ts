@@ -6,7 +6,9 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private urlApi = 'http://127.0.0.1:8000/web';
+  private urlApi = 'http://127.0.0.1:8000/api/doctors';
+
+  /* SECCION CATEGORIA Y SUBCATEGORIA */
   //Selecciona Subcategoria
   private selectSubCat = new BehaviorSubject<String>('Undefinid');
   selectEncuest$ = this.selectSubCat.asObservable();
@@ -22,11 +24,6 @@ export class ApiService {
     // Asignar el observable a una propiedad pública
     this.categoriaSeleccionada$ = this.categoriaSeleccionadaSource.asObservable();
   }
-
-  /* Método para eliminar un paciente
-  deletePatient(id: number): Observable<any> {
-    return this.http.delete(`${this.}/patients/${id}`);
-  }*/
   seleccionarEncuesta(encuesta: String){
     this.selectSubCat.next(encuesta);
   }
@@ -35,5 +32,21 @@ export class ApiService {
     // Actualizar la categoría y persistirla en Local Storage
     this.categoriaSeleccionadaSource.next(categoria);
     localStorage.setItem('categoriaSeleccionada', categoria.toString());
+  }
+
+  /* SECCION DE LARAVEL DE API */
+
+  // Registrar un nuevo doctor
+  registerDoctor(data: FormData): Observable<any> {
+    return this.http.post(this.urlApi, data);
+  }
+
+  // Login del doctor
+  loginDoctor(credentials: any): Observable<any> {
+    return this.http.post<any>('http://localhost:8000/api/login', credentials);
+  }
+
+  getUsers(): Observable<any> {
+    return this.http.get(this.urlApi);
   }
 }
