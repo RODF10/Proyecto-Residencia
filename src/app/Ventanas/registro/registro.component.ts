@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
 import Swal from 'sweetalert2';
 
@@ -16,7 +17,7 @@ export class RegistroComponent implements OnInit{
   selectedImage!: File | null; // Almacena la imagen seleccionada
   
 
-   constructor(private fb: FormBuilder,private  doctorsApi: ApiService, private router: Router){}
+   constructor(private fb: FormBuilder,private  doctorsApi: ApiService, private router: Router, private alert: AlertService){}
 
    ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -28,7 +29,7 @@ export class RegistroComponent implements OnInit{
       genero: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      telefono: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+      telefono: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       direccion: ['', Validators.required],
       imagen: [''], // Imagen es opcional
     });
@@ -58,24 +59,17 @@ export class RegistroComponent implements OnInit{
       this.doctorsApi.registerDoctor(formData).subscribe(
         (response) => {
           console.log('Doctor registrado:', response);
+          this.alert.success('Registro de usuario Exitoso', 'Succesfuly Register');
           this.router.navigate(['/login']);
         },
         (error) => {
           console.error('Error al registrar doctor:', error);
-          Swal.fire({
-            title: "Failed Register",
-            text: "Error al registrar al doctor, Intente de Nuevo",
-            icon: "error"
-          });
+          this.alert.error('Error al registrar al Usuario', 'Failed Register');
         }
       );
     } else {
       console.log('Formulario no válido');
-      Swal.fire({
-        title: "Failed Register",
-        text: "Error de Formulario",
-        icon: "warning"
-      });
+      this.alert.warning('Error de Formulatio', 'Register Failed');
     }
    }
 

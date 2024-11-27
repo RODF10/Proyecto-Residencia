@@ -38,7 +38,7 @@ export class ApiService {
 
   // Registrar un nuevo doctor
   registerDoctor(data: FormData): Observable<any> {
-    return this.http.post(this.urlApi, data);
+    return this.http.post<any>(`${this.urlApi}`, data);
   }
 
   // Login del doctor
