@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private urlApi = 'http://127.0.0.1:8000/api/doctors';
+  private urlApi = 'http://192.168.1.80:8000/api';
 
   /* SECCION CATEGORIA Y SUBCATEGORIA */
   //Selecciona Subcategoria
@@ -38,15 +38,16 @@ export class ApiService {
 
   // Registrar un nuevo doctor
   registerDoctor(data: FormData): Observable<any> {
-    return this.http.post<any>(`${this.urlApi}`, data);
+    return this.http.post<any>(`${this.urlApi}/doctors`, data);
+    // return this.http.post<any>(this.urlApi,data);
   }
 
   // Login del doctor
   loginDoctor(credentials: any): Observable<any> {
-    return this.http.post<any>('http://localhost:8000/api/login', credentials);
+    return this.http.post<any>(this.urlApi+'/validate-password', credentials);
   }
 
   getUsers(): Observable<any> {
-    return this.http.get(this.urlApi);
+    return this.http.get(this.urlApi+'/doctors');
   }
 }

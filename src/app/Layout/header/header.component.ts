@@ -12,6 +12,7 @@ import { UserService } from 'src/app/Service/user.service';
 export class HeaderComponent implements OnInit{
 
   dropdownOpen = false;
+  showRegisterButton: boolean = false;
 
   constructor(
     private LoadJS: LoadJSService,

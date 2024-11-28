@@ -6,7 +6,7 @@
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <div class="menu">
       <a routerLink="list-person">Lista Pacientes</a>
-      <a routerLink="encuestas">Encuesta</a>
+      <a routerLink="doctors-register" *ngIf="showRegisterButton">Registrar</a>
       <a routerLink="diagnostic">Categoria de Encuesta</a>
       <a routerLink="encuesta-afc">esfera afectiva</a>
       <a routerLink="encuesta-okeeffe">preuba</a>
