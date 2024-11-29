@@ -13,6 +13,7 @@ export class HeaderComponent implements OnInit{
 
   dropdownOpen = false;
   showRegisterButton: boolean = false;
+  name: string = '';
 
   constructor(
     private LoadJS: LoadJSService,
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit{
   }
 
   ngOnInit() {
+      this.name = this.userService.getDoctorName();
     /*this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {

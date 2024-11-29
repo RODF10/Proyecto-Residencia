@@ -126,7 +126,7 @@
 </div>
 
 <div class="tablaDoctores">
-  <div class="container">  
+  <div class="container">
     <h2 class="mt-4">Lista de Doctores</h2>
     <table class="table table-striped">
       <thead>
@@ -141,7 +141,7 @@
           <th>Email</th>
           <th>Teléfono</th>
           <th>Dirección</th>
-          <th>Imagen</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -157,11 +157,17 @@
           <td>{{ user.telefono }}</td>
           <td>{{ user.direccion }}</td>
           <td>
-            <img *ngIf="user.imagen" [src]="'http://127.0.0.1:8000/storage/' + user.imagen" alt="Imagen" width="50" />
+            <div class="botones">
+              <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.id, user.nombre)">
+                <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+              </button>
+              <button class="btn btn-sm btn-primary" (click)="actualizarUsuario(user.id)">
+                <i class="fas fa-edit"></i> <!-- Icono de actualizar -->
+              </button>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
-  
 </div>

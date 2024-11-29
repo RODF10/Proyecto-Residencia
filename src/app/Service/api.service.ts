@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private urlApi = 'http://192.168.1.80:8000/api';
+  private urlApi = 'http://127.0.0.1:8000/api';
 
   /* SECCION CATEGORIA Y SUBCATEGORIA */
   //Selecciona Subcategoria
@@ -49,5 +49,9 @@ export class ApiService {
 
   getUsers(): Observable<any> {
     return this.http.get(this.urlApi+'/doctors');
+  }
+
+  deleteDoctor(id: number): Observable<any> {
+    return this.http.delete(`${this.urlApi}/doctors/${id}`);
   }
 }

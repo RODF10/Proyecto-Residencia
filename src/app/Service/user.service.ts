@@ -9,6 +9,7 @@ import { SharedService } from './shared.service';
 export class UserService {
   private apiService?: ApiService;
   showButton: boolean = false;
+  usuario: string = '';
 
   isLoggedIn() {
     throw new Error('Method not implemented.');
@@ -44,6 +45,8 @@ export class UserService {
     return !!localStorage.getItem('isAuthenticated'); // Verifica si el token está en localStorage
   }
 
+  // BOTON DE VISTA REGISTRAR
+
   canShowRegisterButton(email: string, registeredUsers: any[]): boolean {
     // Verifica si el correo es el permitido para registrar
     if (email === this.validar.email) {
@@ -53,11 +56,14 @@ export class UserService {
     return !registeredUsers.some(user => user.email === email);
   }
 
+  // LOGIN DE SUPER USER Y REVISION DE BASE DE DATOS
+
   async log(email: string, password: string): Promise<boolean> {
     try {
       // Si no está en la base de datos, valida el correo de prueba
       if (email === this.validar.email && password === this.validar.password) {
         localStorage.setItem('isAuthenticated', 'logged_in');
+        localStorage.setItem('doctorName', 'Dr. Master Crack'); // Guardar el nombre del doctor de prueba
         this.sharedService.setShowRegisterButton(true); // Mostrar botón en el caso del usuario de prueba
         return true;
       }
@@ -68,9 +74,12 @@ export class UserService {
 
       // Busca un usuario con el correo y contraseña proporcionados
       const user = users.find((u: any) => u.email == email && u.password == password);
+      const response: any = await this.serviApi.loginDoctor({ email, password }).toPromise();
 
-      if (user) {
+      if (response.success) {
+        this.usuario = response.user.nombre + ' ' + response.user.apellido;
         localStorage.setItem('isAuthenticated', 'logged_in');
+        localStorage.setItem('doctorName', this.usuario); // Guardar el nombre del doctor
         this.sharedService.setShowRegisterButton(false);
         return true;
       }
@@ -95,5 +104,9 @@ export class UserService {
       });
       return false;
     }
+  }
+
+  getDoctorName(): string {
+    return localStorage.getItem('doctorName') || '';
   }
 }

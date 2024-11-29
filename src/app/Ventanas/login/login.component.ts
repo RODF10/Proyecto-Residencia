@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
 import { SharedService } from 'src/app/Service/shared.service';
@@ -9,12 +9,16 @@ import { UserService } from 'src/app/Service/user.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   email: string = '';
   password: string = '';
   errorMessage: string = '';
 
   constructor(private userService: UserService, private router: Router, private apiService: ApiService, private sharedService: SharedService) {}
+
+  ngOnInit(): void {
+      localStorage.removeItem('doctorName');
+  }
 
   /*onSubmit() {
     if (this.userService.login(this.email, this.password)) {
