@@ -26,6 +26,8 @@ import { EncuestaEscalaSoledadComponent } from './Diagnosticos/Afectiva/encuesta
 import { EncuestaSADPERSONSComponent } from './Diagnosticos/Afectiva/encuesta-sad-persons/encuesta-sad-persons.component';
 import { EncuestaCornellComponent } from './Diagnosticos/Afectiva/encuesta-cornell/encuesta-cornell.component';
 import { EncuestaOkeeffeComponent } from './Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
+import { EncuestaAssessmentSFComponent } from './Diagnosticos/Nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
+import { EncuestaAssessmentComponent } from './Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
@@ -136,6 +138,16 @@ const routes: Routes = [
   {
     path: 'encuesta-okeeffe', 
     component: EncuestaOkeeffeComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-assessment-sf', 
+    component: EncuestaAssessmentSFComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-asesment', 
+    component: EncuestaAssessmentComponent,
     canActivate: [AuthGuard]
   },
 ];

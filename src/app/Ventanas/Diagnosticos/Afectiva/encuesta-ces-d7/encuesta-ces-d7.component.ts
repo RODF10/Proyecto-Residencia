@@ -62,7 +62,7 @@ export class EncuestaCESD7Component implements OnInit {
     console.log('Puntaje: ', this.resultado, '\nObservación: ', this.interpretacion);
 
     // Redirige al componente Resultados con los datos mediante el estado
-    this.router.navigate(['/resultado'], {
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         nombreEncuesta: 'CES-D7',
         puntaje: this.resultado,

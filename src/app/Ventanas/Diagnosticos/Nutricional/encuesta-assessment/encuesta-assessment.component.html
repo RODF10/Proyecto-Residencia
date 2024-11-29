@@ -1,0 +1,41 @@
+<div class="container encuesta-container">
+    <h1 class="titulo-encuesta">Mini Nutritional Assessment</h1>
+  
+    <form [formGroup]="mnaForm" (ngSubmit)="enviarResultados()">
+      <!-- Cribaje -->
+      <h2 class="subtitulo">Cribaje</h2>
+      <div *ngFor="let pregunta of cribajePreguntas; let i = index" class="form-group">
+        <label>{{ pregunta.texto }}</label>
+        <div>
+          <label *ngFor="let opcion of pregunta.opciones">
+            <input
+              type="radio"
+              [formControlName]="'pregunta' + i"
+              [value]="opcion.valor"
+            />
+            {{ opcion.texto }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Evaluación -->
+      <h2 class="subtitulo">Evaluación</h2>
+      <div *ngFor="let pregunta of evaluacionPreguntas; let i = index" class="form-group">
+        <label>{{ pregunta.texto }}</label>
+        <div>
+          <label *ngFor="let opcion of pregunta.opciones">
+            <input
+              type="radio"
+              [formControlName]="'evaluacionPregunta' + i"
+              [value]="opcion.valor"
+            />
+            {{ opcion.texto }}
+          </label>
+        </div>
+      </div>
+      
+      <!-- Botón Finalizar -->
+      <button type="submit" class="btn btn-primary">Finalizar y Enviar</button>
+    </form>
+  </div>
+  

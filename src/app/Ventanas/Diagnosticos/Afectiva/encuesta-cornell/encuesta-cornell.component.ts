@@ -59,7 +59,7 @@ export class EncuestaCornellComponent {
 
     console.log('Puntaje:', this.resultado, '\nObservación:', this.observacion);
 
-    this.router.navigate(['/resultado'], {
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         nombreEncuesta: 'Escala de Cornell',
         puntaje: this.resultado,

@@ -40,7 +40,8 @@ import { EncuestaEscalaSoledadComponent } from './Ventanas/Diagnosticos/Afectiva
 import { EncuestaSADPERSONSComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-sad-persons/encuesta-sad-persons.component';
 import { EncuestaCornellComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-cornell/encuesta-cornell.component';
 import { EncuestaOkeeffeComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
-import { EncuestaAssessmentSFComponent } from './Ventanas/Diagnosticos/nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
+import { EncuestaAssessmentSFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
+import { EncuestaAssessmentComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -75,6 +76,7 @@ registerLocaleData(localeEs, 'es');
     EncuestaCornellComponent,
     EncuestaOkeeffeComponent,
     EncuestaAssessmentSFComponent,
+    EncuestaAssessmentComponent,
     //NotFoundComponent,
   ],
   imports: [

@@ -52,7 +52,7 @@ export class EncuestaSADPERSONSComponent {
     console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
 
     // Redirige al componente de resultados con los datos mediante queryParams
-    this.router.navigate(['/resultado'], {
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         nombreEncuesta: 'Escala SAD PERSONS',
         puntaje: puntaje,
