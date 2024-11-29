@@ -34,11 +34,21 @@ export class LoginComponent implements OnInit{
       const isLoggedIn = await this.userService.log(this.email, this.password);
   
       if (isLoggedIn) {
-        this.sharedService.setShowRegisterButton(false);
+        //this.sharedService.setShowRegisterButton(false);
+        this.updateRegisterButtonVisibility();
         this.router.navigate(['home'], { replaceUrl: true });
       } else {
         this.errorMessage = 'Correo electrónico o contraseña incorrectos';
       }
+    }
+
+    updateRegisterButtonVisibility(): void {
+      this.apiService.getUsers().subscribe((users: any[]) => {
+        // Determina si se muestra el botón usando UserService
+        const showButton = this.userService.canShowRegisterButton(this.email, users);
+        // Actualiza el estado en el servicio compartido
+        this.sharedService.setShowRegisterButton(showButton);
+      });
     }
   
 }

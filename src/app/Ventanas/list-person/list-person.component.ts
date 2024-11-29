@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/Service/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AlertService } from 'src/app/Service/alert.service';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-list-person',
@@ -10,6 +11,7 @@ import { AlertService } from 'src/app/Service/alert.service';
   styleUrls: ['./list-person.component.scss']
 })
 export class ListPersonComponent implements OnInit{
+  showTableMaster: boolean = false; //vista del boton SuperMaster
   pacienteForm: FormGroup;
   submitted = false;
   pacientes: any[] = []; // Array para almacenar los pacientes registrados
@@ -32,7 +34,7 @@ export class ListPersonComponent implements OnInit{
     caracteristicas: ''
   };
 
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService) {
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService, private sharedService: SharedService) {
     // Definición del formulario reactivo
     this.pacienteForm = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -48,6 +50,9 @@ export class ListPersonComponent implements OnInit{
 
   ngOnInit(): void {
     this.fetchUsers();
+    this.sharedService.showRegisterButton$.subscribe(show => {
+      this.showTableMaster = show;
+    });
   }
 
   // Método para manejar el envío del formulario
