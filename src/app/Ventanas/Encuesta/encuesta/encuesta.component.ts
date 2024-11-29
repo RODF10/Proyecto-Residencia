@@ -38,14 +38,21 @@ export class EncuestaComponent implements OnInit, OnDestroy{
 
       this.serviceApi.selectEncuest$.subscribe(subC => {
         this.subCat = subC;
-        console.log('SubCat: ',subC);
+        console.log('Subcategoria recibida en EncuestaComponent: ',subC);
       });
+
+      document.addEventListener('contextmenu',this.disableRightClick);
       
+  }
+
+  disableRightClick(event: MouseEvent){
+    event.preventDefault();
   }
 
   ngOnDestroy(): void {
     localStorage.removeItem('subCatSeleccionada'); // Limpia selección SubCategoria
     localStorage.removeItem('categoriaSeleccionada')// Limpiar seleccion Categoria
+    document.removeEventListener('contextmenu', this.disableRightClick);
   }
 
   cambiarCategoria(categoria: string) {

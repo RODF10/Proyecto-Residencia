@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadJSService } from 'src/app/Service/load-js.service';
 import { NavbarService } from 'src/app/Service/navbar.service';
+import { SharedService } from 'src/app/Service/shared.service';
 import { UserService } from 'src/app/Service/user.service';
 
 @Component({
@@ -12,12 +13,15 @@ import { UserService } from 'src/app/Service/user.service';
 export class HeaderComponent implements OnInit{
 
   dropdownOpen = false;
+  showRegisterButton: boolean = false;
+  name: string = '';
 
   constructor(
     private LoadJS: LoadJSService,
     private router: Router,
     public authService: NavbarService,
-    private userService: UserService // Inyecta UserService para la autenticación
+    private userService: UserService, // Inyecta UserService para la autenticación
+    private sharedService: SharedService,
     ){
     LoadJS.Carga(["Profile"]);
   }
@@ -27,6 +31,10 @@ export class HeaderComponent implements OnInit{
   }
 
   ngOnInit() {
+      this.name = this.userService.getDoctorName();
+      this.sharedService.showRegisterButton$.subscribe(show => {
+        this.showRegisterButton = show;
+      });
     /*this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (event.url === '/login') {

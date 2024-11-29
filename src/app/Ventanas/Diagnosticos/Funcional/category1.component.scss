@@ -72,8 +72,8 @@ label{
 .boton button{
   padding: 10px 30px;
 }
-/* ESTILOS DE BARTHEL */
-.barthel .opciones {  
+/* ESTILOS DE BARTHEL, LAWTON Y KATZ */
+.opcmult .opciones {  
   label input[type="radio"]{
     margin-top: 0.1rem;
     align-self: start;
@@ -114,4 +114,9 @@ label{
   .table td {
     vertical-align: middle; /* Centrar verticalmente las celdas */
   }
+}
+
+// ESTILOS ENSRUD
+.frail{
+  
 }

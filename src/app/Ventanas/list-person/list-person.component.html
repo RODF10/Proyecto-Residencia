@@ -124,3 +124,50 @@
       <a href="home/view-person" class="perfil">Ver Perfil</a>
     </div>
 </div>
+
+<div class="tablaDoctores" *ngIf="showTableMaster">
+  <div class="container">
+    <h2 class="mt-4">Lista de Doctores</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Cédula</th>
+          <th>Profesión</th>
+          <th>Edad</th>
+          <th>Género</th>
+          <th>Email</th>
+          <th>Teléfono</th>
+          <th>Dirección</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>{{ user.id }}</td>
+          <td>{{ user.nombre }}</td>
+          <td>{{ user.apellido }}</td>
+          <td>{{ user.cedula }}</td>
+          <td>{{ user.profesion }}</td>
+          <td>{{ user.edad }}</td>
+          <td>{{ user.genero }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.telefono }}</td>
+          <td>{{ user.direccion }}</td>
+          <td>
+            <div class="botones">
+              <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.id, user.nombre)">
+                <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
+              </button>
+              <button class="btn btn-sm btn-primary" (click)="actualizarUsuario(user.id)">
+                <i class="fas fa-edit"></i> <!-- Icono de actualizar -->
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

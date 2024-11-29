@@ -32,6 +32,7 @@ import { EncuestaAssessmentComponent } from './Diagnosticos/Nutricional/encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
 import { checkRedirectGuard } from '../guards/check-redirect.guard';
+import { RegistroComponent } from './registro/registro.component';
 
 
 const routes: Routes = [
@@ -83,6 +84,11 @@ const routes: Routes = [
     path: 'encuesta/:categoria',
     component: EncuestaComponent,
     canActivate: [checkRedirectGuard]
+  },
+  {
+    path: 'doctors-register',
+    component: RegistroComponent,
+    canActivate: [AuthGuard]
   },
   //Encuestas de los URL
   {

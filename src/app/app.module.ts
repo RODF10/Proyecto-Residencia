@@ -40,8 +40,8 @@ import { EncuestaEscalaSoledadComponent } from './Ventanas/Diagnosticos/Afectiva
 import { EncuestaSADPERSONSComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-sad-persons/encuesta-sad-persons.component';
 import { EncuestaCornellComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-cornell/encuesta-cornell.component';
 import { EncuestaOkeeffeComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
-import { EncuestaAssessmentSFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
-import { EncuestaAssessmentComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegistroComponent } from './Ventanas/registro/registro.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -75,8 +75,7 @@ registerLocaleData(localeEs, 'es');
     EncuestaSADPERSONSComponent,
     EncuestaCornellComponent,
     EncuestaOkeeffeComponent,
-    EncuestaAssessmentSFComponent,
-    EncuestaAssessmentComponent,
+    RegistroComponent,
     //NotFoundComponent,
   ],
   imports: [
@@ -86,6 +85,7 @@ registerLocaleData(localeEs, 'es');
     ReactiveFormsModule,
     WindowsRoutingModule,
     HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'es' } ],
   bootstrap: [AppComponent]

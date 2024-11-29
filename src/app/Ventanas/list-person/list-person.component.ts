@@ -1,17 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/Service/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AlertService } from 'src/app/Service/alert.service';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-list-person',
   templateUrl: './list-person.component.html',
   styleUrls: ['./list-person.component.scss']
 })
-export class ListPersonComponent {
+export class ListPersonComponent implements OnInit{
+  showTableMaster: boolean = false; //vista del boton SuperMaster
   pacienteForm: FormGroup;
   submitted = false;
   pacientes: any[] = []; // Array para almacenar los pacientes registrados
+  // Doctorea
+  users: any[] = [];
+  user: any = {};
+  selectedFile: File | null = null;
 
   // Objeto para almacenar los datos del formulario
   pacient = {
@@ -27,10 +34,7 @@ export class ListPersonComponent {
     caracteristicas: ''
   };
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private apiService: ApiService
-  ) {
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService, private sharedService: SharedService) {
     // Definición del formulario reactivo
     this.pacienteForm = this.formBuilder.group({
       nombre: ['', Validators.required],
@@ -44,6 +48,13 @@ export class ListPersonComponent {
     });
   }
 
+  ngOnInit(): void {
+    this.fetchUsers();
+    this.sharedService.showRegisterButton$.subscribe(show => {
+      this.showTableMaster = show;
+    });
+  }
+
   // Método para manejar el envío del formulario
   onSubmit() {
     this.submitted = true;
@@ -53,33 +64,59 @@ export class ListPersonComponent {
       alert('Por favor, completa todos los campos requeridos.');
       return;
     }
-
-    // Llamar al método para registrar el paciente
-   // this.registro();
   }
 
-  // Método para registrar al paciente
-  /*registro() {
-    this.apiService.registerPatient(this.pacienteForm.value).subscribe(
-      (response: any) => {  // Aquí puedes definir un tipo específico si es necesario
-        console.log('Registro Exitoso', response);
-        alert('Registro exitoso');
+  fetchUsers() {
+    this.apiService.getUsers().subscribe((data) => {
+      this.users = data;
+    });
+  }
 
-        // Agregar el paciente al array de pacientes
-        this.pacientes.push({ ...this.pacient });
+  onFileSelected(event: any) {
+    this.selectedFile = event.target.files[0];
+  }
 
-        // Limpiar el formulario y el objeto pacient
-        this.pacienteForm.reset();
-        this.submitted = false;
-
-        // Cerrar el modal si es necesario
-        // Si tienes algún código para cerrar el modal, añádelo aquí
-      },
-      (error: HttpErrorResponse) => {
-        console.error('Error en el Registro', error);
-        alert('Error en el registro');
+  eliminarUsuario(id: number, name: string): void {
+    console.log('Eliminar usuario con ID:', id ,name);
+    // Utilizar el servicio AlertService para mostrar la confirmación
+    this.alertService
+    .confirm(`¿Estás seguro de que deseas eliminar al doctor "${name}"?`, 'Confirmación')
+    .then((isConfirmed) => {
+      if (isConfirmed) {
+        // Llamar al API para eliminar al doctor si se confirma
+        this.apiService.deleteDoctor(id).subscribe({
+          next: (response) => {
+            // Mostrar mensaje de éxito
+            this.alertService.success(
+              `El doctor "${name}" ha sido eliminado exitosamente.`,
+              'Eliminado'
+            );
+            this.cargarDoctores(); // Refrescar la lista de doctores
+          },
+          error: (error) => {
+            console.error('Error al eliminar el doctor:', error);
+            // Mostrar mensaje de error
+            this.alertService.error(
+              `No se pudo eliminar al doctor "${name}". Inténtalo nuevamente.`,
+              'Error'
+            );
+          },
+        });
       }
-    );
-  }*/
+    });
+    // Agrega aquí la lógica para eliminar el usuario
+  }
+  
+  actualizarUsuario(id: number): void {
+    console.log('Actualizar usuario con ID:', id);
+    // Agrega aquí la lógica para actualizar el usuario
+  }
+
+  cargarDoctores(): void {
+    this.apiService.getUsers().subscribe({
+      next: (users) => this.users = users, // Asigna los usuarios recibidos al array "users"
+      error: (error) => console.error('Error al cargar la lista de doctores:', error)
+    });
+  }
 }
 
