@@ -1,15 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
+import { animate, state, style, transition, trigger,} from '@angular/animations';
 import { PATIENTS_DATA } from '../data/patients-data';
 import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-patients',
@@ -42,8 +37,8 @@ export class PatientsComponent {
     | MatPaginator
     | undefined;
 
-    constructor(private router: Router){
-
+    constructor(private router: Router, ){
+     
     }
 
   ngOnInit() {
@@ -62,5 +57,9 @@ export class PatientsComponent {
 
   perfilUser(id: number){
     this.router.navigate(['home/view-person']);
+  }
+
+  patient(){
+    this.router.navigate(['/home/register-patient'])
   }
 }

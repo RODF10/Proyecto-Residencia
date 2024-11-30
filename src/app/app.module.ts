@@ -42,6 +42,7 @@ import { RegistroComponent } from './Ventanas/registro/registro.component';
 import { MaterialModuleModule } from './material.module';
 import { ListDoctorsComponent } from './Ventanas/list-doctors/list-doctors.component';
 import { PatientsComponent } from './Ventanas/patients/patients.component';
+import { RegisterPatientComponent } from './Ventanas/register-patient/register-patient.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -75,6 +76,7 @@ registerLocaleData(localeEs, 'es');
     RegistroComponent,
     ListDoctorsComponent,
     PatientsComponent,
+    RegisterPatientComponent,
     //NotFoundComponent,
   ],
   imports: [

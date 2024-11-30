@@ -1,3 +1,9 @@
+
+<!-- Botón para Abrir el Modal -->
+<div class="d-grid gap-2 col-6 btn_click">
+  <button class="btn btn-success" type="button" (click)="patient()"><i class="fa-solid fa-circle-plus"></i> Añadir Paciente</button>
+</div>
+
 <div class="container">
   <h1>Pacientes</h1>
   <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">

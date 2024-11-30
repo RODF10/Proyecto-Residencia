@@ -1,5 +1,5 @@
 .container {
-  background-color: #ff0000;
+  background-color: #e4a6ff;
   padding: 20px;
   max-width: 100%;
   /* Asegúrate de que nunca se salga de los bordes */
@@ -73,8 +73,15 @@ tr.example-element-row:not(.example-expanded-row):active {
   background-color: aqua;
 }
 
+/* BOTONES */
+.btn_click {
+  max-width: 500px;
+  margin: 15px auto;
+}
+
 @media screen and (max-width: 768px) {
-  th, td {
+  th,
+  td {
     font-size: 12px; /* Reduce el tamaño de fuente en pantallas pequeñas */
     padding: 6px;
   }
@@ -89,7 +96,8 @@ tr.example-element-row:not(.example-expanded-row):active {
 }
 
 @media screen and (max-width: 480px) {
-  th, td {
+  th,
+  td {
     font-size: 10px; /* Más pequeño en pantallas extra pequeñas */
     padding: 4px;
   }

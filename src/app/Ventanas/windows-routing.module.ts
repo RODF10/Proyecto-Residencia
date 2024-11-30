@@ -32,6 +32,7 @@ import { checkRedirectGuard } from '../guards/check-redirect.guard';
 import { RegistroComponent } from './registro/registro.component';
 import { ListDoctorsComponent } from './list-doctors/list-doctors.component';
 import { PatientsComponent } from './patients/patients.component';
+import { RegisterPatientComponent } from './register-patient/register-patient.component';
 
 
 const routes: Routes = [
@@ -92,6 +93,11 @@ const routes: Routes = [
   {
     path: 'list-doctors',
     component: ListDoctorsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'register-patient',
+    component: RegisterPatientComponent,
     canActivate: [AuthGuard]
   },
   //Encuestas de los URL
