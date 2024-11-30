@@ -1,0 +1,223 @@
+export interface Patient {
+  id: number; // Identificador único del paciente.
+  name: string; // Nombre del paciente.
+  last_name: string; // Apellido del paciente.
+  age: number; // Edad del paciente en años.
+  gender: string; // Género del paciente. Ejemplo: "Femenino" o "Masculino".
+  pulse: number; // Pulso cardíaco del paciente (latidos por minuto).
+  blood_pressure: string; // Presión arterial del paciente. Ejemplo: "120/80".
+  weight: number; // Peso del paciente en kilogramos (kg).
+  height: number; // Altura del paciente en metros (m). Ejemplo: 1.75.
+  bmi: string; // Índice de Masa Corporal (IMC), calculado con el peso y la altura. Ejemplo: "22.3 (normal)".
+  allergies: string; // Alergias conocidas del paciente. Ejemplo: "Alergia a la penicilina".
+  diagnosis: string; // Diagnóstico principal del paciente. Ejemplo: "Hipertensión arterial".
+  treatment: string; // Tratamiento prescrito al paciente. Ejemplo: "Enalapril 10 mg diarios".
+  last_consultation: string; // Fecha de la última consulta médica. Ejemplo: "2024-11-10".
+  emergency_contact: string; // Teléfono del contacto de emergencia. Ejemplo: "555-123-4567".
+  doctor_notes: string; // Notas del médico sobre el paciente. Ejemplo: "Controlar dieta para mejorar el manejo de la diabetes".
+  description: string; // Breve descripción del estado o historial del paciente. Ejemplo: "Paciente con historial de hipertensión controlada".
+
+}
+
+export const PATIENTS_DATA: Patient[] = [
+  {
+    id: 1,
+    name: 'María',
+    last_name: 'González',
+    age: 78,
+    gender: 'Femenino',
+    pulse: 72,
+    blood_pressure: '130/85',
+    weight: 65,
+    height: 1.55,
+    bmi: '27.1 (sobrepeso)',
+    allergies: 'Ninguna conocida',
+    diagnosis: 'Hipertensión arterial',
+    treatment: 'Enalapril 10 mg diarios',
+    last_consultation: '2024-10-15',
+    emergency_contact: '555-123-4567',
+    doctor_notes: 'Controlar dieta y reducir consumo de sal.',
+    description:
+      'Paciente con historial de hipertensión controlada, sin complicaciones recientes.',
+  },
+  {
+    id: 2,
+    name: 'José',
+    last_name: 'López',
+    age: 82,
+    gender: 'Masculino',
+    pulse: 68,
+    blood_pressure: '120/80',
+    weight: 70,
+    height: 1.68,
+    bmi: '24.8 (normal)',
+    allergies: 'Ibuprofeno',
+    diagnosis: 'Osteoartritis',
+    treatment: 'Paracetamol 500 mg c/8 hrs',
+    last_consultation: '2024-09-30',
+    emergency_contact: '555-987-6543',
+    doctor_notes: 'Recomendar ejercicios para fortalecer articulaciones.',
+    description:
+      'Presenta dolor en las articulaciones, principalmente en las rodillas. Movilidad moderada.',
+  },
+  {
+    id: 3,
+    name: 'Carmen',
+    last_name: 'Ramírez',
+    age: 85,
+    gender: 'Femenino',
+    pulse: 75,
+    blood_pressure: '125/78',
+    weight: 60,
+    height: 1.50,
+    bmi: '26.7 (sobrepeso)',
+    allergies: 'Penicilina',
+    diagnosis: 'Demencia senil',
+    treatment: 'Rivastigmina 4.5 mg/día',
+    last_consultation: '2024-10-05',
+    emergency_contact: '555-456-7890',
+    doctor_notes: 'Supervisar actividades diarias y medicamentos.',
+    description:
+      'Declive cognitivo progresivo. Requiere supervisión constante para actividades diarias.',
+  },
+  {
+    id: 4,
+    name: 'Juan',
+    last_name: 'Martínez',
+    age: 76,
+    gender: 'Masculino',
+    pulse: 80,
+    blood_pressure: '135/90',
+    weight: 85,
+    height: 1.75,
+    bmi: '27.8 (sobrepeso)',
+    allergies: 'Ninguna conocida',
+    diagnosis: 'Diabetes tipo 2',
+    treatment: 'Metformina 850 mg c/12 hrs',
+    last_consultation: '2024-11-01',
+    emergency_contact: '555-333-2222',
+    doctor_notes: 'Control metabólico debe mejorar. Revisar dieta.',
+    description:
+      'Control metabólico moderado. Necesita monitoreo constante de glucosa.',
+  },
+  {
+    id: 5,
+    name: 'Rosalía',
+    last_name: 'Pérez',
+    age: 79,
+    gender: 'Femenino',
+    pulse: 70,
+    blood_pressure: '118/76',
+    weight: 62,
+    height: 1.60,
+    bmi: '24.2 (normal)',
+    allergies: 'Mariscos',
+    diagnosis: 'Insuficiencia cardíaca',
+    treatment: 'Bisoprolol 5 mg/día',
+    last_consultation: '2024-10-20',
+    emergency_contact: '555-111-2233',
+    doctor_notes: 'Evitar esfuerzos físicos prolongados.',
+    description:
+      'Historial de hospitalización reciente. Requiere control de líquidos y reposo.',
+  },
+  {
+    id: 6,
+    name: 'Miguel',
+    last_name: 'Hernández',
+    age: 81,
+    gender: 'Masculino',
+    pulse: 65,
+    blood_pressure: '110/70',
+    weight: 68,
+    height: 1.70,
+    bmi: '23.5 (normal)',
+    allergies: 'Aspirina',
+    diagnosis: 'Parkinson',
+    treatment: 'Levodopa 200 mg c/8 hrs',
+    last_consultation: '2024-11-10',
+    emergency_contact: '555-444-5555',
+    doctor_notes: 'Recomendar terapia física para mejorar movilidad.',
+    description:
+      'Temblor en reposo y rigidez muscular. Necesita apoyo para caminar largas distancias.',
+  },
+  {
+    id: 7,
+    name: 'Antonia',
+    last_name: 'García',
+    age: 84,
+    gender: 'Femenino',
+    pulse: 77,
+    blood_pressure: '140/88',
+    weight: 58,
+    height: 1.55,
+    bmi: '24.1 (normal)',
+    allergies: 'Ninguna conocida',
+    diagnosis: 'Insuficiencia renal crónica',
+    treatment: 'Hemodiálisis semanal',
+    last_consultation: '2024-10-25',
+    emergency_contact: '555-666-7777',
+    doctor_notes: 'Monitorear niveles de potasio en sangre.',
+    description:
+      'Bajo tratamiento de hemodiálisis con restricciones alimenticias estrictas.',
+  },
+  {
+    id: 8,
+    name: 'Raúl',
+    last_name: 'Sánchez',
+    age: 80,
+    gender: 'Masculino',
+    pulse: 73,
+    blood_pressure: '125/80',
+    weight: 75,
+    height: 1.72,
+    bmi: '25.4 (sobrepeso leve)',
+    allergies: 'Polen',
+    diagnosis: 'Cataratas',
+    treatment: 'Pendiente de cirugía oftalmológica',
+    last_consultation: '2024-11-12',
+    emergency_contact: '555-888-9999',
+    doctor_notes: 'Evaluar aptitud para cirugía.',
+    description:
+      'Visión borrosa y dificultad para realizar actividades que requieran enfoque visual.',
+  },
+  {
+    id: 9,
+    name: 'Laura',
+    last_name: 'Ortiz',
+    age: 77,
+    gender: 'Femenino',
+    pulse: 74,
+    blood_pressure: '130/82',
+    weight: 65,
+    height: 1.58,
+    bmi: '26.0 (sobrepeso)',
+    allergies: 'Gluten',
+    diagnosis: 'Fractura de cadera',
+    treatment: 'Rehabilitación física diaria',
+    last_consultation: '2024-11-09',
+    emergency_contact: '555-999-8888',
+    doctor_notes: 'Evaluar progreso de movilidad semanalmente.',
+    description:
+      'En recuperación tras cirugía de reemplazo de cadera. Movilidad reducida.',
+  },
+  {
+    id: 10,
+    name: 'Francisco',
+    last_name: 'Domínguez',
+    age: 83,
+    gender: 'Masculino',
+    pulse: 69,
+    blood_pressure: '115/75',
+    weight: 72,
+    height: 1.65,
+    bmi: '26.4 (sobrepeso)',
+    allergies: 'Sulfas',
+    diagnosis: 'Alzheimer',
+    treatment: 'Memantina 10 mg/día',
+    last_consultation: '2024-10-28',
+    emergency_contact: '555-222-3333',
+    doctor_notes: 'Reforzar actividades cognitivas diarias.',
+    description:
+      'Avance gradual de pérdida de memoria y confusión. Requiere ayuda constante.',
+  },
+];

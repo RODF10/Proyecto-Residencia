@@ -1,3 +1,93 @@
-.main-content{
-    margin-top: 20px;
+mat-toolbar {
+  background-color: #f06cff;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+}
+
+mat-sidenav {
+  width: 200px;
+  border-right: none;
+  padding: 16px 0;
+}
+
+.content {
+  height: calc(100svh - 98px);
+  border-radius: 10px;
+  padding: 16px;
+  max-width: 1520px;
+  margin: 0 auto;
+  font-size: 16px;
+}
+mat-sidenav-container {
+  height: calc(100svh - 65px);
+}
+
+/* Espaciador para separar elementos */
+.spacer {
+    flex: 1 1 auto; /* Ocupa el espacio restante */
+}
+
+// LOGO DE LA APLICACION
+.logo .icono {
+	background: white;
+	border-radius: 50%;
+    width: 100%;
+    max-width: 40px;
+}
+.logo:hover{
+	cursor: pointer;
+}
+.logo .icono, .logo h2{
+	display: inline;
+}
+.logo h2{
+    padding-left: 10px;
+}
+// IMAGEN Y USUARIO [LOGIN]
+.profile {
+    position: relative;
+    //width: 100px;
+}
+.user-name {
+    color: #000;
+    font-size: 15px;
+    font-weight: 400;
+    display: inline-flex;
+    margin-left: 10px;
+}
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+    display: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+
+    i{
+        margin-right: 10px;
+    }
+}
+.profile a:hover{
+	background: rgba(0,250,238,0.3);
+}
+
+.dropdown-menu.show {
+    display: block;
 }

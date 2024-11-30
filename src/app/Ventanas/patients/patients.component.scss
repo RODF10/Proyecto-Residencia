@@ -1,0 +1,100 @@
+.container {
+  background-color: #ff0000;
+  padding: 20px;
+  max-width: 100%;
+  /* Asegúrate de que nunca se salga de los bordes */
+  overflow-x: auto;
+  /* Permite desplazamiento horizontal en caso necesario */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  font-size: 14px;
+  /* Ajusta el tamaño de fuente para pantallas pequeñas */
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap; /* Asegúrate de que los elementos internos se acomoden */
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.perfil {
+  background-color: aqua;
+}
+
+@media screen and (max-width: 768px) {
+  th, td {
+    font-size: 12px; /* Reduce el tamaño de fuente en pantallas pequeñas */
+    padding: 6px;
+  }
+
+  .example-element-detail {
+    flex-direction: column; /* Ajusta el diseño del detalle en columnas */
+  }
+
+  table {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  th, td {
+    font-size: 10px; /* Más pequeño en pantallas extra pequeñas */
+    padding: 4px;
+  }
+
+  .container {
+    padding: 10px; /* Ajusta el margen en pantallas pequeñas */
+  }
+}
