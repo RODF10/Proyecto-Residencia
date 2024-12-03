@@ -46,12 +46,16 @@ export class ApiService {
   loginDoctor(credentials: any): Observable<any> {
     return this.http.post<any>(this.urlApi+'/validate-password', credentials);
   }
-
+  //Obtener los registros Tabla Doctor
   getUsers(): Observable<any> {
     return this.http.get(this.urlApi+'/doctors');
   }
-
+  //Eliminar Doctor
   deleteDoctor(id: number): Observable<any> {
     return this.http.delete(`${this.urlApi}/doctors/${id}`);
+  }
+  //Crear Paciente
+  crearPaciente(data: any): Observable<any> {
+    return this.http.post(`${this.urlApi}/add-patients`, data);
   }
 }

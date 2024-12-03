@@ -26,7 +26,7 @@
               </div>
   
               <!-- Cédula -->
-              <div class="mb-3">
+              <div class="mb-3 cedula">
                 <label for="cedula" class="form-label">Cédula</label>
                 <input id="cedula" type="text" class="form-control" formControlName="cedula" />
                 <div *ngIf="registerForm.get('cedula')?.invalid && registerForm.get('cedula')?.touched" class="text-danger">
