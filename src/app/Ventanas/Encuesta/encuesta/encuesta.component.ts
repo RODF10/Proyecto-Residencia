@@ -50,7 +50,7 @@ export class EncuestaComponent implements OnInit, OnDestroy{
   }
 
   ngOnDestroy(): void {
-    localStorage.removeItem('subCatSeleccionada'); // Limpia selección SubCategoria
+    localStorage.removeItem('encuestaSeleccionada'); // Limpia selección SubCategoria
     localStorage.removeItem('categoriaSeleccionada')// Limpiar seleccion Categoria
     document.removeEventListener('contextmenu', this.disableRightClick);
   }

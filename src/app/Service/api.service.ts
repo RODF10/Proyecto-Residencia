@@ -6,28 +6,32 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private urlApi = 'http://127.0.0.1:8000/api';
+  private urlApi = 'http://127.0.0.1:8000/api'; // Api Laravel (Backend)
 
   /* SECCION CATEGORIA Y SUBCATEGORIA */
   //Selecciona Subcategoria
   private selectSubCat = new BehaviorSubject<String>('Undefinid');
-  selectEncuest$ = this.selectSubCat.asObservable();
+  selectEncuest$: Observable<String>;
   //Selecciona la Categoria
   private categoriaSeleccionadaSource: BehaviorSubject<String> = new BehaviorSubject<String>('Undefinid');
   categoriaSeleccionada$: Observable<String>; 
 
   constructor(private http: HttpClient) {
-    // Recuperar la categoría seleccionada del Local Storage o establecer un valor predeterminado
+    // Recuperar la categoría/encuesta seleccionada del Local Storage o establecer un valor predeterminado
     const categoriaGuardada = localStorage.getItem('categoriaSeleccionada') || 'undefinid';
+    const encuestaGuardada = localStorage.getItem('encuestaSeleccionada') || 'undefined';
     // Inicializar BehaviorSubject con el valor recuperado
     this.categoriaSeleccionadaSource = new BehaviorSubject<String>(categoriaGuardada);
+    this.selectSubCat = new BehaviorSubject<String>(encuestaGuardada);
     // Asignar el observable a una propiedad pública
     this.categoriaSeleccionada$ = this.categoriaSeleccionadaSource.asObservable();
+    this.selectEncuest$ = this.selectSubCat.asObservable();
   }
+  //Seleccion de Categoria y Encuesta
   seleccionarEncuesta(encuesta: String){
     this.selectSubCat.next(encuesta);
+    localStorage.setItem('encuestaSeleccionada', encuesta.toString());
   }
-
   seleccionarCategoria(categoria: string){
     // Actualizar la categoría y persistirla en Local Storage
     this.categoriaSeleccionadaSource.next(categoria);

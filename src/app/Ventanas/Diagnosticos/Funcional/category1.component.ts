@@ -264,13 +264,11 @@ export class Category1Component implements OnInit {
     this.categoria = this.route.snapshot.paramMap.get('categoria')!;
     this.encuestaService.selectEncuest$.subscribe(cat => {
       this.encuestaSelect = cat;
-      //this.mostrarEncuesta(cat);
     });
   }
 
   // En el componente 'Category1Component'
   finalizarEncuesta() {
-    //this.puntos = 0;
     this.encuesta(this.encuestaSelect);
   }
 

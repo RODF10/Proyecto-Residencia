@@ -59,7 +59,6 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
             this.seleccionarSubCategoria('4at'); //Enciat nombre (Clave) para cada encuesta
             break;
           case 2:
-            // this.cambiarCategoria(this.ec.toLowerCase() +'-cam.php');
             this.cambiarCategoria(this.url(this.ec,'cam'))
             this.seleccionarSubCategoria('cam');
             break;
@@ -159,20 +158,16 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
   cambiarCategoria(categoria: string): void {
     this.router.navigate([`home/encuesta/${categoria}`]);
   }
-
-  //Selecciona el Nombre de la Encuesta
+  //Selecciona el Nombre de la Encuesta y Categoria
   seleccionarSubCategoria(encuesta: String){
     this.serviceApi.seleccionarEncuesta(encuesta);
-    this.categoriaSeleccionada.emit(encuesta);
-    localStorage.setItem('subCatSeleccionada', encuesta.toString());
     console.log(`Subcategoria seleccionada en DiagnosticComponent: ${encuesta}`); // Debug
   }
-
   seleccionarCategoria(categoria: string){
     this.serviceApi.seleccionarCategoria(categoria);
-    console.log('Categoria recibida en EncuestaComponent: ',categoria)
+    console.log('Categoria recibida en EncuestaComponent: ',categoria);
   }
-
+  //Asginacion URL
   url(esfera: String, url: string): string{
     return esfera.toLowerCase() + '-' + url + '.php';
   }

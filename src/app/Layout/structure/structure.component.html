@@ -35,7 +35,7 @@
                 <mat-icon matListItemIcon>home</mat-icon>
                 Home
             </mat-list-item>
-            <mat-list-item (click)="sidenav.mode === 'over' && sidenav.toggle()" routerLink="list-doctors">
+            <mat-list-item (click)="sidenav.mode === 'over' && sidenav.toggle()" routerLink="list-doctors" *ngIf="doctorID == 1">
                 <mat-icon matListItemIcon>person</mat-icon>
                 Doctores
             </mat-list-item>

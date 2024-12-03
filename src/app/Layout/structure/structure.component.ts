@@ -19,6 +19,7 @@ export class StructureComponent {
   dropdownOpen = false;
   showRegisterButton: boolean = false;
   name: string = '';
+  doctorID = 0; //Determinar el ID del Doctor
 
   constructor(private observer: BreakpointObserver, private router: Router, private authService: NavbarService, private userService: UserService, private sharedService: SharedService, private LoadJS: LoadJSService){
     LoadJS.Carga(["Profile"]);
@@ -39,6 +40,7 @@ export class StructureComponent {
       this.sharedService.showRegisterButton$.subscribe(show => {
         this.showRegisterButton = show;
       }); 
+    this.doctorID = this.userService.getDoctorId(); //Solo el Doctor Master puede registrar Doctores
   }
 
   mainPage(){
