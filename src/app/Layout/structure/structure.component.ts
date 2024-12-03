@@ -35,7 +35,7 @@ export class StructureComponent {
           this.sidenav.open();
         }
       });
-      this.name = this.userService.getDoctorName();
+      this.name = 'Dr. ' + this.userService.getDoctorName();
       this.sharedService.showRegisterButton$.subscribe(show => {
         this.showRegisterButton = show;
       }); 

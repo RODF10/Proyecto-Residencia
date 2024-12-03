@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
+import { UserService } from 'src/app/Service/user.service';
 
 @Component({
   selector: 'app-register-patient',
@@ -16,7 +17,7 @@ export class RegisterPatientComponent implements OnInit{
 
   doctor = {
     id: 0, // Este sería el ID del doctor autenticado
-    nombre: 'Undefinied'
+    name: 'Undefinied'
   };
   
 
@@ -34,7 +35,7 @@ export class RegisterPatientComponent implements OnInit{
     caracteristicas: ''
   };
 
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService) {
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService, private userService: UserService) {
     // Definición del formulario reactivo
     this.pacienteForm = this.formBuilder.group({
       matricula: ['', Validators.required], //Matricula
@@ -59,8 +60,10 @@ export class RegisterPatientComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.getDoctor();
-      console.log(this.doctor.nombre)
+      this.doctor.id = this.userService.getDoctorId();
+      this.doctor.name = this.userService.getDoctorName();
+      console.log('Nombre: '+this.doctor.name +' ID: '+this.doctor.id)
+      
   }
 
   // Método para manejar el envío del formulario
@@ -106,22 +109,6 @@ export class RegisterPatientComponent implements OnInit{
       }
     });
   }
-
-  getDoctor() {
-    this.apiService.getUsers().subscribe({
-      next: (response) => {
-        if (response && response.length > 0) {
-          this.doctor.id = response.id;
-          this.doctor.nombre = response.nombre;
-        }
-      },
-      error: (err) => {
-        this.alertService.error('Error al obtener la información del doctor.', 'Error');
-        console.error('Error al obtener doctor:', err);
-      }
-    });
-  }
-  
 }
 
 // Validador personalizado TELEFONO

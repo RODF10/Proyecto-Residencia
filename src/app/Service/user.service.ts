@@ -40,6 +40,8 @@ export class UserService {
 
   logout(): void {
     localStorage.removeItem('isAuthenticated'); // Borra el token para cerrar sesión
+    localStorage.removeItem('doctorName'); // Eliminar Nombre
+    localStorage.removeItem('idDoctor'); //Emilinar el ID
   }
 
   isAuthenticated(): boolean {
@@ -73,9 +75,10 @@ export class UserService {
       const response: any = await this.serviApi.loginDoctor({ email, password }).toPromise();
 
       if (response.success) {
-        this.usuario = 'Dr. ' + response.user.nombre + ' ' + response.user.apellido;
+        this.usuario = response.user.nombre + ' ' + response.user.apellido;
         localStorage.setItem('isAuthenticated', 'logged_in');
         localStorage.setItem('doctorName', this.usuario); // Guardar el nombre del doctor
+        localStorage.setItem('idDoctor', response.user.id.toString());
         this.sharedService.setShowRegisterButton(false);
         return true;
       }
@@ -104,5 +107,9 @@ export class UserService {
 
   getDoctorName(): string {
     return localStorage.getItem('doctorName') || '';
+  }
+  getDoctorId(): number {
+    const id = localStorage.getItem('idDoctor');
+    return id ? parseInt(id, 10) : 0; // Convierte a número o devuelve 0 si no está definido
   }
 }
