@@ -161,24 +161,35 @@ export class EncuestaAssessmentComponent {
     },
   ];
 
+  
   constructor(private fb: FormBuilder, private router: Router) {
-    const formControls: MNAForm = {};
+    const formControls: any = {};
 
-    // Configurar controles para las preguntas
+    // Configurar controles para las preguntas de cribaje
     this.cribajePreguntas.forEach((_, index) => {
       formControls[`pregunta${index}`] = [null, Validators.required];
     });
 
-    this.evaluacionPreguntas.forEach((_, index) => {
-      formControls[`evaluacionPregunta${index}`] = [null, Validators.required];
+    // Configurar controles para las preguntas de evaluación
+    this.evaluacionPreguntas.forEach((pregunta, index) => {
+      if (!pregunta.subPreguntas) {
+        formControls[`evaluacionPregunta${index}`] = [null, Validators.required];
+      }
     });
 
-    // Configurar controles para "Consume el paciente"
-    formControls['consumePaciente'] = this.fb.group({
-      lacteos: [null, Validators.required],
-      huevosLegumbres: [null, Validators.required],
-      carnePescadoAves: [null, Validators.required],
-    });
+    // Configurar controles para las subpreguntas de "K"
+    const consumePacienteControls: any = {};
+    this.evaluacionPreguntas
+      .find(p => p.texto.startsWith('K.'))?.subPreguntas
+      ?.forEach(subPregunta => {
+        consumePacienteControls[subPregunta.texto] = [false]; // Checkbox inicializado en `false`
+      });
+
+      formControls['consumePaciente'] = this.fb.group({
+        'Lácteos': [null,Validators.required],
+        'Huevos y legumbres': [null,Validators.required],
+        'Carne, pescado o aves': [null,Validators.required],
+      });
 
     this.mnaForm = this.fb.group(formControls);
   }
@@ -188,67 +199,53 @@ export class EncuestaAssessmentComponent {
       alert('Completa todas las preguntas antes de enviar.');
       return;
     }
-  
+
     const puntajeCribaje = this.calculateScore(this.cribajePreguntas, 'pregunta');
     const puntajeEvaluacion = this.calculateScore(this.evaluacionPreguntas, 'evaluacionPregunta');
-    const puntajeK = this.calculateSubPreguntaKScore();
+    const puntajeK = this.calculateConsumePacienteScore();
     const puntajeTotal = puntajeCribaje + puntajeEvaluacion + puntajeK;
-  
-    let resultado;
+
+    let observacion;
     if (puntajeTotal >= 24) {
-      resultado = 'Estado nutricional normal';
+      observacion = 'Estado nutricional normal';
     } else if (puntajeTotal >= 17) {
-      resultado = 'Riesgo de desnutrición';
+      observacion = 'Riesgo de desnutrición';
     } else {
-      resultado = 'Desnutrición';
+      observacion = 'Desnutrición';
     }
-  
-    console.log('Puntaje total:', puntajeTotal, 'Resultado:', resultado);
-  
-    this.router.navigate(['/resultados'], {
+
+    console.log('Puntaje total:', puntajeTotal, 'Resultado:', observacion);
+
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         puntaje: puntajeTotal,
-        resultado: resultado,
+        observacion: observacion,
       },
     });
   }
 
+  // Calcular el puntaje de las preguntas normales
   calculateScore(preguntas: any[], prefix: string): number {
-    return preguntas.reduce((total, _, index) => {
+    return preguntas.reduce((total, pregunta, index) => {
+      if (pregunta.subPreguntas) return total; // Excluir preguntas con subpreguntas
       const respuesta = this.mnaForm.get(`${prefix}${index}`)?.value;
       return total + (respuesta !== null ? Number(respuesta) : 0);
     }, 0);
   }
-  calculateSubPreguntaKScore(): number {
-    const preguntaK = this.evaluacionPreguntas.find(p => p.texto.startsWith('K.'));
-    if (!preguntaK || !preguntaK.subPreguntas) return 0;
-  
-    const seleccionados = preguntaK.subPreguntas.filter(subPregunta => subPregunta.seleccionado).length;
-  
-    if (seleccionados === 0) return 0;
-    if (seleccionados === 1) return 0.5;
-    if (seleccionados >= 2) return 1.0;
-  
-    return 0;
-  }
 
+  // Calcular el puntaje para la pregunta "K" (subpreguntas)
   calculateConsumePacienteScore(): number {
     const consumePaciente = this.mnaForm.get('consumePaciente')?.value;
 
     if (!consumePaciente) return 0;
 
-    // Contar respuestas "sí"
-    const siCount = Object.values(consumePaciente).filter(value => value === 'si').length;
+    // Contar subpreguntas seleccionadas (checkboxes marcados como `true`)
+    const seleccionados = Object.values(consumePaciente).filter(value => value).length;
 
-    // Devolver puntaje basado en la cantidad de "sí"
-    if (siCount === 0 || siCount === 1) {
-      return 0.0;
-    } else if (siCount === 2) {
-      return 0.5;
-    } else if (siCount === 3) {
-      return 1.0;
-    }
+    if (seleccionados === 1) return 0;
+    if (seleccionados === 2) return 0.5;
+    if (seleccionados >= 3) return 1.0;
 
-    return 0.0; // En caso de error
+    return 0;
   }
 }

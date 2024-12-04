@@ -28,6 +28,8 @@ import { EncuestaCornellComponent } from './Diagnosticos/Afectiva/encuesta-corne
 import { EncuestaOkeeffeComponent } from './Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
 import { EncuestaAssessmentSFComponent } from './Diagnosticos/Nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
 import { EncuestaAssessmentComponent } from './Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
+import { EncuestaMustComponent } from './Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
+import { EncuestaSarcFComponent } from './Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
@@ -154,6 +156,16 @@ const routes: Routes = [
   {
     path: 'encuesta-asesment', 
     component: EncuestaAssessmentComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-must', 
+    component: EncuestaMustComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-sarc-f', 
+    component: EncuestaSarcFComponent,
     canActivate: [AuthGuard]
   },
 ];

@@ -1,0 +1,22 @@
+<form [formGroup]="MustForm" (ngSubmit)="enviarFormulario()">
+  <h2 class="form-title">Encuesta MUST</h2>
+  <div>
+    <label for="imc">IMC (Kg/m²):</label>
+    <input id="imc" formControlName="imc" type="number" />
+  </div>
+
+  <div>
+    <label for="perdidaPeso">Pérdida de peso (%):</label>
+    <input id="perdidaPeso" formControlName="perdidaPeso" type="number" />
+  </div>
+
+  <div>
+    <label for="enfermedadAguda">¿Enfermedad aguda?</label>
+    <input id="enfermedadAguda" formControlName="enfermedadAguda" type="checkbox" />
+  </div>
+
+  <button type="submit" [disabled]="MustForm.invalid">Enviar</button>
+</form>
+
+
+  

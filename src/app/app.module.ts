@@ -19,6 +19,8 @@ import { ListPersonComponent } from './Ventanas/list-person/list-person.componen
 import { AboutComponent } from './Ventanas/about/about.component';
 import { Category1Component } from './Ventanas/Diagnosticos/Funcional/category1.component';
 import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.component';
+import { EncuestaAssessmentSFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
+import { EncuestaAssessmentComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
 
 //Incorporacion de Fecha
 import { LOCALE_ID } from '@angular/core';
@@ -42,6 +44,8 @@ import { EncuestaCornellComponent } from './Ventanas/Diagnosticos/Afectiva/encue
 import { EncuestaOkeeffeComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistroComponent } from './Ventanas/registro/registro.component';
+import { EncuestaMustComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
+import { EncuestaSarcFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -76,6 +80,10 @@ registerLocaleData(localeEs, 'es');
     EncuestaCornellComponent,
     EncuestaOkeeffeComponent,
     RegistroComponent,
+    EncuestaAssessmentSFComponent,
+    EncuestaAssessmentComponent,
+    EncuestaMustComponent,
+    EncuestaSarcFComponent,
     //NotFoundComponent,
   ],
   imports: [

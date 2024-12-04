@@ -1,0 +1,44 @@
+.encuesta-sarcf {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+  
+      th, td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+  
+      th {
+        background-color: #f4f4f4;
+      }
+    }
+  
+    .form-control {
+      width: 100%;
+      padding: 8px;
+    }
+  
+    .resultado, .interpretacion {
+      margin-top: 20px;
+      font-size: 16px;
+      text-align: center;
+    }
+  
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+  }
+  

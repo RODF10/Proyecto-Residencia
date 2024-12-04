@@ -1,0 +1,70 @@
+<div class="encuesta-sarcf">
+    <h2>Encuesta SARC-F</h2>
+    <form [formGroup]="sarcFForm">
+      <table class="table table-bordered table-responsive">
+        <thead>
+          <tr>
+            <th>Preguntas</th>
+            <th>Puntaje</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Strength (Fuerza):</strong> ¿Qué tanta dificultad tiene para llevar o cargar 4.5 kg?</td>
+            <td>
+              <select formControlName="strength" class="form-control">
+                <option value="0">Ninguna</option>
+                <option value="1">Alguna</option>
+                <option value="2">Mucha o incapaz</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Assistance in walking (Asistencia para caminar):</strong> ¿Qué tanta dificultad tiene para cruzar caminando por un cuarto?</td>
+            <td>
+              <select formControlName="walking" class="form-control">
+                <option value="0">Ninguna</option>
+                <option value="1">Alguna</option>
+                <option value="2">Mucha, usando auxiliares o incapaz</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Rise from chair (Levantarse de una silla):</strong> ¿Qué tanta dificultad tiene para levantarse de una silla o cama?</td>
+            <td>
+              <select formControlName="chair" class="form-control">
+                <option value="0">Ninguna</option>
+                <option value="1">Alguna</option>
+                <option value="2">Mucha o incapaz sin ayuda</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Climb stairs (Subir escaleras):</strong> ¿Qué tanta dificultad tiene para subir 10 escalones?</td>
+            <td>
+              <select formControlName="stairs" class="form-control">
+                <option value="0">Ninguna</option>
+                <option value="1">Alguna</option>
+                <option value="2">Mucha o incapaz</option>
+              </select>
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Falls (Caídas):</strong> ¿Cuántas veces se ha caído en el último año?</td>
+            <td>
+              <select formControlName="falls" class="form-control">
+                <option value="0">Ninguna</option>
+                <option value="1">1-3 caídas</option>
+                <option value="2">4 o más caídas</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <button type="button" class="btn btn-success" (click)="enviarResultados()">Enviar Resultados</button>
+    </form>
+  </div>
+  
+
+  
