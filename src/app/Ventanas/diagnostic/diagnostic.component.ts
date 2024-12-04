@@ -157,6 +157,7 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
   //URL Dinamica de acuerdo a la encuesta seleccionada
   cambiarCategoria(categoria: string): void {
     this.router.navigate([`home/encuesta/${categoria}`]);
+    console.log('URL: '+categoria)
   }
   //Selecciona el Nombre de la Encuesta y Categoria
   seleccionarSubCategoria(encuesta: String){

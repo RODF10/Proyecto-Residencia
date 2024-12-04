@@ -114,7 +114,7 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
         // Reiniciar el formulario
         this.pacienteForm.reset();
         this.submitted = false;
-        this.router.navigateByUrl('home/list-person');
+        this.router.navigate(['home/list-person']);
       },
       error: (error) => {
         this.alertService.error('Ocurrió un error al registrar el paciente. Por favor, inténtelo de nuevo.', 'Error');
