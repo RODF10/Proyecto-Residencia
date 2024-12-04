@@ -5,6 +5,8 @@ import { animate, state, style, transition, trigger,} from '@angular/animations'
 import { PATIENTS_DATA } from '../data/patients-data';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ApiService } from 'src/app/Service/api.service';
+import { UserService } from 'src/app/Service/user.service';
 
 @Component({
   selector: 'app-patients',
@@ -24,7 +26,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class PatientsComponent {
   title = 'Pacientes';
   columnsToDisplay: string[] = [
-    'name',
+    'first_name',
     'last_name',
     'age',
     'last_consultation',
@@ -37,7 +39,7 @@ export class PatientsComponent {
     | MatPaginator
     | undefined;
 
-    constructor(private router: Router, ){
+    constructor(private router: Router, private apiService: ApiService, private userService: UserService){
      
     }
 
@@ -46,20 +48,36 @@ export class PatientsComponent {
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
     }
+
+    // Obtener pacientes del doctor
+    this.getPatients();
   }
 
   columnHeaders: { [key: string]: string } = {
-    name: 'Nombre',
+    first_name: 'Nombre',
     last_name: 'Apellido',
     age: 'Edad',
     last_consultation: 'Última consulta',
   };
 
+  // Método para redirigir al perfil del paciente
   perfilUser(id: number){
-    this.router.navigate(['home/view-person']);
+    // Redirige al componente del perfil de paciente pasando el id en la URL
+    this.router.navigate(['home/view-person',{patientID: id}]);
+    console.log(id)
   }
 
   patient(){
     this.router.navigate(['/home/register-patient'])
+  }
+
+  getPatients(){
+    this.apiService.getPatientsByDoctor(this.userService.getDoctorId()).subscribe(
+      (response) =>{
+        this.dataSource.data = response.patients;
+      }, (error) =>{
+        alert('Error al obtener los pacientes');
+      }
+    );
   }
 }

@@ -32,11 +32,11 @@
             <!--Foto del paciente-->
             <img src="assets/icons/Logo_IMSS.png" alt="Home Icon" width="50" height="50" class="perfil">
           </div>
+          <div class="botons">
+            <button type="button" class="btn btn-info" (click)="perfilUser(element.id)">Perfil Paciente</button>
+          </div>
           <div class="example-element-description">
             {{element.description}}
-          </div>
-          <div class="botons">
-            <button type="button" class="btn btn-info" (click)="perfilUser(1)">Perfil Paciente</button>
           </div>
         </div>
       </td>

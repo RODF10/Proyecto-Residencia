@@ -20,10 +20,4 @@ export class checkRedirectGuard implements CanActivate{
     }
     return true; // Permite acceso
   }
-
-  /*private checkAccessToEncuesta(): boolean {
-    // Aquí puedes verificar una condición, como si seleccionó una categoría
-    const categoriaSeleccionada = localStorage.getItem('subCatSeleccionada');
-    return !!categoriaSeleccionada; // Devuelve true si existe
-  }*/
 }

@@ -60,6 +60,18 @@ export class ApiService {
   }
   //Crear Paciente
   crearPaciente(data: any): Observable<any> {
-    return this.http.post(`${this.urlApi}/add-patients`, data);
+    return this.http.post<any>(`${this.urlApi}/add-patients`, data);
+  }
+  // En ApiService
+  getPatientsByDoctor(doctorId: number): Observable<any> {
+    return this.http.get<any>(`${this.urlApi}/${doctorId}/patients`);
+  }
+  // Obtiene el paciente por id
+  getPatientById(id: number): Observable<any> {
+    return this.http.get(`${this.urlApi}/patients/${id}`);
+  }
+  //Eliminar Paciente
+  deletePatient(patientId: number): Observable<any> {
+    return this.http.delete<any>(`${this.urlApi}/patients/${patientId}`);
   }
 }

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
 import { UserService } from 'src/app/Service/user.service';
@@ -9,7 +10,7 @@ import { UserService } from 'src/app/Service/user.service';
   templateUrl: './register-patient.component.html',
   styleUrls: ['./register-patient.component.scss']
 })
-export class RegisterPatientComponent implements OnInit{
+export class RegisterPatientComponent implements OnInit, OnDestroy{
   /* REGISTRO DE PACIENTE */
   pacienteForm: FormGroup;
   pacientes: any[] = []; // Array para almacenar los pacientes registrados
@@ -35,7 +36,7 @@ export class RegisterPatientComponent implements OnInit{
     caracteristicas: ''
   };
 
-  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService, private userService: UserService) {
+  constructor(private formBuilder: FormBuilder, private apiService: ApiService, private alertService: AlertService, private userService: UserService, private router: Router) {
     // Definición del formulario reactivo
     this.pacienteForm = this.formBuilder.group({
       matricula: ['', Validators.required], //Matricula
@@ -66,9 +67,19 @@ export class RegisterPatientComponent implements OnInit{
       
   }
 
+  ngOnDestroy(): void {
+      console.log('Componente destruido manualmente');
+  }
+
   // Método para manejar el envío del formulario
   onSubmit() {
     this.submitted = true;
+
+    // Generar la fecha y hora actual en el formato [YYYY-MM-DD - HH:mm:ss]
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${(now.getMonth() + 1).toString().padStart(2, '0')}-${now.getDate().toString().padStart(2, '0')}`;
+    const formattedTime = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}:${now.getSeconds().toString().padStart(2, '0')}`;
+    const lastConsultation = `${formattedDate} - ${formattedTime}`;
 
     // Validación del formulario
     if (this.pacienteForm.invalid) {
@@ -91,6 +102,7 @@ export class RegisterPatientComponent implements OnInit{
       medical_history: this.pacienteForm.value.historialMedico,
       allergies: this.pacienteForm.value.alergias,
       description: this.pacienteForm.value.caracteristicas,
+      last_consultation: lastConsultation, // Fecha y hora de la consulta
       doctor_id: this.doctor.id // Suponiendo que el objeto `doctor` contiene los datos del doctor actual
     };
 
@@ -102,12 +114,15 @@ export class RegisterPatientComponent implements OnInit{
         // Reiniciar el formulario
         this.pacienteForm.reset();
         this.submitted = false;
+        this.router.navigateByUrl('home/list-person');
       },
       error: (error) => {
         this.alertService.error('Ocurrió un error al registrar el paciente. Por favor, inténtelo de nuevo.', 'Error');
         console.error('Error al registrar paciente:', error);
       }
     });
+
+    console.log(lastConsultation);
   }
 }
 

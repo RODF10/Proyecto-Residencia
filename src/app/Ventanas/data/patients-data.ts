@@ -1,7 +1,7 @@
 export interface Patient {
   id: number; // Identificador único del paciente.
-  name: string; // Nombre del paciente.
-  last_name: string; // Apellido del paciente.
+  first_name: string; // Nombre del paciente.
+  last_first_name: string; // Apellido del paciente.
   age: number; // Edad del paciente en años.
   gender: string; // Género del paciente. Ejemplo: "Femenino" o "Masculino".
   pulse: number; // Pulso cardíaco del paciente (latidos por minuto).
@@ -22,8 +22,8 @@ export interface Patient {
 export const PATIENTS_DATA: Patient[] = [
   {
     id: 1,
-    name: 'María',
-    last_name: 'González',
+    first_name: 'María',
+    last_first_name: 'González',
     age: 78,
     gender: 'Femenino',
     pulse: 72,
@@ -42,8 +42,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 2,
-    name: 'José',
-    last_name: 'López',
+    first_name: 'José',
+    last_first_name: 'López',
     age: 82,
     gender: 'Masculino',
     pulse: 68,
@@ -62,8 +62,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 3,
-    name: 'Carmen',
-    last_name: 'Ramírez',
+    first_name: 'Carmen',
+    last_first_name: 'Ramírez',
     age: 85,
     gender: 'Femenino',
     pulse: 75,
@@ -82,8 +82,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 4,
-    name: 'Juan',
-    last_name: 'Martínez',
+    first_name: 'Juan',
+    last_first_name: 'Martínez',
     age: 76,
     gender: 'Masculino',
     pulse: 80,
@@ -102,8 +102,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 5,
-    name: 'Rosalía',
-    last_name: 'Pérez',
+    first_name: 'Rosalía',
+    last_first_name: 'Pérez',
     age: 79,
     gender: 'Femenino',
     pulse: 70,
@@ -122,8 +122,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 6,
-    name: 'Miguel',
-    last_name: 'Hernández',
+    first_name: 'Miguel',
+    last_first_name: 'Hernández',
     age: 81,
     gender: 'Masculino',
     pulse: 65,
@@ -142,8 +142,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 7,
-    name: 'Antonia',
-    last_name: 'García',
+    first_name: 'Antonia',
+    last_first_name: 'García',
     age: 84,
     gender: 'Femenino',
     pulse: 77,
@@ -162,8 +162,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 8,
-    name: 'Raúl',
-    last_name: 'Sánchez',
+    first_name: 'Raúl',
+    last_first_name: 'Sánchez',
     age: 80,
     gender: 'Masculino',
     pulse: 73,
@@ -182,8 +182,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 9,
-    name: 'Laura',
-    last_name: 'Ortiz',
+    first_name: 'Laura',
+    last_first_name: 'Ortiz',
     age: 77,
     gender: 'Femenino',
     pulse: 74,
@@ -202,8 +202,8 @@ export const PATIENTS_DATA: Patient[] = [
   },
   {
     id: 10,
-    name: 'Francisco',
-    last_name: 'Domínguez',
+    first_name: 'Francisco',
+    last_first_name: 'Domínguez',
     age: 83,
     gender: 'Masculino',
     pulse: 69,

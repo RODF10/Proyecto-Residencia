@@ -60,7 +60,7 @@ export class RegistroComponent implements OnInit{
         (response) => {
           console.log('Doctor registrado:', response);
           this.alert.success('Registro de usuario Exitoso', 'Succesfuly Register');
-          this.router.navigate(['/login']);
+          this.router.navigate(['/list-doctors']);
         },
         (error) => {
           console.error('Error al registrar doctor:', error);
