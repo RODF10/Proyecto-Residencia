@@ -1,0 +1,79 @@
+<div class="encuesta-container">
+  <h1 class="encuesta-title">Mini Nutritional Assessment SF</h1>
+  <form [formGroup]="mnaForm" (ngSubmit)="enviarResultados()">
+    <!-- Pregunta 1 -->
+    <div class="form-group">
+      <label>A. ¿Ha perdido el apetito? Ha comido menos por falta de apetito, problemas digestivos, dificultades de masticación o deglución en los últimos 3 meses?</label>
+      <div>
+        <label><input type="radio" formControlName="question1" value="0" /> Ha comido mucho menos</label>
+        <label><input type="radio" formControlName="question1" value="1" /> Ha comido menos</label>
+        <label><input type="radio" formControlName="question1" value="2" /> Ha comido igual</label>
+      </div>
+    </div>
+
+    <!-- Pregunta 2 -->
+    <div class="form-group">
+      <label>B. ¿Ha perdido peso recientemente (menor a 3 meses)?</label>
+      <div>
+        <label><input type="radio" formControlName="question2" value="0" /> Pérdida de peso mayor a 3 kilos</label>
+        <label><input type="radio" formControlName="question2" value="1" /> No lo sabe</label>
+        <label><input type="radio" formControlName="question2" value="2" /> Pérdida de peso entre 1 y 3 kilos</label>
+        <label><input type="radio" formControlName="question2" value="3" /> No ha habido pérdida de peso</label>
+      </div>
+    </div>
+
+    <!-- Pregunta 3 -->
+    <div class="form-group">
+      <label>C. Movilidad</label>
+      <div>
+        <label><input type="radio" formControlName="question3" value="0" /> De la cama al sillón</label>
+        <label><input type="radio" formControlName="question3" value="1" /> Autonomía en el interior</label>
+        <label><input type="radio" formControlName="question3" value="2" /> Sale del domicilio</label>
+      </div>
+    </div>
+
+    <!-- Pregunta 4 -->
+    <div class="form-group">
+      <label>D. ¿Ha tenido una enfermedad aguda o situación de estrés psicológico en los últimos 3 meses?</label>
+      <div>
+        <label><input type="radio" formControlName="question4" value="0" /> Sí</label>
+        <label><input type="radio" formControlName="question4" value="2" /> No</label>
+      </div>
+    </div>
+
+    <!-- Pregunta 5 -->
+    <div class="form-group">
+      <label>E. Problemas neuropsicológicos</label>
+      <div>
+        <label><input type="radio" formControlName="question5" value="0" /> Demencia o depresión grave</label>
+        <label><input type="radio" formControlName="question5" value="1" /> Demencia moderada</label>
+        <label><input type="radio" formControlName="question5" value="2" /> Sin problemas psicológicos</label>
+      </div>
+    </div>
+
+    <!-- Pregunta 6 -->
+    <div class="form-group">
+      <label>F1. Índice de masa corporal (IMC) = Peso en KG / (Talla en m²)</label>
+      <div>
+        <label><input type="radio" formControlName="question6" value="0" /> IMC &#60; 19 kg/m²</label>
+        <label><input type="radio" formControlName="question6" value="1" /> IMC entre 19 y 21 kg/m²</label>
+        <label><input type="radio" formControlName="question6" value="2" /> IMC entre 21 y 23 kg/m²</label>
+        <label><input type="radio" formControlName="question6" value="3" /> IMC &#62; 23 kg/m²</label>
+      </div>
+    </div>
+
+    <!-- Pregunta 7 -->
+    <div class="form-group">
+      <label>F2. Perímetro de pantorrilla (cm)</label>
+      <div>
+        <label><input type="radio" formControlName="question7" value="0" /> &#60; 31 cm</label>
+        <label><input type="radio" formControlName="question7" value="1" /> &#62; 31 cm</label>
+      </div>
+    </div>
+
+    <!-- Botón de envío -->
+    <button type="button" class="btn btn-primary mt-3" (click)="enviarResultados()">Finalizar y Enviar</button>
+  </form>
+</div>
+
+  

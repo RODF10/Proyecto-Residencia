@@ -34,10 +34,10 @@
             <td>{{ user.direccion }}</td>
             <td>
               <div class="botones">
-                <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.id, user.nombre)">
+                <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.id, user.nombre)" title="Elminar {{user.nombre}}">
                   <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
                 </button>
-                <button class="btn btn-sm btn-primary" (click)="actualizarUsuario(user.id)">
+                <button class="btn btn-sm btn-primary" (click)="actualizarUsuario(user.id)" title="Cambiar Contraseña">
                   <i class="fas fa-edit"></i> <!-- Icono de actualizar -->
                 </button>
               </div>

@@ -116,7 +116,13 @@ label{
   }
 }
 
-// ESTILOS ENSRUD
-.frail{
-  
+/*  ESTILOS TIME UP */ 
+.cronometro ul{
+  list-style-type: cjk-earthly-stem;
+}
+.cronometro .time{
+  width: 400px;
+}
+.cronometro .opciones button{
+  margin: 0 10px;
 }

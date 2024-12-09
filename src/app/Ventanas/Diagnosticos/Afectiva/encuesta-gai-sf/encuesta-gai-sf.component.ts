@@ -43,7 +43,7 @@ export class EncuestaGaiSfComponent {
     console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
 
     // Redirige al componente de resultados con los datos mediante queryParams
-    this.router.navigate(['/resultado'], {
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         nombreEncuesta: 'GAI-SF',
         puntaje: puntaje,

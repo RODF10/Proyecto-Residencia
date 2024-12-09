@@ -217,23 +217,40 @@
  </div>
 
  <!-- Time Up and Go -->
- <div class="cronometro" *ngIf="encuestaSelect == 'timeup'">
-  <h1>{{ tiempo | date:'mm:ss.SSS':'UTC' }}</h1>
-  <button (click)="iniciarPausar()">
-    {{ corriendo ? 'Pause' : 'Start' }}
-  </button>
-  <button (click)="reiniciar()">Reset</button>
-  <button (click)="capturarTiempo()" [disabled]="!corriendo">Time Capture</button>
-  <button (click)="deleteScore()">Default</button>
-  
-  <div *ngIf="capturas.length">
-    <h3>Tiempos Capturados:</h3>
-    <ul>
-      <li *ngFor="let captura of capturas; let i = index">
-        Captura {{ i + 1 }}: {{ captura }}
-      </li>
-    </ul>
+ <div class="cronometro containerEncuesta" *ngIf="encuestaSelect == 'timeup'">
+  <div class="titulo">
+    <h2>Time UP and DOWN</h2>
   </div>
+  <div class="instrucciones">
+    <p>La persona puede usar su calzado habitual y puede utilizar cualquier dispositivo de ayuda que normalmente usa.</p>
+    <ul>
+      <li>Indicarle a la persona mayor, sentarse en la silla con la espalda apoyada en el respaldo.</li>
+      <li>Pídale a la persona que se levante de la silla, camine a paso normal una distancia de 3 metros, haga que la persona de la vuelta camine nuevamente hacia la silla y se vuelva a sentar.</li>
+      <li>Mida el tiempo en que la persona mayor realiza la prueba. El cronometraje comienza cuando la persona comienza a levantarse de la silla y termina cuando regresa a la silla y se sienta.</li>
+      <li>Dar un intento de prueba.</li>
+    </ul>
+    <p>El cronometraje comienza cuando la persona comienza a levantarse de la silla y termina cuando regresa a la silla y se sienta.</p>
+    <p>La persona debe de dar un intento de práctica y luego repite 3 intentos más. Se promedian los tres ensayos reales y se promedian.</p>
+  </div>
+  <div class="opciones">
+    <h1>{{ tiempo | date:'mm:ss.SSS':'UTC' }}</h1>
+    <button (click)="iniciarPausar()" class="btn btn-primary">
+      {{ corriendo ? 'Pause' : 'Start' }}
+    </button>
+    <button (click)="reiniciar()" class="btn btn-primary">Reset</button>
+    <button (click)="capturarTiempo()" [disabled]="!corriendo" class="btn btn-primary">Time Capture</button>
+    <button (click)="deleteScore()" class="btn btn-primary">Default</button>
+    
+    <div *ngIf="capturas.length">
+      <h3>Tiempos Capturados:</h3>
+      <ul>
+        <li *ngFor="let captura of capturas; let i = index">
+          Captura {{ i + 1 }}: {{ captura }}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <img src="assets/Imagenes/timeupdown.png" alt="" class="time" draggable="false">
 </div>
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>

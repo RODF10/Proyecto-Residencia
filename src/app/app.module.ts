@@ -16,6 +16,8 @@ import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component'
 import { AboutComponent } from './Ventanas/about/about.component';
 import { Category1Component } from './Ventanas/Diagnosticos/Funcional/category1.component';
 import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.component';
+import { EncuestaAssessmentSFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment-sf/encuesta-assessment-sf.component';
+import { EncuestaAssessmentComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
 
 //Incorporacion de Fecha
 import { LOCALE_ID } from '@angular/core';
@@ -43,6 +45,8 @@ import { MaterialModuleModule } from './material.module';
 import { ListDoctorsComponent } from './Ventanas/list-doctors/list-doctors.component';
 import { PatientsComponent } from './Ventanas/patients/patients.component';
 import { RegisterPatientComponent } from './Ventanas/register-patient/register-patient.component';
+import { EncuestaMustComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
+import { EncuestaSarcFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -77,6 +81,10 @@ registerLocaleData(localeEs, 'es');
     ListDoctorsComponent,
     PatientsComponent,
     RegisterPatientComponent,
+    EncuestaAssessmentSFComponent,
+    EncuestaAssessmentComponent,
+    EncuestaMustComponent,
+    EncuestaSarcFComponent,
     //NotFoundComponent,
   ],
   imports: [

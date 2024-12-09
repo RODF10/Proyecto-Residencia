@@ -1,0 +1,105 @@
+<h1 class="titulo-encuesta">Mini Nutritional Assessment</h1>
+
+<form [formGroup]="mnaForm" (ngSubmit)="enviarResultados()" class="container encuesta-container">
+  <!-- Sección de Cribaje -->
+  <h2 class="subtitulo">Cribaje</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Pregunta</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pregunta of cribajePreguntas; let i = index">
+        <td>
+          <label>{{ pregunta.texto }}</label>
+        </td>
+        <td>
+          <div *ngFor="let opcion of pregunta.opciones" class="form-check">
+            <input
+              type="radio"
+              class="form-check-input"
+              [formControlName]="'pregunta' + i"
+              [value]="opcion.valor"
+              id="cribajePregunta{{ i }}-opcion{{ opcion.valor }}"
+            />
+            <label
+              class="form-check-label"
+              for="cribajePregunta{{ i }}-opcion{{ opcion.valor }}"
+            >
+              {{ opcion.texto }}
+            </label>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Sección de Evaluación -->
+  <h2 class="subtitulo">Evaluación</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Pregunta</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pregunta of evaluacionPreguntas; let i = index">
+        <td>
+          <label>{{ pregunta.texto }}</label>
+        </td>
+        <td>
+          <!-- Preguntas normales -->
+          <ng-container *ngIf="!pregunta.subPreguntas">
+            <div *ngFor="let opcion of pregunta.opciones" class="form-check">
+              <input
+                type="radio"
+                class="form-check-input"
+                [formControlName]="'evaluacionPregunta' + i"
+                [value]="opcion.valor"
+                id="evaluacionPregunta{{ i }}-opcion{{ opcion.valor }}"
+              />
+              <label
+                class="form-check-label"
+                for="evaluacionPregunta{{ i }}-opcion{{ opcion.valor }}"
+              >
+                {{ opcion.texto }}
+              </label>
+            </div>
+          </ng-container>
+
+          <!-- Pregunta "K" con subpreguntas -->
+          <ng-container *ngIf="pregunta.subPreguntas">
+            <div formGroupName="consumePaciente">
+              <div *ngFor="let subPregunta of pregunta.subPreguntas" class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [formControlName]="subPregunta.texto"
+                  id="subpregunta-{{ subPregunta.texto }}"
+                />
+                <label
+                  class="form-check-label"
+                  for="subpregunta-{{ subPregunta.texto }}"
+                >
+                  {{ subPregunta.texto }}
+                </label>
+              </div>
+            </div>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Botón de enviar -->
+  <button
+    type="submit"
+    [disabled]="mnaForm.invalid"
+    class="btn btn-primary mt-3"
+  >
+    Enviar Resultados
+  </button>
+</form>

@@ -1,51 +1,206 @@
-<p>Perfil Medico</p>
-<!-- PERFIL DEL MEDICO -->
-<div class="perfil">
-    <div class="fotoPerfil">
-        <img src="https://i.pinimg.com/1200x/88/f4/8f/88f48f94c2b60bb17a009a1513c53716.jpg" alt="" class="user">
-        <div class="overlay"><i class="fas fa-camera"></i></div> <!--Cambiar foto-->
-    </div>
-    <div class="container">
-        <p class="name">Eduardo Manuel Miller Mart&iacute;nez</p>
-        <div class="datoPersonal">
-            <p class="date">21/Agosto/2004</p>
-            <p class="genero">Masculino</p>
+<div class="perfilDoctor" *ngIf="mostrar && !pass">
+    <p class="title">Perfil M&#233;dico</p>
+    <!-- PERFIL DEL MEDICO -->
+    <div class="perfil">
+        <div class="fotoPerfil">
+            <img [src]='imagen' alt="" class="user"> <!-- Imagen/ImageDefault -->
+            <div class="overlay"><i class="fas fa-camera"></i></div> <!--Cambiar foto-->
         </div>
+        <div class="container">
+            <p class="firstName">{{ nombre }}</p> <!-- Nombre -->
+            <p class="lastName">{{ apellido }}</p> <!-- Apellido -->
+            <div class="datoPersonal">
+                <p class="date">{{ fecha }}</p> <!-- Fecha Nacimiento -->
+                <p class="genero">{{ genero }}</p> <!-- Genero -->
+            </div>
+        </div>
+        <button class="edit-btn" title="Editar Perfil" (click)="seleccionPerfil(1)">
+            <i class="fas fa-pencil-alt" id="icon"></i>
+        </button>
     </div>
-    <button class="edit-btn" title="Editar Perfil">
-        <i class="fas fa-pencil-alt" id="icon"></i>
-    </button>
+
+    <div class="containerProfesional">
+        <!-- Cedula -->
+        <div class="perfil-item">
+            <span class="label">Cédula:</span>
+            <span class="value">{{ cedula }}</span>
+        </div>
+
+        <!-- Prefesion -->
+        <div class="perfil-item">
+            <span class="label">Profesión:</span>
+            <span class="value">{{ profesion }}</span>
+        </div>
+
+        <!-- Edad -->
+        <div class="perfil-item">
+            <span class="label">Edad:</span>
+            <span class="value">{{ edad }}</span>
+        </div>
+
+        <!-- Correo -->
+        <div class="perfil-item">
+            <span class="label">Correo:</span>
+            <span class="value">{{ correo }}</span>
+        </div>
+
+        <!-- Mostrar/Ocultar Contraseña -->
+        <div class="perfil-item password-item">
+            <span class="label">Contraseña:</span>
+            <span class="value">
+                <span *ngIf="mostrarPassword">{{ password }}</span>
+                <span *ngIf="!mostrarPassword">********</span>
+                <button (click)="togglePasswordVisibility()" class="toggle-btn">
+                    <mat-icon>{{ mostrarPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+            </span>
+        </div>
+
+        <!-- Telefono -->
+        <div class="perfil-item">
+            <span class="label">Teléfono:</span>
+            <span class="value">{{ telefono }}</span>
+        </div>
+
+        <!-- Direccion -->
+        <div class="perfil-item">
+            <span class="label">Dirección:</span>
+            <span class="value">{{ direccion }}</span>
+        </div>
+
+        <button class="btn btn-success" (click)="selectChanged(1)">Cambiar Contrase&#241;a</button>
+    </div>
 </div>
 
-<div class="containerProfesional">
-    <div class="pesonal">
-        <div class="stat-item" id="altura">
-            <i class="fas fa-male"></i>
-            <span>Altura: 1.75 m</span>
+<!-- *********************** ACTUALIZACION DEL DOCTOR ****************************** -->
+<div class="containerForm" *ngIf="!mostrar">
+    <p class="title">Actualizaci&#243;n del Perfil</p>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmitForm()">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" formControlName="nombre" class="form-control" />
         </div>
-        <div class="stat-item" id="peso">
-            <i class="fas fa-weight"></i>
-            <span>Peso: 70 kg</span>
+      
+        <div class="form-group">
+          <label for="apellido">Apellido:</label>
+          <input type="text" id="apellido" formControlName="apellido" class="form-control"/>
         </div>
-        <div class="stat-item" id="bmi">
-            <i class="fas fa-calculator"></i>
-            <span>BMI: 22.9</span>
+      
+        <div class="form-group">
+          <label for="cedula">Cédula:</label>
+          <input type="text" id="cedula" class="form-control disabled" [disabled]="!mostrar" value="{{ cedula }}" title="{{ cursor }}"/>
         </div>
-        <div class="stat-item" id="temperatura">
-            <i class="fas fa-thermometer-half"></i>
-            <span>Temperatura: 36.6°C</span>
+      
+        <div class="form-group">
+          <label for="profesion">Profesión:</label>
+          <input type="text" id="profesion" formControlName="profesion" class="form-control" required/>
         </div>
-        <div class="stat-item" id="arterial">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>Presión Arterial: 120/80 mmHg</span>
+      
+        <div class="form-group">
+          <label for="fecha">Fecha de Nacimiento:</label>
+          <input type="text" id="fecha" class="form-control disabled" required value="{{ fechaForm }}" [disabled]="!mostrar" title="{{ cursor }}"/>
         </div>
-        <div class="stat-item" id="cardiaca">
-            <i class="fas fa-heartbeat"></i>
-            <span>Frecuencia Cardiaca: 72 bpm</span>
+      
+        <div class="form-group">
+          <label for="edad">Edad:</label>
+          <input type="number" id="edad" formControlName="edad" class="form-control" required [ngClass]="{'is-invalid': profileForm.get('edad')?.invalid && profileForm.get('edad')?.touched}"/>
+          <div *ngIf="profileForm.get('edad')?.invalid && profileForm.get('edad')?.touched" class="invalid-feedback">
+            La edad debe ser igual o mayor a 20.
+          </div>
         </div>
-        <div class="stat-item" id="respiratorio">
-            <i class="fas fa-lungs"></i>
-            <span>Frecuencia Respiratoria: 16 rpm</span>
+      
+        <div class="form-group">
+          <label for="genero">Género:</label>
+          <input type="text" id="genero" class="form-control disabled" [disabled]="!mostrar" value="{{ genero }}" title="{{ cursor }}"/>
         </div>
+      
+        <div class="form-group">
+          <label for="correo">Correo:</label>
+          <input type="email" id="correo" formControlName="correo" class="form-control" required [ngClass]="{'is-invalid': profileForm.get('correo')?.invalid && profileForm.get('correo')?.touched}"/>
+          <div *ngIf="profileForm.get('correo')?.invalid && profileForm.get('correo')?.touched" class="invalid-feedback">
+            Por favor ingresa un correo válido.
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="telefono">Teléfono:</label>
+          <input type="tel" id="telefono" formControlName="telefono" class="form-control" required [ngClass]="{'is-invalid': profileForm.get('telefono')?.invalid && profileForm.get('telefono')?.touched}"/>
+          <div *ngIf="profileForm.get('telefono')?.invalid && profileForm.get('telefono')?.touched" class="invalid-feedback">
+            El teléfono debe tener un máximo de 10 dígitos y contener solo números.
+          </div>
+        </div>
+      
+        <div class="form-group">
+          <label for="direccion">Dirección:</label>
+          <input type="text" id="direccion" formControlName="direccion" class="form-control" required />
+        </div>
+      
+        <div class="form-group">
+          <label for="password">Contraseña:</label>
+          <div class="d-flex align-items-center">
+            <input [type]="mostrarPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control" required [ngClass]="{'is-invalid': profileForm.get('password')?.invalid && profileForm.get('password')?.touched}"/>
+            <button type="button" mat-icon-button (click)="togglePasswordVisibility()" title="{{ mostrarPassword ? 'Ocultar' : 'Mostrar' }} contraseña">
+                <mat-icon>{{ mostrarPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+          </div>
+          <div *ngIf="profileForm.get('password')?.invalid && profileForm.get('password')?.touched" class="invalid-feedback">
+            La contraseña debe tener al menos 8 caracteres.
+          </div>
+        </div>
+      
+        <div class="botones">
+            <button type="submit" class="btn btn-primary" [disabled]="profileForm">Actualizar</button>
+            <button class="btn btn-danger" (click)="seleccionPerfil(2)">Cancelar</button>
+        </div>
+      </form>      
+</div>
+
+<div class="containerPassword" *ngIf="pass">
+  <p class="title">Cambiar Contrase&#241;a</p>
+<form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitPassword()" class="container mt-5">
+    <!-- Correo Electrónico (opcional) -->
+    <div class="form-group">
+      <label for="correo">Correo Electrónico (Opcional):</label>
+      <input type="email" id="correo" formControlName="correo" class="form-control" [ngClass]="{'is-invalid': changePasswordForm.get('correo')?.invalid && changePasswordForm.get('correo')?.touched}" placeholder="Ingresa tu correo electrónico"/>
+      <div *ngIf="changePasswordForm.get('correo')?.invalid && changePasswordForm.get('correo')?.touched" class="invalid-feedback">
+        {{ getEmailErrorMessage() }}
+      </div>
     </div>
+  
+    <!-- Nueva Contraseña -->
+    <div class="form-group">
+      <label for="password">Nueva Contraseña:</label>
+      <div class="input-group">
+        <input [type]="mostrarPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid': changePasswordForm.get('password')?.invalid && changePasswordForm.get('password')?.touched}" placeholder="Ingresa nueva contraseña"/>
+        <button type="button" mat-icon-button class="input-group-text" (click)="togglePasswordVisibility()" title="{{ mostrarPassword ? 'Ocultar' : 'Mostrar' }} contraseña">
+          <mat-icon>{{ mostrarPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <div *ngIf="changePasswordForm.get('password')?.invalid && changePasswordForm.get('password')?.touched" class="invalid-feedback">
+          {{ getPasswordErrorMessage() }}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Confirmar Nueva Contraseña -->
+    <div class="form-group">
+      <label for="confirmPassword">Confirmar Nueva Contraseña:</label>
+      <div class="input-group">
+        <input [type]="mostrarConfirmPassword ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword" class="form-control" 
+        [ngClass]="{'is-invalid': (changePasswordForm.get('confirmPassword')?.invalid && changePasswordForm.get('confirmPassword')?.touched) || changePasswordForm.hasError('passwordsMismatch') && changePasswordForm.get('confirmPassword')?.touched}"
+          placeholder="Confirma nueva contraseña" />
+        <button type="button" mat-icon-button class="input-group-text" (click)="toggleConfirmPasswordVisibility()" title="{{ mostrarConfirmPassword ? 'Ocultar' : 'Mostrar' }} contraseña">
+          <mat-icon>{{ mostrarConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <div *ngIf="(changePasswordForm.get('confirmPassword')?.invalid && changePasswordForm.get('confirmPassword')?.touched) || (changePasswordForm.hasError('passwordsMismatch') && changePasswordForm.get('confirmPassword')?.touched)" class="invalid-feedback">
+          {{ getConfirmPasswordErrorMessage() }}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Botón de Envío -->
+     <div class="botones">
+       <button type="submit" class="btn btn-success" [disabled]="changePasswordForm.invalid">Cambiar Contrase&#241;a</button>
+       <button class="btn btn-danger" (click)="selectChanged(2)">Cancelar</button>
+     </div>
+  </form>
 </div>

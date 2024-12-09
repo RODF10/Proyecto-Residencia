@@ -72,6 +72,7 @@ mat-sidenav-container {
     border-radius: 5px;
     overflow: hidden;
     display: none;
+    padding-right: 10px;
 }
 
 .dropdown-menu a {
@@ -79,9 +80,9 @@ mat-sidenav-container {
     padding: 10px;
     color: #333;
     text-decoration: none;
-
+    text-align: right;
     i{
-        margin-right: 10px;
+        margin-left: 10px;
     }
 }
 .profile a:hover{

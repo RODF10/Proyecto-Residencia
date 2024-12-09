@@ -61,7 +61,7 @@ export class EncuestaOkeeffeComponent implements OnInit {
     console.log('Puntaje: ', this.resultado, '\nObservación: ', this.interpretacion);
 
     // Redirige al componente Resultados con los datos mediante el estado
-    this.router.navigate(['/resultado'], {
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         nombreEncuesta: 'Escala Corta de Depresión por Observación Hammond-O\'Keeffe',
         puntaje: this.resultado,

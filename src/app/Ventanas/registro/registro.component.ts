@@ -25,6 +25,7 @@ export class RegistroComponent implements OnInit{
       apellido: ['', Validators.required],
       cedula: ['', Validators.required],
       profesion: ['', Validators.required],
+      date: ['', Validators.required],
       edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
       genero: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -39,6 +40,7 @@ export class RegistroComponent implements OnInit{
    registro(){
     if (this.registerForm.invalid) {
       console.log('Formulario no válido');
+      this.alert.warning('No deje campos vacios, por favor de llenarlo', 'Campos Vacios');
       return;
     }
 
@@ -60,7 +62,7 @@ export class RegistroComponent implements OnInit{
         (response) => {
           console.log('Doctor registrado:', response);
           this.alert.success('Registro de usuario Exitoso', 'Succesfuly Register');
-          this.router.navigate(['/list-doctors']);
+          this.router.navigate(['home/list-doctors']);
         },
         (error) => {
           console.error('Error al registrar doctor:', error);

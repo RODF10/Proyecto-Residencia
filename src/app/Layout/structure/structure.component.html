@@ -19,9 +19,9 @@
         <img src="https://i.pinimg.com/1200x/88/f4/8f/88f48f94c2b60bb17a009a1513c53716.jpg" alt="Profile Image" class="profile-image" onclick="toggleDropdown()">
         <div id="dropdownMenu" class="dropdown-menu">
             <span class="user-name">{{name}}</span> <!-- Nombre del usuario -->
-            <a routerLink="profile"><i class="fas fa-user-circle"></i>Profile</a>
-            <a routerLink="#"><i class="fas fa-cog"></i>Settings</a>
-            <a routerLink="#" (click)="logout()"><i class="fas fa-sign-out-alt"></i>Logout</a>
+            <a routerLink="profile">Profile<i class="fas fa-user-circle"></i></a>
+            <a routerLink="#">Settings<i class="fas fa-cog"></i></a>
+            <a routerLink="#" (click)="logout()">Logout<i class="fas fa-sign-out-alt"></i></a>
         </div>
     </div>
 </mat-toolbar>

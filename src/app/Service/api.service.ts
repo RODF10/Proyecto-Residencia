@@ -45,7 +45,6 @@ export class ApiService {
     return this.http.post<any>(`${this.urlApi}/doctors`, data);
     // return this.http.post<any>(this.urlApi,data);
   }
-
   // Login del doctor
   loginDoctor(credentials: any): Observable<any> {
     return this.http.post<any>(this.urlApi+'/validate-password', credentials);
@@ -58,13 +57,22 @@ export class ApiService {
   deleteDoctor(id: number): Observable<any> {
     return this.http.delete(`${this.urlApi}/doctors/${id}`);
   }
+  //Obtener Doctor por id
+  getDoctorId(id: number): Observable<any> {
+    return this.http.get(`${this.urlApi}/doctors${id}`);
+  }
+  // Método para cambiar la contraseña
+  changePassword(payload: { correo: string, password: string }): Observable<any> {
+    return this.http.post(`${this.urlApi}/change-password`, payload);
+  }
+  /* --------------------------- PACIENTE ------------------------------------- */
   //Crear Paciente
   crearPaciente(data: any): Observable<any> {
     return this.http.post<any>(`${this.urlApi}/add-patients`, data);
   }
   // En ApiService
   getPatientsByDoctor(doctorId: number): Observable<any> {
-    return this.http.get<any>(`${this.urlApi}/${doctorId}/patients`);
+    return this.http.get<any>(`${this.urlApi}/doctor${doctorId}/patients`);
   }
   // Obtiene el paciente por id
   getPatientById(id: number): Observable<any> {
