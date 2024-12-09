@@ -9,7 +9,6 @@ import { AuthGuard } from '../guards/auth.guard';
 import { PrincipalComponent } from './principal/principal.component';
 import { VistasComponent } from './vistas/vistas.component';
 import { DiagnosticComponent } from './diagnostic/diagnostic.component';
-import { ListPersonComponent } from './list-person/list-person.component';
 import { AboutComponent } from './about/about.component';
 import { Category1Component } from './Diagnosticos/Funcional/category1.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -36,6 +35,9 @@ import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encu
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
 import { checkRedirectGuard } from '../guards/check-redirect.guard';
 import { RegistroComponent } from './registro/registro.component';
+import { ListDoctorsComponent } from './list-doctors/list-doctors.component';
+import { PatientsComponent } from './patients/patients.component';
+import { RegisterPatientComponent } from './register-patient/register-patient.component';
 
 
 const routes: Routes = [
@@ -60,7 +62,7 @@ const routes: Routes = [
   },
   {
     path: 'list-person',
-    component: ListPersonComponent,
+    component: PatientsComponent,
     canActivate: [AuthGuard]
   },
   {
@@ -91,6 +93,16 @@ const routes: Routes = [
   {
     path: 'doctors-register',
     component: RegistroComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'list-doctors',
+    component: ListDoctorsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'register-patient',
+    component: RegisterPatientComponent,
     canActivate: [AuthGuard]
   },
   //Encuestas de los URL

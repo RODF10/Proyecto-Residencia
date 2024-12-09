@@ -5,209 +5,60 @@
     <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-plus-circle"></i> Añadir Paciente</button>
   </div> -->
   <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card mt-3">
+    <div class="container my-4">
+      <h2>Detalles del Paciente</h2>
+      <div class="card">
         <div class="card-body">
-          <h3 class="card-title text-center">{{ paciente.nombre }} {{ paciente.apellido }}</h3>
-          <div class="text-center">
-            <img [src]="paciente.imagenUrl" alt="Imagen del Paciente" class="img-fluid mb-3">
+          <!-- Información del paciente -->
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Matrícula:</strong></div>
+            <div class="col-md-8">{{ patientData.registration_number }}</div>
           </div>
-          <div class="form-group">
-            <label for="edad">Edad:</label>
-            <p id="edad">{{ paciente.edad }}</p>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Nombre:</strong></div>
+            <div class="col-md-8">{{ patientData.first_name }}</div>
           </div>
-          <div class="form-group">
-            <label for="caracteristicas">Características:</label>
-            <p id="caracteristicas">{{ paciente.caracteristicas }}</p>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Apellido:</strong></div>
+            <div class="col-md-8">{{ patientData.last_name }}</div>
           </div>
-          <div class="form-group">
-            <label for="enfermedad">Enfermedad:</label>
-            <p id="enfermedad">{{ paciente.enfermedad }}</p>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Edad:</strong></div>
+            <div class="col-md-8">{{ patientData.age }}</div>
           </div>
-          <div class="form-group">
-            <label for="matricula">Número de Matrícula:</label>
-            <p id="matricula">{{ paciente.matricula }}</p>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Fecha de Nacimiento:</strong></div>
+            <div class="col-md-8">{{ patientData.birth_date | date }}</div>
           </div>
-          <div class="form-group">
-            <label for="genero">Género:</label>
-            <p id="genero">{{ paciente.genero }}</p>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Correo de Emergencia:</strong></div>
+            <div class="col-md-8">{{ patientData.emergency_email }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Teléfono de Emergencia:</strong></div>
+            <div class="col-md-8">{{ patientData.emergency_contact }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Dirección:</strong></div>
+            <div class="col-md-8">{{ patientData.address }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Historial Médico:</strong></div>
+            <div class="col-md-8">{{ patientData.medical_history }}</div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-4"><strong>Alergias:</strong></div>
+            <div class="col-md-8">{{ patientData.allergies }}</div>
           </div>
           <!-- Botones Modificar y Eliminar dentro del cuadro -->
           <div class="text-center mt-3 boxBtn">
-            <button type="button" class="btn btn-warning mr-2"><i class="bi bi-file-earmark-text"></i> Modificar</button>
-            <button type="button" class="btn btn-danger"><i class="bi bi-trash3"></i> Eliminar</button>
+            <button type="button" class="btn btn-warning mr-2"><i class="fa-regular fa-pen-to-square"></i> Modificar</button>
+            <button type="button" class="btn btn-danger" (click)="deletePatient()"><i class="fa-solid fa-trash"></i> Eliminar</button>
             <button type="button" class="btn btn-success" (click)="categoria()"><i class="fa-solid fa-file-medical"></i> Diagnostico</button>
-            <button type="button" class="btn btn-history" (click)="history()"><i class="fa-solid fa-book-medical"></i> Historial</button> <!--data-bs-toggle="modal" data-bs-target="#exampleModal"-->
-           
+            <button type="button" class="btn btn-history" (click)="history()"><i class="fa-solid fa-book-medical"></i> Historial</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-
-
-<!-- Registro de Paciente -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">Añadir Paciente <i class="bi bi-person-arms-up"></i></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Formulario del Registro -->
-        <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
-          <!-- Nombre -->
-          <div class="form-group">
-            <label for="nombre">Nombre:</label>
-            <input type="text" class="form-control" id="nombre" formControlName="nombre">
-            <div *ngIf="submitted && pacienteForm.controls['nombre'].errors">
-              <div *ngIf="pacienteForm.controls['nombre'].errors['required']" class="text-danger">Nombre es requerido</div>
-            </div>
-          </div>
-          <!-- Apellido -->
-          <div class="form-group">
-            <label for="apellido">Apellido:</label>
-            <input type="text" class="form-control" id="apellido" formControlName="apellido">
-            <div *ngIf="submitted && pacienteForm.controls['apellido'].errors">
-              <div *ngIf="pacienteForm.controls['apellido'].errors['required']" class="text-danger">Apellido es requerido</div>
-            </div>
-          </div>
-          <!-- Genero -->
-          <div class="form-group">
-            <label for="genero">Género:</label>
-            <select class="form-control" id="genero" formControlName="genero">
-              <option value="">Seleccione</option>
-              <option value="Masculino">Masculino</option>
-              <option value="Femenino">Femenino</option>
-              <!-- <option value="Otro">Otro</option> -->
-            </select>
-            <div *ngIf="submitted && pacienteForm.controls['genero'].errors">
-              <div *ngIf="pacienteForm.controls['genero'].errors['required']" class="text-danger">Género es requerido</div>
-            </div>
-          </div>
-          <!-- Matricula -->
-          <div class="form-group">
-            <label for="matricula">Número de Matrícula:</label>
-            <input type="text" class="form-control" id="matricula" formControlName="matricula">
-            <div *ngIf="submitted && pacienteForm.controls['matricula'].errors">
-              <div *ngIf="pacienteForm.controls['matricula'].errors['required']" class="text-danger">Número de Matrícula es requerido</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="caracteristicas">Características:</label>
-            <textarea class="form-control" id="caracteristicas" formControlName="caracteristicas" rows="3"></textarea>
-            <div *ngIf="submitted && pacienteForm.controls['caracteristicas'].errors" class="text-danger">
-              <div *ngIf="pacienteForm.controls['caracteristicas'].errors['required']">Características son requeridas</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="enfermedad">Enfermedad:</label>
-            <input type="text" class="form-control" id="enfermedad" formControlName="enfermedad">
-            <div *ngIf="submitted && pacienteForm.controls['enfermedad'].errors" class="text-danger">
-              <div *ngIf="pacienteForm.controls['enfermedad'].errors['required']">Enfermedad es requerida</div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="edad">Edad:</label>
-            <input type="number" class="form-control" id="edad" formControlName="edad">
-            <div *ngIf="submitted && pacienteForm.controls['edad'].errors" class="text-danger">
-              <div *ngIf="pacienteForm.controls['edad'].errors['required']">Edad es requerida</div>
-              <div *ngIf="pacienteForm.controls['edad'].errors['min']">Edad mínima es 0</div>
-            </div>
-          </div>
-          <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="confirmacion" formControlName="confirmacion">
-            <label class="form-check-label" for="confirmacion">Confirmo que los datos ingresados son correctos</label>
-            <div *ngIf="submitted && pacienteForm.controls['confirmacion'].errors" class="text-danger">
-              <div *ngIf="pacienteForm.controls['confirmacion'].errors['required']">La confirmación es requerida</div>
-            </div>
-          </div>
-          <div class="text-center">
-            <button type="submit" class="btn btn-success"><i class="bi bi-check2"></i> Guardar</button>
-            <button type="reset" class="btn btn-danger"><i class="bi bi-archive"></i> Clean</button>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Historial del Paciente -->
-<div class="cont-historia modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Historia Medico del Paciente <i class="fa-solid fa-house-medical"></i></h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <div class="modal-body">
-        <table>
-      <thead>
-          <tr>
-              <th>No.</th>
-              <th>Nombre</th>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Acciones</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td>1</td>
-              <td>Juan Pérez</td>
-              <td>2024-08-12</td>
-              <td>14:30</td>
-              <td>
-                  <span class="icon-button" title="Ver">
-                      <i class="fas fa-eye"></i>
-                  </span>
-                  <span class="icon-button" title="Descargar">
-                      <i class="fas fa-download"></i>
-                  </span>
-              </td>
-          </tr>
-          <tr>
-              <td>2</td>
-              <td>María López</td>
-              <td>2024-08-12</td>
-              <td>15:00</td>
-              <td>
-                  <span class="icon-button" title="Ver">
-                      <i class="fas fa-eye"></i>
-                  </span>
-                  <span class="icon-button" title="Descargar">
-                      <i class="fas fa-download"></i>
-                  </span>
-              </td>
-          </tr>
-          <tr>
-              <td>3</td>
-              <td>Carlos García</td>
-              <td>2024-08-12</td>
-              <td>15:30</td>
-              <td>
-                  <span class="icon-button" title="Ver">
-                      <i class="fas fa-eye"></i>
-                  </span>
-                  <span class="icon-button" title="Descargar">
-                      <i class="fas fa-download"></i>
-                  </span>
-              </td>
-          </tr>
-      </tbody>
-        </table>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-  
 </div>

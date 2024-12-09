@@ -1,0 +1,28 @@
+.text-center .btn {
+  margin: 5px 15px;
+}
+.boxBtn .btn {
+  margin: 0px 15px;
+}
+.container {
+  width: 100%;
+  max-width: 720px;
+}
+
+.container .title {
+  width: 100%;
+  background: #17b2ff;
+  padding: 5px;
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin-top: 5px;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+}
+
+.form-group{
+  margin-bottom: 1rem;
+}

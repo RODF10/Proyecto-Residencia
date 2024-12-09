@@ -1,76 +1,76 @@
-<div class="fecha-hora">
-    <div class="reloj-container">
-        <p class="hours">Hora Actual:</p>
-        <div class="reloj">
-          {{ horaActual | date:'HH:mm:ss' }}
+<div class="container">
+    <div class="fecha-hora">
+        <div class="reloj-container">
+            <p class="hours">Hora Actual:</p>
+            <div class="reloj">
+              {{ horaActual | date:'HH:mm:ss' }}
+            </div>
         </div>
-    </div>
-    <div class="container-fecha">
-        <p class="date">{{ fecha | date: 'EEEE, dd/MM/yyyy' }}</p>
-    </div>
-</div>
-
-<div class="dashboard">
-    <h1>Dashboard</h1>
-    <div class="statistics">
-        <div class="stat-box">
-            <p>1020</p>
-            <span>Citas Hechas</span>
-        </div>
-        <div class="stat-box">
-            <p>2834</p>
-            <span>Pacientes Ingresados</span>
-        </div>
-        <div class="stat-box">
-            <p></p>
-            <span>Total Encuestas</span>
+        <div class="container-fecha">
+            <p class="date">{{ fecha | date: 'EEEE, dd/MM/yyyy' }}</p>
         </div>
     </div>
     
-    <div class="content">
-        <div class="patients">
-            <h2>Diagnóstico de Pacientes Recientes</h2>
-            <table>
-                <tr>
-                    <th>Paciente</th>
-                    <th>Date Order</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
-                    <td>01-10-2021</td>
-                    <td><span class="status completed">Completed</span></td>
-                </tr>
-                <tr>
-                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
-                    <td>01-10-2021</td>
-                    <td><span class="status pending">Pending</span></td>
-                </tr>
-                <tr>
-                    <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
-                    <td>01-10-2021</td>
-                    <td><span class="status process">Process</span></td>
-                </tr>
-            </table>
+    <div class="dashboard">
+        <h1>Bienvenido al Tablero Principal</h1>
+        <div class="statistics row">
+            <div class="stat-box1 col">
+                <img src="assets/icons/Logo_IMSS.png" alt="Home Icon" width="50" height="50">
+                <p>1020</p>
+                <span>Citas Hechas</span>
+            </div>
+            <div class="stat-box2 col">
+                <img src="assets/icons/Logo_IMSS.png" alt="Home Icon" width="50" height="50">
+                <p>2834</p>
+                <span>Pacientes Ingresados</span>
+            </div>
+            <div class="stat-box3 col">
+                <img src="assets/icons/Logo_IMSS.png" alt="Home Icon" width="50" height="50">
+                <p>0</p>
+                <span>Encuestas</span>
+            </div>
         </div>
         
-        <div class="todos">
-            <h2>Citas Recientes</h2>
-            <div class="citaReciente">
-                <p class="nombre" style="margin: 0;">Jose Almendez</p>
-                <h2 class="fecha" style="margin: 0;">22/12/2025</h2>
-                <p class="hora" style="margin: 0;">14:16</p>
+        <div class="content row">
+            <div class="patients col">
+                <h2>Diagnóstico de Pacientes Recientes</h2>
+                <table>
+                    <tr>
+                        <th>Paciente</th>
+                        <th>Date Order</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr>
+                        <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                        <td>01-10-2021</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                        <td>01-10-2021</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td><img src="https://img.freepik.com/vector-premium/perfil-medico-icono-servicio-medico_617655-48.jpg" class="patient-img" alt="John Doe"> John Doe</td>
+                        <td>01-10-2021</td>
+                        <td><span class="status process">Process</span></td>
+                    </tr>
+                </table>
             </div>
-            <div class="citaReciente">
-                <p class="nombre" style="margin: 0;">Maria Peter</p>
-                <h2 class="fecha" style="margin: 0;">22/12/2025</h2>
-                <p class="hora" style="margin: 0;">16:00</p>
+            
+            <div class="todos col">
+                <h2>Citas Recientes</h2>
+                <div class="citaReciente">
+                    <p class="nombre" style="margin: 0;">Jose Almendez</p>
+                    <h2 class="fecha" style="margin: 0;">22/12/2025</h2>
+                    <p class="hora" style="margin: 0;">14:16</p>
+                </div>
+                <div class="citaReciente">
+                    <p class="nombre" style="margin: 0;">Maria Peter</p>
+                    <h2 class="fecha" style="margin: 0;">22/12/2025</h2>
+                    <p class="hora" style="margin: 0;">16:00</p>
+                </div>
             </div>
-            <!--<ul>
-                <li class="todo-item">Todo List</li>
-                <li class="todo-item">Todo List</li>
-                <li class="todo-item">Todo List</li>
-            </ul>-->
         </div>
     </div>
 </div>

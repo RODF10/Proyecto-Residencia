@@ -2,8 +2,8 @@
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card shadow">
-          <div class="card-header bg-primary text-white text-center">
-            <h3>Registro de Doctor</h3>
+          <div class="card-header  text-center">
+            <h2>Registro de Doctor <i class="fa-solid fa-user-doctor"></i></h2>
           </div>
           <div class="card-body">
             <form [formGroup]="registerForm" (ngSubmit)="registro()">
@@ -26,7 +26,7 @@
               </div>
   
               <!-- Cédula -->
-              <div class="mb-3">
+              <div class="mb-3 cedula">
                 <label for="cedula" class="form-label">Cédula</label>
                 <input id="cedula" type="text" class="form-control" formControlName="cedula" />
                 <div *ngIf="registerForm.get('cedula')?.invalid && registerForm.get('cedula')?.touched" class="text-danger">
@@ -43,6 +43,16 @@
                 </div>
               </div>
   
+              <!-- Edad -->
+              <div class="mb-3">
+                <label for="date" class="form-label">Fecha de Nacimiento</label>
+                <input id="date" type="date" class="form-control" formControlName="date" />
+                <div *ngIf="registerForm.get('date')?.invalid && registerForm.get('date')?.touched" class="text-danger">
+                  Ingrese su Fecha de Nacimiento
+                </div>
+              </div>
+              
+              
               <!-- Edad -->
               <div class="mb-3">
                 <label for="edad" class="form-label">Edad</label>
@@ -103,7 +113,7 @@
   
               <!-- Imagen -->
               <div class="mb-3">
-                <label for="imagen" class="form-label">Imagen (opcional)</label>
+                <label for="imagen" class="form-label"><i class="fa-solid fa-image"></i> Imagen (opcional)</label>
                 <input id="imagen" type="file" class="form-control" (change)="onImageChange($event)" accept="image/*" />
               </div>
   

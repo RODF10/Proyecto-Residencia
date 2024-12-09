@@ -228,7 +228,6 @@ export class EncuestaCogComponent implements OnInit{
        porcentaje: porcentaje.toFixed(2),
        observacion: observacion //Observaciones
      }});
-     //localStorage.removeItem('subCatSeleccionada'); 
    }
  }
 

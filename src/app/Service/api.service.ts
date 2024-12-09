@@ -6,28 +6,32 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private urlApi = 'http://127.0.0.1:8000/api';
+  private urlApi = 'http://127.0.0.1:8000/api'; // Api Laravel (Backend)
 
   /* SECCION CATEGORIA Y SUBCATEGORIA */
   //Selecciona Subcategoria
   private selectSubCat = new BehaviorSubject<String>('Undefinid');
-  selectEncuest$ = this.selectSubCat.asObservable();
+  selectEncuest$: Observable<String>;
   //Selecciona la Categoria
   private categoriaSeleccionadaSource: BehaviorSubject<String> = new BehaviorSubject<String>('Undefinid');
   categoriaSeleccionada$: Observable<String>; 
 
   constructor(private http: HttpClient) {
-    // Recuperar la categoría seleccionada del Local Storage o establecer un valor predeterminado
+    // Recuperar la categoría/encuesta seleccionada del Local Storage o establecer un valor predeterminado
     const categoriaGuardada = localStorage.getItem('categoriaSeleccionada') || 'undefinid';
+    const encuestaGuardada = localStorage.getItem('encuestaSeleccionada') || 'undefined';
     // Inicializar BehaviorSubject con el valor recuperado
     this.categoriaSeleccionadaSource = new BehaviorSubject<String>(categoriaGuardada);
+    this.selectSubCat = new BehaviorSubject<String>(encuestaGuardada);
     // Asignar el observable a una propiedad pública
     this.categoriaSeleccionada$ = this.categoriaSeleccionadaSource.asObservable();
+    this.selectEncuest$ = this.selectSubCat.asObservable();
   }
+  //Seleccion de Categoria y Encuesta
   seleccionarEncuesta(encuesta: String){
     this.selectSubCat.next(encuesta);
+    localStorage.setItem('encuestaSeleccionada', encuesta.toString());
   }
-
   seleccionarCategoria(categoria: string){
     // Actualizar la categoría y persistirla en Local Storage
     this.categoriaSeleccionadaSource.next(categoria);
@@ -41,17 +45,41 @@ export class ApiService {
     return this.http.post<any>(`${this.urlApi}/doctors`, data);
     // return this.http.post<any>(this.urlApi,data);
   }
-
   // Login del doctor
   loginDoctor(credentials: any): Observable<any> {
     return this.http.post<any>(this.urlApi+'/validate-password', credentials);
   }
-
+  //Obtener los registros Tabla Doctor
   getUsers(): Observable<any> {
     return this.http.get(this.urlApi+'/doctors');
   }
-
+  //Eliminar Doctor
   deleteDoctor(id: number): Observable<any> {
     return this.http.delete(`${this.urlApi}/doctors/${id}`);
+  }
+  //Obtener Doctor por id
+  getDoctorId(id: number): Observable<any> {
+    return this.http.get(`${this.urlApi}/doctors${id}`);
+  }
+  // Método para cambiar la contraseña
+  changePassword(payload: { correo: string, password: string }): Observable<any> {
+    return this.http.post(`${this.urlApi}/change-password`, payload);
+  }
+  /* --------------------------- PACIENTE ------------------------------------- */
+  //Crear Paciente
+  crearPaciente(data: any): Observable<any> {
+    return this.http.post<any>(`${this.urlApi}/add-patients`, data);
+  }
+  // En ApiService
+  getPatientsByDoctor(doctorId: number): Observable<any> {
+    return this.http.get<any>(`${this.urlApi}/doctor${doctorId}/patients`);
+  }
+  // Obtiene el paciente por id
+  getPatientById(id: number): Observable<any> {
+    return this.http.get(`${this.urlApi}/patients/${id}`);
+  }
+  //Eliminar Paciente
+  deletePatient(patientId: number): Observable<any> {
+    return this.http.delete<any>(`${this.urlApi}/patients/${patientId}`);
   }
 }
