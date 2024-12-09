@@ -1,0 +1,66 @@
+<div class="encuesta-glim">
+    <h2>Criterios GLIM</h2>
+    <p>La desnutrición requiere al menos 1 criterio fenotípico y 1 etiológico:</p>
+    
+    <form [formGroup]="glimForm" (ngSubmit)="enviarResultados()">
+      <h3>Criterios Fenotípicos</h3>
+      <div class="criterio">
+        <label for="perdidaPeso">
+          <strong>Pérdida de peso involuntaria:</strong> ¿Ha perdido peso en los últimos meses?
+        </label>
+        <select id="perdidaPeso" formControlName="perdidaPeso" class="form-control">
+          <option value="0">No</option>
+          <option value="1">Sí, más del 5% en los últimos 6 meses</option>
+          <option value="2">Sí, más del 10% en más de 6 meses</option>
+        </select>
+      </div>
+  
+      <div class="criterio">
+        <label for="imc">
+          <strong>Índice de masa corporal bajo:</strong> ¿Cuál es su IMC?
+        </label>
+        <select id="imc" formControlName="imc" class="form-control">
+          <option value="0">≥20 (menor de 70 años)</option>
+          <option value="1">≥22 (70 años o más)</option>
+          <option value="2">&lt;20 (menor de 70 años)</option>
+          <option value="3">&lt;22 (70 años o más)</option>
+        </select>
+      </div>
+  
+      <div class="criterio">
+        <label for="masaMuscular">
+          <strong>Reducción de la masa muscular:</strong> ¿Ha tenido reducción de masa muscular según técnicas validadas?
+        </label>
+        <select id="masaMuscular" formControlName="masaMuscular" class="form-control">
+          <option value="0">No</option>
+          <option value="1">Sí</option>
+        </select>
+      </div>
+  
+      <h3>Criterios Etiológicos</h3>
+      <div class="criterio">
+        <label for="ingestaAlimentos">
+          <strong>Disminución de la ingesta o asimilación de alimentos:</strong>
+        </label>
+        <select id="ingestaAlimentos" formControlName="ingestaAlimentos" class="form-control">
+          <option value="0">No</option>
+          <option value="1">Sí, ≤50% durante 1 semana</option>
+          <option value="2">Sí, ≤100% durante 2 semanas</option>
+        </select>
+      </div>
+  
+      <div class="criterio">
+        <label for="cargaInflamatoria">
+          <strong>Carga inflamatoria:</strong> ¿Tiene alguna condición inflamatoria activa?
+        </label>
+        <select id="cargaInflamatoria" formControlName="cargaInflamatoria" class="form-control">
+          <option value="0">No</option>
+          <option value="1">Sí, lesión/inflamación aguda</option>
+          <option value="2">Sí, patología inflamatoria crónica</option>
+        </select>
+      </div>
+  
+      <button type="submit" [disabled]="glimForm.invalid" class="btn btn-primary">Enviar Resultados</button>
+    </form>
+  </div>
+  

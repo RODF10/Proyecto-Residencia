@@ -30,6 +30,7 @@ import { EncuestaAssessmentSFComponent } from './Diagnosticos/Nutricional/encues
 import { EncuestaAssessmentComponent } from './Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
 import { EncuestaMustComponent } from './Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
 import { EncuestaSarcFComponent } from './Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
+import { EncuestaGlimComponent } from './Diagnosticos/Nutricional/encuesta-glim/encuesta-glim.component';
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
@@ -166,6 +167,11 @@ const routes: Routes = [
   {
     path: 'encuesta-sarc-f', 
     component: EncuestaSarcFComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'encuesta-glim', 
+    component: EncuestaGlimComponent,
     canActivate: [AuthGuard]
   },
 ];

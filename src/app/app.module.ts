@@ -46,6 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistroComponent } from './Ventanas/registro/registro.component';
 import { EncuestaMustComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
 import { EncuestaSarcFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
+import { EncuestaGlimComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-glim/encuesta-glim.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -84,6 +85,7 @@ registerLocaleData(localeEs, 'es');
     EncuestaAssessmentComponent,
     EncuestaMustComponent,
     EncuestaSarcFComponent,
+    EncuestaGlimComponent,
     //NotFoundComponent,
   ],
   imports: [
