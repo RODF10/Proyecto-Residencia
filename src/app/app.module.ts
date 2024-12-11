@@ -8,14 +8,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './Ventanas/login/login.component';
 import { PrincipalComponent } from './Ventanas/principal/principal.component';
-import { HeaderComponent } from './Layout/header/header.component';
 import { FooterComponent } from './Layout/footer/footer.component';
-import { ContentComponent } from './Layout/content/content.component';
 import { VistasComponent } from './Ventanas/vistas/vistas.component';
 import { StructureComponent } from './Layout/structure/structure.component';
 import { WindowsRoutingModule } from './Ventanas/windows-routing.module';
 import { DiagnosticComponent } from './Ventanas/diagnostic/diagnostic.component';
-import { ListPersonComponent } from './Ventanas/list-person/list-person.component';
 import { AboutComponent } from './Ventanas/about/about.component';
 import { Category1Component } from './Ventanas/Diagnosticos/Funcional/category1.component';
 import { EncuestaComponent } from './Ventanas/Encuesta/encuesta/encuesta.component';
@@ -44,6 +41,10 @@ import { EncuestaCornellComponent } from './Ventanas/Diagnosticos/Afectiva/encue
 import { EncuestaOkeeffeComponent } from './Ventanas/Diagnosticos/Afectiva/encuesta-okeeffe/encuesta-okeeffe.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistroComponent } from './Ventanas/registro/registro.component';
+import { MaterialModuleModule } from './material.module';
+import { ListDoctorsComponent } from './Ventanas/list-doctors/list-doctors.component';
+import { PatientsComponent } from './Ventanas/patients/patients.component';
+import { RegisterPatientComponent } from './Ventanas/register-patient/register-patient.component';
 import { EncuestaMustComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
 import { EncuestaSarcFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
 import { EncuestaGlimComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-glim/encuesta-glim.component';
@@ -57,13 +58,10 @@ registerLocaleData(localeEs, 'es');
     AppComponent,
     LoginComponent,
     PrincipalComponent,
-    HeaderComponent,
     FooterComponent,
-    ContentComponent,
     VistasComponent,
     StructureComponent,
     DiagnosticComponent,
-    ListPersonComponent,
     AboutComponent,
     Category1Component,
     DashboardComponent,
@@ -81,6 +79,9 @@ registerLocaleData(localeEs, 'es');
     EncuestaCornellComponent,
     EncuestaOkeeffeComponent,
     RegistroComponent,
+    ListDoctorsComponent,
+    PatientsComponent,
+    RegisterPatientComponent,
     EncuestaAssessmentSFComponent,
     EncuestaAssessmentComponent,
     EncuestaMustComponent,
@@ -96,6 +97,7 @@ registerLocaleData(localeEs, 'es');
     WindowsRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MaterialModuleModule
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'es' } ],
   bootstrap: [AppComponent]
