@@ -8,9 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class ResultadosComponent implements OnInit{
   nombreEncuesta: string = ''; //Encuesta
-  puntaje: number = 0; //Control del Puntaje
+  puntaje: string = ''; //Control del Puntaje
   observacion: string = ''; //Observacion
   porcentaje: number = 0;
+  entrada: string = '';
 
   constructor(private router: Router, private route: ActivatedRoute) {
     //const navigation = this.router.getCurrentNavigation();
@@ -20,10 +21,11 @@ export class ResultadosComponent implements OnInit{
   ngOnInit(): void {
     // Obtener los puntos desde los queryParams
     this.route.queryParams.subscribe(params => {
-      this.puntaje = params['puntaje'] || 0;  // Si no hay puntos, se asigna 0
+      this.puntaje = params['puntaje'] || '0';  // Si no hay puntos, se asigna 0
       this.nombreEncuesta = params['nameEncuesta'] || '';
       this.porcentaje = params['porcentaje'] || '';
       this.observacion = params['observacion'] || '';
+      this.entrada = params['entrada'] || 'pto';
     });
   }
 

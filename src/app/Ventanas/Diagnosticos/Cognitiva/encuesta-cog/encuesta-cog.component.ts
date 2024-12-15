@@ -123,7 +123,7 @@ export class EncuestaCogComponent implements OnInit{
           }
         }
 
-        this.encuestaResulto(puntajeSi, 'CAM-ICU','Sin observaciones',(puntajeSi/9)*100);
+        this.encuestaResulto(puntajeSi.toString(), 'CAM-ICU','Sin observaciones',(puntajeSi/9)*100);
         console.log(this.cons[1], 'CAM-ICU');
         break;
       case 'awol':
@@ -144,7 +144,7 @@ export class EncuestaCogComponent implements OnInit{
 
         this.showErrors = true;// An finalizar marca verdadero si, dependiendo si selecciona la letra
         console.log(this.cons[1], 'AWOL');//Verificar que si hay salida
-        this.encuestaResulto(this.puntos, 'AWOL', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
+        this.encuestaResulto(this.puntos.toString(), 'AWOL', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
         break;
       case 'spmsqp':
         var err: String = 'Errores Obtenido: ';//Acortar observacion
@@ -174,7 +174,7 @@ export class EncuestaCogComponent implements OnInit{
           this.observacion = err + 'Leve, Deteriodo cognitivo'
         }
 
-        this.encuestaResulto(respuestaNo, 'Question Pfeiffer', this.observacion, (respuestaNo/10)*100); //Envio de los parametros
+        this.encuestaResulto(respuestaNo.toString(), 'Question Pfeiffer', this.observacion, (respuestaNo/10)*100); //Envio de los parametros
         console.log(this.cons[1], 'spmsqp');
         break;
       case 'reloj':
@@ -208,7 +208,7 @@ export class EncuestaCogComponent implements OnInit{
         if(!this.showErrors){
           console.log('Entrada If del Reloj');
           this.showErrors = true; //Convertirse en verdadero antes de llamar al metod, para enviar al siguiente componente
-          this.encuestaResulto(this.puntos, 'Prueba de Reloj',this.observacion, (this.puntos/10)*100);
+          this.encuestaResulto(this.puntos.toString(), 'Prueba de Reloj',this.observacion, (this.puntos/10)*100);
         }
         console.log(this.cons[1], 'Prueba Reloj');
         break;
@@ -219,7 +219,7 @@ export class EncuestaCogComponent implements OnInit{
   /* ALGUNOS METODOS POR CADA ENCUESTA A REALIZAR */
 
    //Envia los parametros al Componente Resultado segun reciba
-   encuestaResulto(puntos: number, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
+   encuestaResulto(puntos: string, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
     if(this.showErrors){
      // Al navegar, enviamos los puntos al componente de resultado
      this.router.navigate(['home/resultado'], {queryParams: {
