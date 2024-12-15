@@ -17,11 +17,11 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
 
   //Lista de la Categoria a Mostrar
   categoria = [
-    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj' },
+    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj', cont7: 'Mini-Cog' },
     { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, 
       cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario Ansiedad Beck', cont6: 'Escala Soledad 3 Elementos', cont7: 'Riesgo de Suicidio SAD PERSON', cont8: 'Escala Cornell', cont9:'Corta Depresion por Observacion' },
     { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go', cont7: 'Short Physical Performance Battery',
-      cont8: 'Velocidad de la Marcha'
+      cont8: 'Velocidad de la Marcha', cont9: 'Identificador de Riesgo Persona Mayor'
     },
     { title: this.en.toUpperCase(), cat: 4, content: this.sub + ' ' + this.en, cont1:'Mini Nutritional Assessment SF', cont2:'Mini Nutritional Assessment', cont3:'MUST', cont4:'Criterios Glim', cont5:'Sarc-F',cont6:'EAT-10'},
   ];
@@ -80,6 +80,10 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
           case 6:
             this.cambiarCategoria(this.url(this.ec,'prueba-reloj'));
             this.seleccionarSubCategoria('reloj');
+            break;
+          case 7:
+            this.cambiarCategoria(this.url(this.ec, 'mini-cog'));
+            this.seleccionarSubCategoria('minicog');
             break;
         }
         break;
@@ -158,6 +162,10 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
           case 8:
             this.cambiarCategoria(this.url(this.ef, 'velocidad-marcha'));
             this.seleccionarSubCategoria('velmarcha');
+            break;
+          case 9:
+            this.cambiarCategoria(this.url(this.ef, 'identificador-persona-mayor'));
+            this.seleccionarSubCategoria('riesgoHpt');
             break;
         }
         break;

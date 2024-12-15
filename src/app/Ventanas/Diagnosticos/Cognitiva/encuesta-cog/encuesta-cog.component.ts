@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validator, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { left } from '@popperjs/core';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { ApiService } from 'src/app/Service/api.service';
-import { PreguntaDosOpc, Question } from 'src/app/Shared/Data';
+import { PreguntaDosOpc, Question, QuestionCheck } from 'src/app/Shared/Data';
 
 @Component({
   selector: 'app-encuesta-cog',
@@ -12,12 +11,15 @@ import { PreguntaDosOpc, Question } from 'src/app/Shared/Data';
   styleUrls: ['./encuesta-cog.component.scss']
 })
 export class EncuestaCogComponent implements OnInit{
-  isSelected: { [key: string]: boolean } = {};// Validacion de color de AWOL false/true
+  /* DATOS BAISCO DE CAPTURA */
   puntos: number = 0; //Puntaje
-  categoria: String = 'Undefinid';//Recibir nombre clave
-  cons: String[] = ['Entrastes en: ', 'Salida de: '];
+  showErrors: boolean = false;
   nameEncuesta?: String;
   observacion: String ='';
+  categoria: String = 'Undefinid';//Recibir nombre clave
+  cons: String[] = ['Entrastes en: ', 'Salida de: '];
+
+  isSelected: { [key: string]: boolean } = {};// Validacion de color de AWOL false/true
 
   //Preguntas Si No
   preguntasCamIcu: PreguntaDosOpc[] = [
@@ -72,7 +74,20 @@ export class EncuestaCogComponent implements OnInit{
       ]
     }
   ];
-  showErrors: boolean = false;
+
+  // MINI COG PREGUNTAS
+  minicog: QuestionCheck[] = [
+    {question: '1.- Dibujo del Reloj',
+      options: [
+        { text: 'Normal', seleccionada: false },
+      ]},
+    {question: '2.- Evocación de las Tres Palabras',
+      options: [
+        { text: 'Papel', seleccionada: false },
+        { text: 'Bicicleta', seleccionada: false },
+        { text: 'Cuchara', seleccionada: false }
+      ]}
+  ];
 
   constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder){
     this.questionnaireForm = this.fb.group({
@@ -92,7 +107,6 @@ export class EncuestaCogComponent implements OnInit{
 
   //Metodo del boton Finalizar
   finalizarEncuesta(){
-    //this.puntos = 0;
     this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
    
   }
@@ -211,6 +225,30 @@ export class EncuestaCogComponent implements OnInit{
           this.encuestaResulto(this.puntos.toString(), 'Prueba de Reloj',this.observacion, (this.puntos/10)*100);
         }
         console.log(this.cons[1], 'Prueba Reloj');
+        break;
+      case 'minicog':
+        this.puntos = 0;
+    
+        this.minicog.forEach(pregunta => {
+          pregunta.options.forEach(opcion => {
+            if (opcion.seleccionada) {
+              if (opcion.text === 'Normal') {
+                this.puntos += 2;  // "Normal" suma 2 puntos
+              } else {
+                this.puntos += 1;  // Las demás opciones suman 1 punto
+              }
+            }
+          });
+        });
+
+        if(this.puntos <= 2){
+          this.observacion = 'Probable deterioro cognitivo, recomienda evaluación cognitiva amplia';
+        } else {
+          this.observacion = 'Muy poco probable que haya deterioro cognitivo';
+        }
+        this.showErrors = true;
+        this.encuestaResulto(this.puntos.toString(), 'Mini-Cog', this.observacion, (this.puntos/5)*100,);
+        console.log(this.puntos);
         break;
     }
 

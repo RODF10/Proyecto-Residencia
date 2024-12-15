@@ -275,11 +275,21 @@ export class Category1Component implements OnInit {
     'assets/Imagenes/caminata/caminata5.png'
   ];
   velOpt: boolean = true;
-  validarSPPB: { [key: string]: string } = { primeraMedicion: '', segundaMedicion: ''};
+
+  // VELOCIDAD MARCHA
+  timeCap: string = '00:00.00';
+  inBoton: boolean = false;
+
+  //Identificador de Persona Mayor
+  itemsRiesgo = [
+    { text: '¿Necesitaba regularmente ayuda para alguna de las actividades instrumentales de la vida diaria?(uso de transporte, uso de teléfono, manejo de medicación, manejo de dinero, hacer compras, preparar alimentos, labores del hogar o lavar ropa)', si: 1, no: 0, selected: '' },
+    { text: '¿Necesitaba algún auxiliar para deambular (bastón, andadera, muletas)?', si: 2, no: 0, selected: '' },
+    { text: '¿Necesitaba ayuda para salir de viaje?', si: 1, no: 0, selected: '' },
+    { text: '¿Continuó su educación después de los 14 años de edad?', si: 0, no: 1, selected: '' }
+  ];
 
   /* ------------------------------- CONSTRUC DE LA CLASE --------------------------- */
-  constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private LoadJS: LoadJSService) {
-    LoadJS.Carga(['Funciones']);    
+  constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private LoadJS: LoadJSService) {  
   }
    /* ------------------------------- ONINIT = INICIALIZADOR --------------------------- */
   ngOnInit(): void {
@@ -469,6 +479,46 @@ export class Category1Component implements OnInit {
         }
         this.encuestaResultado(this.puntos.toString(),'Short Physical Performance Battery', this.observacion, (this.puntos/12)*100);
         break;
+      case 'velmarcha':
+        this.showErrors = true;
+        const capSeg = this.convertirATiempoEnSegundos(this.timeCap);
+        
+        let vm: number;
+        if (capSeg === 0) {
+          vm = 0; // O asigna un valor predeterminado
+        } else {
+          vm = 4 / capSeg;
+        }
+        if(vm == 0) {
+          this.observacion = 'None'
+        } else if(vm < 0.8){
+          this.observacion = 'Disminucion de desempeño de los componentes que definen';
+        } else if(vm < 1){
+          this.observacion = 'Predice riesgo de desenlaces adversos';
+        } else {
+          this.observacion = 'Ninguna Captura con estos datos'
+        }
+        this.encuestaResultado(vm.toFixed(2).toString(), 'Velocidad de Marcha', this.observacion, (capSeg/4)*10, 'm/seg')
+        console.log(vm.toFixed(2) + 'm/seg - Obs: '+this.observacion);
+        break;
+      case 'riesgoHpt':
+        const allSelected = this.itemsRiesgo.every(item => item.selected !== '');
+        this.showErrors = !allSelected;
+        console.log(this.showErrors);
+
+        if(this.puntos <= 1){
+          this.observacion = 'Riesgo Bajo'
+        } else if(this.puntos > 1 && this.puntos <= 3){
+          this.observacion = 'Riesgo Intermedio';
+        } else {
+          this.observacion = 'Riesgo Alto';
+        }
+
+        if(allSelected){
+          this.showErrors = true;
+          this.encuestaResultado(this.puntos.toString(), 'identificar Riesgo Hospitalizacion en Personas Mayores', this.observacion, (this.puntos/5)*100);
+        }
+        break;
     }
   }
 
@@ -544,6 +594,7 @@ export class Category1Component implements OnInit {
       }, 10);
     }
     this.corriendo = !this.corriendo;
+    this.inBoton = true;
   }
 
   reiniciar(){
@@ -551,6 +602,7 @@ export class Category1Component implements OnInit {
     this.tiempo = 0;
     //this.capturas = [];
     this.corriendo = false;
+    this.inBoton = false;
   }
   capturarTiempo(){
     const minutos = Math.floor(this.tiempo / 60000);
@@ -701,17 +753,30 @@ export class Category1Component implements OnInit {
     else this.puntos += 4;
   }
 
-  toggleInputs(event: Event): void {
-    // Obtiene el checkbox del evento
-    const checkbox = event.target as HTMLInputElement;
-
-    // Verifica si está activado o desactivado
-    if (checkbox.checked) {
-      this.velOpt = true;
-      console.log('Switch encendido');
-    } else {
-      this.velOpt = false;
-      console.log('Switch apagado');
+  /* VELOCIDAD DE MARCHA */
+  captureTime(){
+    const minutos = Math.floor(this.tiempo / 60000);
+    const segundos = Math.floor((this.tiempo % 60000) / 1000);
+    const milisegundos = Math.floor((this.tiempo % 1000) / 10);
+    this.timeCap = (`${this.pad(minutos)}:${this.pad(segundos)}.${this.pad(milisegundos)}`);
+    if(this.inBoton){
+      this.iniciarPausar();
+      this.inBoton = false;
     }
+    console.log(this.timeCap);
+  }
+  //Identificador Persona Mayor
+  selectOption(index: number, option: 'si' | 'no') {
+    const item = this.itemsRiesgo[index];
+    if (item.selected == option) return; // No action if already selected
+
+    // Update score
+    if (item.selected) {
+      this.puntos -= item[item.selected as 'si' | 'no'];
+    }
+    //Next
+    item.selected = option;
+    this.puntos += item[option];
+    this.showErrors = false;
   }
 }

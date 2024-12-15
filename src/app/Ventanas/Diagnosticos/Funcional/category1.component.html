@@ -395,6 +395,74 @@
   </div>
   
  </div>
+
+ <!-- VELOCIDAD DE LA MARCHA -->
+  <div class="velmarcha containerEncuesta" *ngIf="encuestaSelect == 'velmarcha'">
+    <div class="titulo">
+      <h2>Velocidad de la Marcha</h2>
+    </div>
+    <div class="instrucciones">
+      <div class="menu">
+        <h1>Siga las instrucciones, capture el tiempo antes de finalizar</h1>
+        <ul>
+          <li>Si la persona mayor, ya utiliza un auxiliar de la marcha &#40;bast&#243;n, andadera, etc.&#41; puede emplearlo durante la prueba.</li>
+          <li> Explique a la persona que le realizar&#225; una prueba para medir su velocidad para caminar, y que su caminar deber&#225; hacerlo a su paso habitual.</li>
+          <li>Ind&#237;quele a la persona el punto de partida y el punto de fin del trayecto donde deber&#225; caminar.</li>
+          <li>Mida con el cron&#243;metro o tel&#233;fono inteligente el tiempo que le toma a la persona caminar el trayecto de 4 metros. &#40;Active el cron&#243;metro en inicio al momento que la persona empiece a caminar, detenga el cron&#243;metro cuando la persona toque la l&#237;nea marcada&#41;.</li>
+          <li>Registre el tiempo de trayectoria del caminar de la persona evaluada.</li>
+          <li>Calcule la velocidad de la marcha, de acuerdo a la operaci&#243;n sugerida.</li>
+        </ul>
+      </div>
+      <div class="timeCrn">
+        <h1>{{ tiempo | date:'mm:ss.SS':'UTC' }}</h1>
+        <button (click)="iniciarPausar()" class="btn btn-success">
+          {{ corriendo ? 'Pausa' : 'Iniciar' }}
+        </button>
+        <button (click)="deleteScore()" class="btn btn-danger">Reiniciar</button>
+        <button class="btn-primary btn" (click)="captureTime()">Capturar Tiempo</button>
+      </div>
+      <img src="assets/Imagenes/trayectoria.png" title="image1" draggable="false">
+    </div>
+  </div>
+
+<!-- Identifiacion de Personas Mayores -->
+   <div class="riesgoHpt containerEncuesta">
+    <div class="titulo">
+      <h2>Identificacion de riesgo hospitalizacion en Personas Mayores</h2>
+    </div>
+      <!-- table.component.html -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Items, antes de la admisión hospitalaria</th>
+              <th>SI</th>
+              <th>NO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of itemsRiesgo; let i = index">
+              <td id="tbl_question">{{ item.text }}</td> <!-- PREGUNTA -->
+              <td class="opc"
+                [class.selected]="item.selected == 'si'" 
+                (click)="selectOption(i, 'si')">
+                {{ item.si }}
+              </td>
+              <td class="opc"
+                [class.selected]="item.selected == 'no'" 
+                (click)="selectOption(i, 'no')">
+                {{ item.no }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="score">Total Puntaje: {{ puntos }}</div>
+        <!-- Mensaje de error -->
+        <div *ngIf="showErrors" class="alert alert-danger mt-3" role="alert">
+          Por favor, seleccione una respuesta para cada ítem antes de continuar.
+        </div>
+      </div>
+   </div>
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
 </div>

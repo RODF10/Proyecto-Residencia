@@ -39,3 +39,7 @@ export interface Checkbox{
   text: String;
   seleccionada: boolean;
 }
+export interface QuestionCheck{
+  question: String;
+  options: Checkbox[];
+}

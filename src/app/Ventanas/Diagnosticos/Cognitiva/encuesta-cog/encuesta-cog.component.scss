@@ -159,3 +159,97 @@
     margin-top: 1rem;
   }
 }
+
+// ESTILOS MINI COG
+.minicog{
+  h1 {
+    text-align: center;
+    color: #4caf50;
+    margin-bottom: 20px;
+  }
+  .instruction {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  .instruction h2 {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  .highlight {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+  }
+  .note {
+    font-style: italic;
+    color: #777;
+  }
+  .gray-bg {
+    background-color: #e8e8e8;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  .minicogIMG{
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    border-radius: 8px;
+    border: #D6DBDF solid 5px;
+  }
+  .containerIMG {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+  }
+}
+.minicog .opciones {
+  font-family: Arial, sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  .opcion input{
+    display: inline-flex;
+    
+  }
+  .stylecog{
+    .preguntacog{
+      background: #e8e8e8;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin: 10px 0;
+    }
+    .opcion{
+      margin: 0 0 10px 0;
+      padding: 5px;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    input[type="checkbox"] {
+      margin-right: 5px;
+      width: 15px;
+      height: 15px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+  
+      &:checked {
+        background-color: #4caf50;
+        border-color: #4caf50;
+      }
+  
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3); // Resalta cuando está en foco
+      }
+    }
+  }  
+}
