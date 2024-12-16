@@ -7,6 +7,11 @@
   <p class="resultadoPuntaje"><strong>Observación:</strong> {{ observacion }}</p>
 </div>
 
+<div class="image-container">
+  <img *ngIf="showImage" [src]="imagePath" alt="Imagen seleccionada" draggable="false"/>
+  <p *ngIf="!showImage">No se ha recibido ninguna imagen para mostrar.</p>
+</div>
+
 <div class="d-grid gap-2 col-6 botones">
   <!-- <button class="btn btn-primary" type="button" (click)="funcionBoton(1)">Encuesta</button> -->
   <button class="btn btn-secondary" type="button" (click)="funcionBoton(2)">Categoria</button>

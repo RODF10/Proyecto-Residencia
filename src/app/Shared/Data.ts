@@ -43,3 +43,9 @@ export interface QuestionCheck{
   question: String;
   options: Checkbox[];
 }
+
+//Categoria y SubCategoria
+export interface CategorySelection {
+  mainCategory: number;
+  subCategory: number;
+}

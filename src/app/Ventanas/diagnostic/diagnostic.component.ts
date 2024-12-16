@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-diagnostic',
@@ -25,7 +26,7 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
     },
     { title: this.en.toUpperCase(), cat: 4, content: this.sub + ' ' + this.en, cont1:'Mini Nutritional Assessment SF', cont2:'Mini Nutritional Assessment', cont3:'MUST', cont4:'Criterios Glim', cont5:'Sarc-F',cont6:'EAT-10'},
   ];
-  constructor(private router: Router, private serviceApi: ApiService){}
+  constructor(private router: Router, private serviceApi: ApiService, private sharedService: SharedService){}
 
   ngOnInit(): void {
       // Bloquea el clic derecho en toda la página
@@ -51,13 +52,12 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
 
   vent(c: number, s: number) {
     console.log(c,s);
+    this.sharedService.changeCategory(c,s); //Envia un numero al servicio
     switch(c){
       case 1:
         this.seleccionarCategoria('cognitiva');
         switch(s){
           case 1:
-            //this.router.navigate(['home/encuesta/{categoria}']);
-            //this.cambiarCategoria(this.ec.toLowerCase()+'-4at.php');
             this.cambiarCategoria(this.url(this.ec,'4at')); //Enviar tipo URL
             this.seleccionarSubCategoria('4at'); //Enciat nombre (Clave) para cada encuesta
             break;
