@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/Service/api.service';
 import { Checkbox, Question } from 'src/app/Shared/Data';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { LoadJSService } from 'src/app/Service/load-js.service';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-category1',
@@ -289,7 +290,7 @@ export class Category1Component implements OnInit {
   ];
 
   /* ------------------------------- CONSTRUC DE LA CLASE --------------------------- */
-  constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private LoadJS: LoadJSService) {  
+  constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private LoadJS: LoadJSService, private sharedService: SharedService) {  
   }
    /* ------------------------------- ONINIT = INICIALIZADOR --------------------------- */
   ngOnInit(): void {
@@ -523,16 +524,18 @@ export class Category1Component implements OnInit {
   }
 
   //Metodo para pasar al siguiente componente, en case de que este respondidos las respuestas
-  encuestaResultado(puntos: string, nameEncuesta: String, observacion: String, porcentaje: FLOAT, ent: string = 'pto'): void{
+  encuestaResultado(puntos: string, nameEncuesta: String, observacion: String, porcentaje: FLOAT, entT: string = 'pto'): void{
+    const resultados = {
+      point: puntos,
+      encuesta: nameEncuesta,
+      observable: observacion,
+      porcent: porcentaje.toFixed(2),
+      ent: entT
+    }
     if(this.showErrors){
-      // Al navegar, enviamos los puntos al componente de resultado
-      this.router.navigate(['home/resultado'], {queryParams: {
-        puntaje: puntos, //Puntaje Obtenido
-        nameEncuesta: nameEncuesta, //Nombre de la Encuesta
-        porcentaje: porcentaje.toFixed(2),
-        observacion: observacion, //Observaciones
-        entrada: ent
-      }});
+      /* Al navegar, enviamos los puntos al componente de resultado */
+      this.sharedService.saveResults(resultados);
+      this.router.navigate(['home/resultado']);
       localStorage.removeItem('subCatSeleccionada'); 
    }
   }

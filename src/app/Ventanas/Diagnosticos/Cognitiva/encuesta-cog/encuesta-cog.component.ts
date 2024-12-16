@@ -3,6 +3,7 @@ import { FormBuilder, Validator, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { ApiService } from 'src/app/Service/api.service';
+import { SharedService } from 'src/app/Service/shared.service';
 import { PreguntaDosOpc, Question, QuestionCheck } from 'src/app/Shared/Data';
 
 @Component({
@@ -89,7 +90,7 @@ export class EncuestaCogComponent implements OnInit{
       ]}
   ];
 
-  constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder){
+  constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder, private sharedService: SharedService){
     this.questionnaireForm = this.fb.group({
       question1: [null, Validators.required],
       question2: [null, Validators.required],
@@ -258,14 +259,18 @@ export class EncuestaCogComponent implements OnInit{
 
    //Envia los parametros al Componente Resultado segun reciba
    encuestaResulto(puntos: string, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
+    // Captura de los datos en una constante tipo any
+    const resultados = {
+      point: puntos,
+      encuesta: nameEncuesta,
+      observable: observacion,
+      porcent: porcentaje.toFixed(2)
+    }
     if(this.showErrors){
-     // Al navegar, enviamos los puntos al componente de resultado
-     this.router.navigate(['home/resultado'], {queryParams: {
-       puntaje: puntos, //Puntaje Obtenido
-       nameEncuesta: nameEncuesta, //Nombre de la Encuesta
-       porcentaje: porcentaje.toFixed(2),
-       observacion: observacion //Observaciones
-     }});
+      //Captura los datos de la cosntante y envia al servicio para su captura
+      this.sharedService.saveResults(resultados);
+      // Navegar al componente de resultados
+      this.router.navigate(['home/resultado']);
    }
  }
 

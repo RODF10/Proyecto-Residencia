@@ -13,47 +13,46 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   observacion: string = ''; //Observacion
   porcentaje: number = 0; //Porcentaje a Mostrar
   entrada: string = ''; // Marca si son Puntos, Segundos, Libras u otra manera de calcualar
-  imagePath: string | null = null; // Escala de Puntuacion en Imagen
+  imagePath: string | null = null; // URL de la imagen
   showImage: boolean = true; // Booleano para controlar la visibilidad
   ruta: string = 'assets/Imagenes/Puntaje/'; //Ruta de la carpeta
   file: string[] = ['', 'cog', 'afc', 'fun', 'nut']; // Asignar array de carpetas que continene posicion 0 = '';
   inNumber: number = 0;
-  private url: string = '';
 
-  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService) {
-    //const navigation = this.router.getCurrentNavigation();
-    //this.encuestas = navigation?.extras.state?.['encuestas'] || [];
-  }
+  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService) { }
 
   ngOnInit(): void {
+    // Recibe los datos del componente sin usar this.router.queryParam y mantener limpia la url
+    const resultados = this.sharedService.getStoredResults();
+
     this.sharedService.currentNumber.subscribe(number => {
       this.updateImage(number.mainCategory, number.subCategory);
-      this.inNumber = number.mainCategory;
+      this.inNumber = number.mainCategory; // Asignar categoria para mostrar parametros recibidos
     });
-
-     // Obtener los puntos desde los queryParams
-     if(this.inNumber != 0){
-       this.route.queryParams.subscribe(params => {
-        this.puntaje = params['puntaje'] || '0';  // Si no hay puntos, se asigna 0
-        this.nombreEncuesta = params['nameEncuesta'] || '';
-        this.porcentaje = params['porcentaje'] || '';
-        this.observacion = params['observacion'] || '';
-        this.entrada = params['entrada'] || 'pto';
-      });
-     }
+    
+     // Obtener los puntos desde los queryParams al recibir un numero difernete de 0
+    if(this.inNumber != 0){      
+      this.nombreEncuesta = resultados.encuesta;
+      this.puntaje = resultados.point;
+      this.observacion = resultados.observable;
+      this.porcentaje = resultados.porcent;
+      this.entrada = resultados.ent ?? 'pto';
+    } else {
+        // Restablecer valores al salir del componente
+        this.puntaje = 'none';
+        this.nombreEncuesta = 'Default';
+        this.porcentaje = 0;
+        this.observacion = 'none';
+        this.entrada = 'undefiend';
+    }
 
     console.log(this.imagePath);
   }
 
   ngOnDestroy(): void {
       localStorage.removeItem('categorySelection');
-      // Restablecer valores al salir del componente
-      this.puntaje = '0';
-      this.nombreEncuesta = 'Default';
-      this.porcentaje = 0;
-      this.observacion = 'none';
-      this.entrada = 'pto';
       window.location.reload();
+      this.sharedService.clearResults();
   }
 
   funcionBoton(n: number): void{
@@ -72,6 +71,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
 
   // Recibe el numero en Servicios para mostrar imagen
   updateImage(cat: number, subc: number) {
+    //console.log('Categoria: '+cat, + '\nSubcategoria: '+subc);
     switch(cat){
       case 1:
         switch(subc){
@@ -79,8 +79,9 @@ export class ResultadosComponent implements OnInit, OnDestroy{
             this.imagePath = this.sectionImage(cat, '4at');
           break;
           case 4:
-            //this.imagePath = this.ruta + this.file[subc] + '/awol.png';
-            this.imagePath = this.sectionImage(cat, 'awol'); //Llamar metodo para asignar url de la imagen
+            /* this.imagePath = this.ruta + this.file[subc] + '/awol.png';
+              categoria = POr defecto se recibe en DiagnosticComponent */
+            this.imagePath = this.sectionImage(cat, 'awol'); //Llamar metodo para asignar url de la imagen (categoria, nombreimagen)
             break;
           case 5:
             this.imagePath = this.sectionImage(cat, 'spmsqp');
@@ -92,13 +93,41 @@ export class ResultadosComponent implements OnInit, OnDestroy{
             this.imagePath = this.sectionImage(cat, 'minicog');
             break;
           default:
-            this.imagePath = null;
-            this.showImage = false;
+            this.resetImage();
             break;
         }
         break;
       case 2:
-        break;
+        switch(subc){
+          case 1:
+            this.imagePath = this.sectionImage(cat, 'gds15');
+            break;
+          case 2:
+            this.imagePath = this.sectionImage(cat, 'cesd7');
+            break;
+          case 3:
+            this.imagePath = this.sectionImage(cat, 'phq9');
+            break;
+          case 4:
+            this.imagePath = this.sectionImage(cat, 'gaisf');
+            break;
+          case 5:
+            this.imagePath = this.sectionImage(cat, 'beck');
+            break;
+          case 6:
+            this.imagePath = this.sectionImage(cat, 'escala');
+            break;
+          case 7:
+            this.imagePath = this.sectionImage(cat, 'sadperson');
+            break;
+          case 8:
+            this.imagePath = this.sectionImage(cat, 'cornell');
+            break;
+          case 9:
+            this.imagePath = this.sectionImage(cat, 'depresionc');
+            break;
+        }
+        break;    
       case 3:
         switch(subc){
           case 1:
@@ -116,14 +145,23 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         break;
       default:
         // this.imagePath =  'assets/Imagenes/Puntaje/cog/awol.png';
-        this.imagePath = null;
-        this.showImage = false;
+        this.resetImage();
         break;
     }
   }
 
   /* Selecciona la imagen de la carpeta, si no recibe por defecto es 0 */
   sectionImage(categoria: number = 0, imagen: string):string{
+    /*
+     * ruta = Acceso a la carpeta de Puntaje
+     * file[x] = acceso a la carpeta de la categoria
+     * imagen = Receptor de nombre de la imagen
+    */
     return this.ruta + this.file[categoria] + '/' + imagen + '.png';
+  }
+
+  resetImage(){
+      this.imagePath = null;
+      this.showImage = false;
   }
 }

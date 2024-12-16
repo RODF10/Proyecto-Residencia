@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-ces-d7',
@@ -22,7 +23,7 @@ export class EncuestaCESD7Component implements OnInit {
   interpretacion: string = '';
   showErrors: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private share: SharedService) {}
 
   ngOnInit(): void {
     // Crea un grupo de controles para cada pregunta
@@ -53,6 +54,12 @@ export class EncuestaCESD7Component implements OnInit {
 
   // Método para enviar los resultados
   enviarResultados(): void {
+    const resultados = {
+      point: this.resultado,
+      encuesta: 'CES-D7',
+      observable: this.interpretacion,
+      porcent: ((this.resultado / 21) * 100).toFixed(2)
+    }
     if (this.resultado === 0 && !this.showErrors) {
       alert('Primero calcula el puntaje antes de enviar los resultados.');
       this.showErrors = true;
@@ -62,14 +69,8 @@ export class EncuestaCESD7Component implements OnInit {
     console.log('Puntaje: ', this.resultado, '\nObservación: ', this.interpretacion);
 
     // Redirige al componente Resultados con los datos mediante el estado
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'CES-D7',
-        puntaje: this.resultado,
-        observacion: this.interpretacion,
-        porcentaje: ((this.resultado / 21) * 100).toFixed(2) // Porcentaje basado en 7 preguntas con valor máximo de 3 cada una
-      }
-    });
+    this.share.saveResults(resultados);
+    this.router.navigate(['home/resultado']);
   }
 
   // Método para finalizar la encuesta: calcula el puntaje y luego envía los resultados

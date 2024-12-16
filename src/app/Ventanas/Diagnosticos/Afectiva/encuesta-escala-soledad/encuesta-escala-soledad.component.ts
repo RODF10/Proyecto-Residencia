@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-escala-soledad',
@@ -14,7 +15,7 @@ export class EncuestaEscalaSoledadComponent {
     { texto: 'Con qué frecuencia se siente aislado/a de los demás.', respuesta: null }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private share: SharedService) {}
 
   // Calcular puntaje total y redirigir al componente de resultados
   calcularPuntaje() {
@@ -40,16 +41,16 @@ export class EncuestaEscalaSoledadComponent {
       return;
     }
 
-    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+    const resultado = {
+      point: puntaje,
+      encuesta: 'Escala de Soledad de 3 Elementos',
+      observable: observacion,
+      porcent: ((puntaje / 21) * 100).toFixed(2)
+    }
 
+    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+    this.share.saveResults(resultado);
     // Redirige al componente de resultados con los datos mediante queryParams
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'Escala de Soledad de 3 Elementos',
-        puntaje: puntaje,
-        observacion: observacion,
-        porcentaje: ((puntaje / 9) * 100).toFixed(2)
-      }
-    });
+    this.router.navigate(['home/resultado']);
   }
 }

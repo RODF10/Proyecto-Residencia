@@ -1,11 +1,6 @@
 <div class="tituloEncuesta">
   <h1>Encuesta {{name}}</h1>
 </div> 
-<!--
-<div class="iframe">
-  <iframe [src]="safeUrl" frameborder="0" class="ventana"></iframe>
-</div>-->
-<!-- <app-diagnostic (categoriaSeleccionada)="cambiarCategoria($event.toString())"></app-diagnostic> -->
  <!-- ENCUESTA COGNITIVA -->
 <app-encuesta-cog #encuestaComponent *ngIf="categoria == 'cognitiva'"></app-encuesta-cog>
 <!-- ENCUESTA FUNCIONAL -->

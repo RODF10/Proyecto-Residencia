@@ -40,6 +40,7 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     // Eliminar el listener al destruir el componente
     document.removeEventListener('contextmenu', this.disableRightClick);
+    this.sharedService.clearResults();
   }
 
   toggleCategoryIndex(index: number){
@@ -52,7 +53,7 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
 
   vent(c: number, s: number) {
     console.log(c,s);
-    this.sharedService.changeCategory(c,s); //Envia un numero al servicio
+    this.sharedService.changeCategory(c,s); //Envia un numero al servicio Cat, y SubCat
     switch(c){
       case 1:
         this.seleccionarCategoria('cognitiva');

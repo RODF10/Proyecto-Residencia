@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-sad-persons',
@@ -21,7 +22,7 @@ export class EncuestaSADPERSONSComponent {
     { texto: 'S: Enfermedad somática', respuesta: null }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private share: SharedService) {}
 
   // Calcular puntaje y redirigir al componente de resultados
   calcularPuntaje() {
@@ -48,18 +49,16 @@ export class EncuestaSADPERSONSComponent {
       alert('Primero calcula el puntaje antes de enviar los resultados.');
       return;
     }
-
+    const resultado = {
+      point: puntaje,
+      encuesta: 'Escala SAD PERSONS',
+      observable: observacion,
+      porcent: ((puntaje / 21) * 100).toFixed(2)
+    }
     console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
-
+    this.share.saveResults(resultado);
     // Redirige al componente de resultados con los datos mediante queryParams
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'Escala SAD PERSONS',
-        puntaje: puntaje,
-        observacion: observacion,
-        porcentaje: ((puntaje / 10) * 100).toFixed(2)
-      }
-    });
+    this.router.navigate(['home/resultado']);
   }
 }
 

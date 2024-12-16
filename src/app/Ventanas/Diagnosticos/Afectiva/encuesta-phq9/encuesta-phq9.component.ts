@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-phq9',
@@ -27,7 +28,7 @@ export class EncuestaPhq9Component {
     { texto: 'Casi todos los días', valor: 3 }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private share: SharedService) {}
 
   // Calcular el puntaje total y redirigir al componente de resultados
   calcularPuntaje() {
@@ -57,17 +58,17 @@ export class EncuestaPhq9Component {
       return;
     }
 
-    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+    const res = {
+      point: puntaje,
+      encuesta: 'PHQ-9',
+      observable: observacion,
+      porcent: ((puntaje / 21) * 100).toFixed(2)
+    }
 
+    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+    this.share.saveResults(res);
     // Redirige al componente de resultados con los datos mediante queryParams
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'PHQ-9',
-        puntaje: puntaje,
-        observacion: observacion,
-        porcentaje: ((puntaje / 27) * 100).toFixed(2)
-      }
-    });
+    this.router.navigate(['home/resultado']);
   }
 }
 
