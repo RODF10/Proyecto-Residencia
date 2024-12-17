@@ -54,13 +54,13 @@ export class EncuestaGlimComponent {
 
     console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
 
-    /*this.router.navigate(['home/resultado'], {
+    this.router.navigate(['home/resultado'], {
       queryParams: {
         nombreEncuesta: 'Criterios GLIM',
         puntaje: puntaje,
         observacion: observacion,
         porcentaje: ((puntaje / 2) * 100).toFixed(2) // Calcula el porcentaje basado en un puntaje máximo (puedes ajustar el máximo si es diferente)
       }
-    });*/
+    });
   }
 }

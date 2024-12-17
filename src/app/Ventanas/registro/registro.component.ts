@@ -82,5 +82,4 @@ export class RegistroComponent implements OnInit{
       this.selectedImage = file;
     }
   }
-
 }

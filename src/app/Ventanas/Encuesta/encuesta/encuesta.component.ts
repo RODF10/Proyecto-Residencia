@@ -72,6 +72,9 @@ export class EncuestaComponent implements OnInit, OnDestroy{
       case 'funcional':
         this.name = 'FUNCIONAL';
         break;
+      case 'nutricional':
+        this.name = 'NUTRICIONAL';
+        break;
       default:
         this.name = 'None'; // Valor predeterminado
         break;
