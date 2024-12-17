@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-assessment-sf',
@@ -11,7 +12,7 @@ export class EncuestaAssessmentSFComponent {
   mnaForm: FormGroup;
   showErrors: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private share: SharedService) {
     this.mnaForm = this.fb.group({
       question1: [null, Validators.required],
       question2: [null, Validators.required],
@@ -63,14 +64,14 @@ export class EncuestaAssessmentSFComponent {
 
     console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
 
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'Mini Nutritional Assessment SF',
-        puntaje: puntaje,
-        observacion: observacion,
-        porcentaje: ((puntaje / 14) * 100).toFixed(2) // Calcula el porcentaje basado en el puntaje máximo
-      }
-    });
+    const resultado = {
+      point: puntaje,
+      encuesta: 'Mini Nutritional Assessment SF',
+      observable: observacion,
+      porcent: ((puntaje/14) * 100).toFixed(2)
+    }
+    this.share.saveResults(resultado);
+    this.router.navigate(['home/resultado']);
   }
 }
 

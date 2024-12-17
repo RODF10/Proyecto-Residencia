@@ -1,6 +1,7 @@
 <div class="tituloEncuesta">
   <h1>Encuesta {{name}}</h1>
 </div> 
+
  <!-- ENCUESTA COGNITIVA -->
 <app-encuesta-cog #encuestaComponent *ngIf="categoria == 'cognitiva'"></app-encuesta-cog>
 <!-- ENCUESTA FUNCIONAL -->
@@ -15,3 +16,9 @@
 <app-encuesta-gai-sf *ngIf="subCat == 'gaisf'"></app-encuesta-gai-sf>
 <app-encuesta-cornell *ngIf="subCat == 'cornell'"></app-encuesta-cornell>
 <app-encuesta-okeeffe *ngIf="subCat == 'cortdepresion'"></app-encuesta-okeeffe>
+<!-- ENCUESTA DE NUTRICIONAL -->
+ <app-encuesta-assessment-sf *ngIf="subCat == 'minisf'"></app-encuesta-assessment-sf>
+ <app-encuesta-assessment *ngIf="subCat == 'nutri'"></app-encuesta-assessment>
+ <app-encuesta-must *ngIf="subCat == 'must'"></app-encuesta-must>
+ <app-encuesta-sarc-f *ngIf="subCat == 'sarf'"></app-encuesta-sarc-f>
+ <app-encuesta-eat10 *ngIf="subCat == 'eat'"></app-encuesta-eat10>

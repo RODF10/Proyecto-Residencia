@@ -170,6 +170,35 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
             break;
         }
         break;
+        case 4:
+          this.seleccionarCategoria('nutricional');
+          switch(s){
+            case 1:
+              this.cambiarCategoria(this.url(this.en, 'mini-nutricional-sf'));
+              this.seleccionarSubCategoria('minisf');
+              break;
+            case 2:
+              this.cambiarCategoria(this.url(this.en, 'mini-nutricional'));
+              this.seleccionarSubCategoria('nutri');
+              break;
+            case 3:
+              this.cambiarCategoria(this.url(this.en, 'must'));
+              this.seleccionarSubCategoria('must');
+              break;
+            case 4:
+              //this.cambiarCategoria(this.url(this.en, 'criterio-glim'));
+              //this.seleccionarSubCategoria('glim');
+              break;
+            case 5:
+              this.cambiarCategoria(this.url(this.en, 'sarc-f'));
+              this.seleccionarSubCategoria('sarf');
+              break;
+            case 6:
+              this.cambiarCategoria(this.url(this.en, 'eat-10'));
+              this.seleccionarSubCategoria('eat');
+              break;
+          }
+          break;
     }
   }
 

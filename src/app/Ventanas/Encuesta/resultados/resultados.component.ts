@@ -139,9 +139,59 @@ export class ResultadosComponent implements OnInit, OnDestroy{
           case 3:
             this.imagePath = this.sectionImage(cat, 'lawton');
             break;
+          case 4:
+            this.imagePath = this.sectionImage(cat, 'frail');
+            break;
+          case 5:
+            this.imagePath = this.sectionImage(cat, 'ensrud');
+            break;
+          case 6:
+            this.imagePath = this.sectionImage(cat,'time');
+            break;
+          case 7:
+            this.imagePath = this.sectionImage(cat, 'sppb');
+            break;
+          case 8:
+            this.imagePath = this.sectionImage(cat, 'marcha');
+            break;
+          case 9:
+            this.imagePath = this.sectionImage(cat, 'hospitalizar');
+            break;
+          default:
+            this.resetImage();
+            break;
         }
         break;
       case 4:
+        switch(subc){
+          case 1:
+            this.imagePath = this.sectionImage(cat, 'minisf');
+            break;
+          case 2:
+            this.imagePath = this.sectionImage(cat, 'nutricional');
+            break;
+          case 3:
+            this.imagePath = this.sectionImage(cat, 'must');
+            break;
+          case 5:
+            this.imagePath = this.sectionImage(cat, 'sarf');
+            break;
+          case 6:
+            this.imagePath = this.sectionImage(cat,'eat');
+            break;
+          case 7:
+            this.imagePath = this.sectionImage(cat, '');
+            break;
+          case 8:
+            this.imagePath = this.sectionImage(cat, '');
+            break;
+          case 9:
+            this.imagePath = this.sectionImage(cat, '');
+            break;
+          default:
+            this.resetImage();
+            break;
+        }
         break;
       default:
         // this.imagePath =  'assets/Imagenes/Puntaje/cog/awol.png';

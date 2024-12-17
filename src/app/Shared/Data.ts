@@ -34,6 +34,12 @@ export interface Question{
   text: String;
   options: Option[];
 }
+//Captura respuesta seleccionada
+export interface QuestionSelec{
+  text: String;
+  option: Option[];
+  selectedScore?: number;
+}
 // OPCOINES BOOLEANAS
 export interface Checkbox{
   text: String;

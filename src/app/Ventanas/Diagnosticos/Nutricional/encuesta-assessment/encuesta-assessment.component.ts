@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 interface MNAForm {
   [key: string]: number | null;
@@ -162,7 +163,7 @@ export class EncuestaAssessmentComponent {
   ];
 
   
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private share: SharedService) {
     const formControls: any = {};
 
     // Configurar controles para las preguntas de cribaje
@@ -216,12 +217,14 @@ export class EncuestaAssessmentComponent {
 
     console.log('Puntaje total:', puntajeTotal, 'Resultado:', observacion);
 
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        puntaje: puntajeTotal,
-        observacion: observacion,
-      },
-    });
+    const resultado = {
+      point: puntajeTotal,
+      encuesta: 'Mini Nutritional Assessment',
+      observable: observacion,
+      porcent: ((puntajeTotal/30) * 100).toFixed(2)
+    }
+    this.share.saveResults(resultado);
+    this.router.navigate(['home/resultado']);
   }
 
   // Calcular el puntaje de las preguntas normales
