@@ -219,7 +219,7 @@
  <!-- Time Up and Go -->
  <div class="cronometro containerEncuesta" *ngIf="encuestaSelect == 'timeup'">
   <div class="titulo">
-    <h2>Time UP and DOWN</h2>
+    <h2>Time UP and GO</h2>
   </div>
   <div class="instrucciones">
     <p>La persona puede usar su calzado habitual y puede utilizar cualquier dispositivo de ayuda que normalmente usa.</p>
@@ -233,25 +233,236 @@
     <p>La persona debe de dar un intento de práctica y luego repite 3 intentos más. Se promedian los tres ensayos reales y se promedian.</p>
   </div>
   <div class="opciones">
-    <h1>{{ tiempo | date:'mm:ss.SSS':'UTC' }}</h1>
-    <button (click)="iniciarPausar()" class="btn btn-primary">
-      {{ corriendo ? 'Pause' : 'Start' }}
-    </button>
-    <button (click)="reiniciar()" class="btn btn-primary">Reset</button>
-    <button (click)="capturarTiempo()" [disabled]="!corriendo" class="btn btn-primary">Time Capture</button>
-    <button (click)="deleteScore()" class="btn btn-primary">Default</button>
-    
-    <div *ngIf="capturas.length">
-      <h3>Tiempos Capturados:</h3>
-      <ul>
-        <li *ngFor="let captura of capturas; let i = index">
-          Captura {{ i + 1 }}: {{ captura }}
-        </li>
-      </ul>
+    <!-- VISTA DEL CRONOMETRO -->
+     <div class="botonesTime">
+       <h1>{{ tiempo | date:'mm:ss.SSS':'UTC' }}</h1>
+       <button (click)="iniciarPausar()" class="btn btn-success">
+         {{ corriendo ? 'Pause' : 'Start' }}
+       </button>
+       <button (click)="reiniciar()" class="btn btn-warning">Reset</button>
+       <button (click)="capturarTiempo()" [disabled]="!corriendo" class="btn btn-primary">Time Capture</button>
+       <button (click)="deleteScore()" class="btn btn-danger">Default</button>
+     </div>
+    <!-- VISTA DE LA CAPTURA E IMAGEN -->
+    <div class="vistaTime">
+      <img src="assets/Imagenes/timeupdown.png" alt="" class="time" draggable="false">
+      <div *ngIf="capturas.length">
+        <h3>Tiempos Capturados:</h3>
+        <ul>
+          <li *ngFor="let captura of capturas; let i = index">
+            Captura {{ i + 1 }}: {{ captura }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  <img src="assets/Imagenes/timeupdown.png" alt="" class="time" draggable="false">
 </div>
+
+<!-- Prueba Corta Fisico -->
+ <div class="sppb containerEncuesta" *ngIf="encuestaSelect == 'sppb'">
+  <div class="titulo">
+    <h2>Prueba corta de desempeño físico &#40;SPPB&#41;</h2>
+  </div>
+  <div class="container mt-3">
+    <form #form="ngForm" (ngSubmit)="puntajeSPPB()">
+      <!-- PRUEBA DE BALANCE -->
+      <div class="mb-3 balance">
+        <h5 class="bg-secondary text-white p-2">1. Prueba de balance</h5> <!-- PRUEBA 1 -->
+        <div class="textoPrueba">
+          <div class="instrucciones">
+            <table>
+              <tr>
+                <td><img [src]="imgCap[0]" class="img-fluid rounded" draggable="false"></td>
+                <td>
+                  <p><strong>A. Pararse con los pies uno al lado del otro</strong></p>
+                  <p>&#191;Mantuvo la posici&#243;n por 10s&#63;</p>
+                </td>
+              </tr>
+            </table>            
+          </div>
+          <div class="opciones">
+            <div class="form-check">
+              <label name="balanceA">
+              <input type="radio" name="balanceA" [(ngModel)]="respuestasSPPB.balanceA" value="1" class="form-check-input"> Sí</label>
+            </div>
+            <div class="form-check">
+              <label name="balanceA">
+              <input type="radio" name="balanceA" [(ngModel)]="respuestasSPPB.balanceA" value="0" class="form-check-input"> No</label>
+            </div>
+            <div class="form-check">
+              <label name="balanceA">
+              <input type="radio" name="balanceA" [(ngModel)]="respuestasSPPB.balanceA" value="-1" class="form-check-input"> Se rehúsa</label>
+            </div>
+          </div>          
+        </div>
+      </div>
+  
+      <div class="mb-3 balance">
+          <div class="textoPrueba">
+            <div class="instrucciones">
+              <table>
+                <tr>
+                  <td><img [src]="imgCap[1]" class="img-fluid rounded" draggable="false"></td>
+                  <td>
+                    <strong>B. Pararse en posición semi-tándem</strong>
+                    <p>&#191;Mantuvo la posici&#243;n por 10s&#63;</p>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            <div class="opciones">
+              <div class="form-check">
+                <label name="">
+                <input type="radio" name="balanceB" [(ngModel)]="respuestasSPPB.balanceB" value="1" class="form-check-input"> Sí</label>
+              </div>
+              <div class="form-check">
+                <label name="">
+                <input type="radio" name="balanceB" [(ngModel)]="respuestasSPPB.balanceB" value="0" class="form-check-input"> No</label>
+              </div>
+              <div class="form-check">
+                <label name="">
+                <input type="radio" name="balanceB" [(ngModel)]="respuestasSPPB.balanceB" value="-1" class="form-check-input"> Se rehúsa</label>
+              </div>
+            </div>
+          </div>
+      </div>
+  
+      <div class="mb-3 balance">
+        <div class="textoPrueba">
+          <div class="instrucciones">
+            <table>
+              <tr>
+                <td><img [src]="imgCap[2]" class="img-fluid rounded" draggable="false"></td>
+                <td>
+                  <p><strong>C. Pararse en posición tándem</strong></p>
+                  <p>Con el cronometro de la opci&#243;n 2, verifique cuanto tiempo le toma al paciente &#40;Seg&#41;</p>
+                </td>
+              </tr>
+            </table>           
+          </div>
+          <div class="opciones">
+            <div class="input-group">
+              <input type="number" [(ngModel)]="respuestasSPPB.tiempoBalance" name="tiempoBalance" class="form-control" placeholder="Tiempo (0-15 segundos)">
+              <span class="input-group-text">segundos</span>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- VELOCIDAD DE MARCHA -->
+       <div class="balance">
+         <h5 class="bg-secondary text-white p-2">2. Velocidad de marcha (4 metros)</h5>
+         <div class="textoPrueba">
+            <div class="opciones" style="margin: 0;">
+              <div class="mb-3">
+                <p>En caso de que no pueda el paciente, ponga 0 en ambos lados, sino capture los 2 tiempos.</p>
+                <label><strong>A. Primera medición</strong></label>
+                <input type="number" [(ngModel)]="respuestasSPPB.primeraMedicion" name="primeraMedicion" class="form-control" placeholder="Tiempo en segundos" id="primeraMedicion">
+              </div>  
+              <div class="mb-3">
+                <label><strong>B. Segunda medición</strong></label>
+                <input type="text" [(ngModel)]="respuestasSPPB.segundaMedicion" name="segundaMedicion" class="form-control" placeholder="Tiempo en segundos" id="segundaMedicion">
+              </div>
+            </div>
+            <div class="instrucciones">
+              <div class="botonesTime">
+                <h1>{{ tiempo | date:'mm:ss.SSS':'UTC' }}</h1>
+                <button (click)="iniciarPausar()" class="btn btn-success">
+                  {{ corriendo ? 'Pausa' : 'Iniciar' }}
+                </button>
+                <button (click)="deleteScore()" class="btn btn-danger">Reiniciar</button>
+              </div>
+            </div>
+        </div>
+       </div>
+  
+      <!-- LEVANTARSE CINCO VECES -->
+      <div class="mb-3">
+        <h5 class="bg-secondary text-white p-2">3. Prueba de levantarse cinco veces</h5>
+        <img [src]="imgCap[3]" alt="" class="img-fluid rounded" draggable="false">
+        <label><strong>A. Prueba previa &#40;No se califica, Pasar al B&#41;</strong></label>
+      </div>
+      <div class="mb-3">
+        <img [src]="imgCap[4]" alt="" class="img-fluid rounded" draggable="false">
+        <label><strong>B. Prueba repetida de levantarse de la silla</strong></label>
+        <p>Tiempo requerido para levantarse cinco veces de una silla</p>
+        <input type="number" [(ngModel)]="respuestasSPPB.tiempoSilla" name="tiempoSilla" class="form-control" placeholder="Tiempo en segundos">
+      </div>
+    </form>  
+    <div *ngIf="mensajeError" class="alert alert-danger mt-3">
+      <p>{{ mensajeError }}</p>
+    </div>
+  </div>
+  
+ </div>
+
+ <!-- VELOCIDAD DE LA MARCHA -->
+  <div class="velmarcha containerEncuesta" *ngIf="encuestaSelect == 'velmarcha'">
+    <div class="titulo">
+      <h2>Velocidad de la Marcha</h2>
+    </div>
+    <div class="instrucciones">
+      <div class="menu">
+        <h1>Siga las instrucciones, capture el tiempo antes de finalizar</h1>
+        <ul>
+          <li>Si la persona mayor, ya utiliza un auxiliar de la marcha &#40;bast&#243;n, andadera, etc.&#41; puede emplearlo durante la prueba.</li>
+          <li> Explique a la persona que le realizar&#225; una prueba para medir su velocidad para caminar, y que su caminar deber&#225; hacerlo a su paso habitual.</li>
+          <li>Ind&#237;quele a la persona el punto de partida y el punto de fin del trayecto donde deber&#225; caminar.</li>
+          <li>Mida con el cron&#243;metro o tel&#233;fono inteligente el tiempo que le toma a la persona caminar el trayecto de 4 metros. &#40;Active el cron&#243;metro en inicio al momento que la persona empiece a caminar, detenga el cron&#243;metro cuando la persona toque la l&#237;nea marcada&#41;.</li>
+          <li>Registre el tiempo de trayectoria del caminar de la persona evaluada.</li>
+          <li>Calcule la velocidad de la marcha, de acuerdo a la operaci&#243;n sugerida.</li>
+        </ul>
+      </div>
+      <div class="timeCrn">
+        <h1>{{ tiempo | date:'mm:ss.SS':'UTC' }}</h1>
+        <button (click)="iniciarPausar()" class="btn btn-success">
+          {{ corriendo ? 'Pausa' : 'Iniciar' }}
+        </button>
+        <button (click)="deleteScore()" class="btn btn-danger">Reiniciar</button>
+        <button class="btn-primary btn" (click)="captureTime()">Capturar Tiempo</button>
+      </div>
+      <img src="assets/Imagenes/trayectoria.png" title="image1" draggable="false">
+    </div>
+  </div>
+
+<!-- Identifiacion de Personas Mayores -->
+   <div class="riesgoHpt containerEncuesta" *ngIf="encuestaSelect == 'riesgoHpt'">
+    <div class="titulo">
+      <h2>Identificacion de riesgo hospitalizacion en Personas Mayores</h2>
+    </div>
+      <!-- table.component.html -->
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Items, antes de la admisión hospitalaria</th>
+              <th>SI</th>
+              <th>NO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of itemsRiesgo; let i = index">
+              <td id="tbl_question">{{ item.text }}</td> <!-- PREGUNTA -->
+              <td class="opc"
+                [class.selected]="item.selected == 'si'" 
+                (click)="selectOption(i, 'si')">
+                {{ item.si }}
+              </td>
+              <td class="opc"
+                [class.selected]="item.selected == 'no'" 
+                (click)="selectOption(i, 'no')">
+                {{ item.no }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="score">Total Puntaje: {{ puntos }}</div>
+        <!-- Mensaje de error -->
+        <div *ngIf="showErrors" class="alert alert-danger mt-3" role="alert">
+          Por favor, seleccione una respuesta para cada ítem antes de continuar.
+        </div>
+      </div>
+   </div>
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>
 </div>

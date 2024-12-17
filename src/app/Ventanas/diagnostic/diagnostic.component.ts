@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/Service/api.service';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-diagnostic',
@@ -17,13 +18,15 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
 
   //Lista de la Categoria a Mostrar
   categoria = [
-    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj' },
+    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj', cont7: 'Mini-Cog' },
     { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, 
       cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario Ansiedad Beck', cont6: 'Escala Soledad 3 Elementos', cont7: 'Riesgo de Suicidio SAD PERSON', cont8: 'Escala Cornell', cont9:'Corta Depresion por Observacion' },
-    { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go' },
+    { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go', cont7: 'Short Physical Performance Battery',
+      cont8: 'Velocidad de la Marcha', cont9: 'Identificador de Riesgo Persona Mayor'
+    },
     { title: this.en.toUpperCase(), cat: 4, content: this.sub + ' ' + this.en, cont1:'Mini Nutritional Assessment SF', cont2:'Mini Nutritional Assessment', cont3:'MUST', cont4:'Criterios Glim', cont5:'Sarc-F',cont6:'EAT-10'},
   ];
-  constructor(private router: Router, private serviceApi: ApiService){}
+  constructor(private router: Router, private serviceApi: ApiService, private sharedService: SharedService){}
 
   ngOnInit(): void {
       // Bloquea el clic derecho en toda la página
@@ -37,6 +40,7 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     // Eliminar el listener al destruir el componente
     document.removeEventListener('contextmenu', this.disableRightClick);
+    this.sharedService.clearResults();
   }
 
   toggleCategoryIndex(index: number){
@@ -49,13 +53,12 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
 
   vent(c: number, s: number) {
     console.log(c,s);
+    this.sharedService.changeCategory(c,s); //Envia un numero al servicio Cat, y SubCat
     switch(c){
       case 1:
         this.seleccionarCategoria('cognitiva');
         switch(s){
           case 1:
-            //this.router.navigate(['home/encuesta/{categoria}']);
-            //this.cambiarCategoria(this.ec.toLowerCase()+'-4at.php');
             this.cambiarCategoria(this.url(this.ec,'4at')); //Enviar tipo URL
             this.seleccionarSubCategoria('4at'); //Enciat nombre (Clave) para cada encuesta
             break;
@@ -79,11 +82,14 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
             this.cambiarCategoria(this.url(this.ec,'prueba-reloj'));
             this.seleccionarSubCategoria('reloj');
             break;
+          case 7:
+            this.cambiarCategoria(this.url(this.ec, 'mini-cog'));
+            this.seleccionarSubCategoria('minicog');
+            break;
         }
         break;
       case 2:
         this.seleccionarCategoria('afectiva');
-        // this.seleccionarSubCategoria('Undefinied');
         switch(s){
           case 1:
             this.cambiarCategoria(this.url(this.ea,'gds-15'));
@@ -150,36 +156,49 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
             this.cambiarCategoria(this.url(this.ef, 'time-up-and-go'));
             this.seleccionarSubCategoria('timeup');
             break;
+          case 7:
+            this.cambiarCategoria(this.url(this.ef, 'prueba-corta-fisico'));
+            this.seleccionarSubCategoria('sppb');
+            break;
+          case 8:
+            this.cambiarCategoria(this.url(this.ef, 'velocidad-marcha'));
+            this.seleccionarSubCategoria('velmarcha');
+            break;
+          case 9:
+            this.cambiarCategoria(this.url(this.ef, 'identificador-persona-mayor'));
+            this.seleccionarSubCategoria('riesgoHpt');
+            break;
         }
         break;
         case 4:
-        this.seleccionarCategoria('nutricional');
-        switch(s){
-          case 1:
-            this.cambiarCategoria(this.url(this.en,'Mini Nutritional Assessment SF'));
-            this.seleccionarSubCategoria('mininutri');
-            break;
-          case 2:
-            this.cambiarCategoria(this.url(this.en,'Mini Nutritional Assessment'));
-            this.seleccionarSubCategoria('asesment');
-            break;
-          case 3:
-            this.cambiarCategoria(this.url(this.en,'MUST'));
-            this.seleccionarSubCategoria('must');
-            break
-          case 4:
-            this.cambiarCategoria(this.url(this.en, 'Criterios Glim'));
-            this.seleccionarSubCategoria('glim');
-            break;
-          case 5:
-            this.cambiarCategoria(this.url(this.en, 'Sarc-F'));
-            this.seleccionarSubCategoria('sarcf');
-            break;
-          case 6:
-            this.cambiarCategoria(this.url(this.en, 'EAT10'));
-            this.seleccionarSubCategoria('EAT10');
-            break;
-        }
+          this.seleccionarCategoria('nutricional');
+          switch(s){
+            case 1:
+              this.cambiarCategoria(this.url(this.en, 'mini-nutricional-sf'));
+              this.seleccionarSubCategoria('minisf');
+              break;
+            case 2:
+              this.cambiarCategoria(this.url(this.en, 'mini-nutricional'));
+              this.seleccionarSubCategoria('nutri');
+              break;
+            case 3:
+              this.cambiarCategoria(this.url(this.en, 'must'));
+              this.seleccionarSubCategoria('must');
+              break;
+            case 4:
+              //this.cambiarCategoria(this.url(this.en, 'criterio-glim'));
+              //this.seleccionarSubCategoria('glim');
+              break;
+            case 5:
+              this.cambiarCategoria(this.url(this.en, 'sarc-f'));
+              this.seleccionarSubCategoria('sarf');
+              break;
+            case 6:
+              this.cambiarCategoria(this.url(this.en, 'eat-10'));
+              this.seleccionarSubCategoria('eat');
+              break;
+          }
+          break;
     }
   }
 

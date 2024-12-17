@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-beck-anxiety',
@@ -36,7 +37,7 @@ export class EncuestaBeckAnxietyComponent {
   observacion: string = '';
   showErrors: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private share: SharedService) {}
 
   // Método para calcular el puntaje
   calcularPuntaje(): void {
@@ -57,25 +58,26 @@ export class EncuestaBeckAnxietyComponent {
 
   // Método para enviar resultados al componente de resultados
   enviarResultados(puntaje: number, observacion: string): void {
-    if (puntaje === null) {
+   if (puntaje === null) {
       alert('Primero calcula el puntaje antes de enviar los resultados.');
       return;
     } else {
       this.showErrors = true;
+    }
+    
+    const resultados = {
+      point: this.puntaje,
+      encuesta: 'Inventario de Ansiedad de Beck',
+      observable: this.observacion,
+      porcent: ((this.puntaje / 21) * 100).toFixed(2)
     }
 
     console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
 
     // Redirige al componente Resultados con los datos mediante el estado
     if (this.showErrors) {
-      this.router.navigate(['home/resultado'], {
-        queryParams: {
-          nombreEncuesta: 'Inventario de Ansiedad de Beck',
-          puntaje: puntaje,
-          observacion: observacion,
-          porcentaje: ((puntaje / 100) * 15).toFixed(2)
-        }
-      });
+      this.share.saveResults(resultados);
+      this.router.navigate(['home/resultado']);
     }
   }
 

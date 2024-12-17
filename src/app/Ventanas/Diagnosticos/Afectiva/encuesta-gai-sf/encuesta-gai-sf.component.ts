@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-gai-sf',
@@ -16,7 +17,7 @@ export class EncuestaGaiSfComponent {
     { texto: 'Mis propios pensamientos me hacen sentir ansioso.', respuesta: null }
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private share: SharedService) {}
 
   // Calcular el puntaje total y redirigir al componente de resultados
   calcularPuntaje() {
@@ -40,17 +41,17 @@ export class EncuestaGaiSfComponent {
       return;
     }
 
-    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+    const resultado = {
+      point: puntaje,
+      encuesta: 'GAI-SF',
+      observable: observacion,
+      porcent: ((puntaje / 21) * 100).toFixed(2)
+    }
 
+    console.log('Puntaje: ', puntaje, '\nObservación: ', observacion);
+    this.share.saveResults(resultado);
     // Redirige al componente de resultados con los datos mediante queryParams
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'GAI-SF',
-        puntaje: puntaje,
-        observacion: observacion,
-        porcentaje: ((puntaje / 10) * 100).toFixed(2)
-      }
-    });
+    this.router.navigate(['home/resultado']);
   }
 }
 

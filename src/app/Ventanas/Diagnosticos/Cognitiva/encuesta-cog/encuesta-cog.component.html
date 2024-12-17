@@ -256,6 +256,53 @@
   </div>
  </div>
  
+  <!-- MINI COG -->
+<div class="minicog containerEncuesta" *ngIf="categoria == 'minicog'">
+  <div class="title">Mini-Cog</div>
+  <div class="instrucciones">
+      <h1>Instrucciones de Evaluación</h1>
+      <div class="instruction">
+        <h2>1. Registro de tres palabras</h2>
+        <p>Vea directamente a la persona, logre su atención y dígale:</p>
+        <div class="highlight">"Le voy a decir tres palabras que quiero que usted recuerde ahora y más tarde. Las palabras son papel, bicicleta, cuchara. Por favor, dígamelas ahora."</div>
+        <p>Si la persona no logra repetir las 3 palabras en un primer intento, dígale las 3 palabras nuevamente. Máximo se le darán hasta 3 intentos para repetir las palabras.</p>
+        <p class="note">Si la persona no logra repetir las palabras después de 3 intentos, continúe con la siguiente sección.</p>
+      </div>
+    
+      <div class="instruction">
+        <h2>2. Dibujo del reloj</h2>
+        <p>Proporcione a la persona una hoja de papel en blanco y una pluma, y dígale las siguientes frases en el orden indicado:</p>
+        <div class="gray-bg">"Por favor, dibuje un reloj en este espacio. Comience dibujando un círculo grande."</div>
+        <p>Cuando la persona haya terminado, dígale:</p>
+        <div class="gray-bg">"Coloque todos los números en el círculo."</div>
+        <p>Cuando la persona haya terminado, dígale:</p>
+        <div class="gray-bg">"Ahora coloque las manecillas del reloj para que marquen las 11 y 10."</div>
+        <p class="note">Si la persona no ha terminado de dibujar el reloj en 3 minutos, deje pendiente esta sección y pase a lo siguiente.</p>
+      </div>
+    
+      <div class="instruction">
+        <h2>3. Evocación de las tres palabras</h2>
+        <p>Dígale a la persona:</p>
+        <div class="highlight">"¿Cuáles fueron las tres palabras que le pedí que recordara?" (papel, bicicleta, cuchara).</div>
+        <p>Registre la fecha, el nombre completo, la edad, el sexo y los años de escolaridad de la persona evaluada.</p>
+      </div>
+  </div>
+  <div class="opciones">
+    <h1>Seleccione las respuestas que considere correctos</h1>
+    <div *ngFor="let pregunta of minicog" class="stylecog">
+      <div class="preguntacog">{{ pregunta.question }}</div>
+      <div class="opcion" *ngFor="let opcion of pregunta.options">
+        <label name="">
+          <input type="checkbox" [(ngModel)]="opcion.seleccionada" />
+            {{ opcion.text }}
+          </label>
+      </div>
+    </div>
+  </div>
+  <div class="containerIMG">
+    <img src="assets/Imagenes/cognitiva/minicog.png" alt="" class="minicogIMG" draggable="false">
+  </div>
+</div>
 <!-- Boton de Envio -->
 <div class="boton">
   <button type="submit" class="btn btn-success" (click)="finalizarEncuesta()">Finalizar</button>

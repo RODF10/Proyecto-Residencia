@@ -1,44 +1,3 @@
-/* Estilos responsivos 
-@media (max-width: 1366px) {
-  form {
-    max-width: 550px;
-  }
-  label {
-    font-size: 0.95rem;
-  }
-  button {
-    font-size: 0.9rem;
-  }
-}
-
-@media (max-width: 720px) {
-  form {
-    max-width: 90%;
-  }
-  label {
-    font-size: 0.9rem;
-  }
-  button {
-    font-size: 0.85rem;
-  }
-}
-
-@media (max-width: 480px) {
-  form {
-    padding: 15px;
-  }
-  label {
-    font-size: 0.85rem;
-  }
-  button {
-    font-size: 0.8rem;
-  }
-
-  Opciones en una sola columna para pantallas pequeñas
-  div > div {
-    flex-direction: column;
-  }
-}*/
 //Estilos de los titulos y contenedor
 .containerEncuesta .titulo {
   width: 100%;
@@ -55,35 +14,35 @@
   font-weight: bold;
   color: #fbfcfc;
 }
-.containerEncuesta{
+.containerEncuesta {
   width: 100%;
   max-width: 1000px;
   margin: auto;
 }
-label{
-    cursor: pointer;
-    margin: 5px 0px;
+label {
+  cursor: pointer;
+  margin: 5px 0px;
 }
-.boton{
+.boton {
   width: 100%;
   text-align: center;
   margin: 1.2rem 0;
 }
-.boton button{
+.boton button {
   padding: 10px 30px;
 }
 /* ESTILOS DE BARTHEL, LAWTON Y KATZ */
-.opcmult .opciones {  
-  label input[type="radio"]{
+.opcmult .opciones {
+  label input[type="radio"] {
     margin-top: 0.1rem;
     align-self: start;
   }
-  label{
+  label {
     margin-left: 1rem;
   }
-  .preguntas{
+  .preguntas {
     padding: 10px 15px;
-    background:   #d7dbdd;
+    background: #d7dbdd;
     color: rgba(0, 0, 0, 0.7);
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.3rem;
@@ -100,29 +59,197 @@ label{
     text-transform: uppercase;
     padding: 13px 0;
   }
-  
+
   /* Colores de las filas */
-  .row-blue td{
+  .row-blue td {
     background: rgb(202, 237, 251); /* Azul claro */
   }
-  
-  .row-gray td{
+
+  .row-gray td {
     background: rgb(242, 243, 244); /* Gris claro */
   }
-  
+
   /* Ajustes adicionales */
   .table td {
     vertical-align: middle; /* Centrar verticalmente las celdas */
   }
 }
 
-/*  ESTILOS TIME UP */ 
-.cronometro ul{
+/*  ESTILOS TIME UP */
+.cronometro ul {
   list-style-type: cjk-earthly-stem;
 }
-.cronometro .time{
+.cronometro .time {
   width: 400px;
 }
-.cronometro .opciones button{
+.cronometro .opciones button {
   margin: 0 10px;
+}
+.cronometro .vistaTime {
+  display: inline-flex;
+  width: 90%;
+
+  img {
+    margin-right: 3rem;
+  }
+}
+
+.cronometro .botonesTime {
+  width: 100%;
+  text-align: center;
+  margin: 15px 0;
+
+  h1 {
+    font-size: 2rem;
+    padding: 10px;
+  }
+}
+
+// ESTILOS SPPB
+.sppb {
+  .balance .textoPrueba {
+    display: inline-flex;
+    width: 100%;
+  }
+  .balance {
+    width: 100%;
+  }
+}
+
+.sppb .balance .botonesTime {
+  width: 100%;
+  text-align: center;
+  padding-top: 40px;
+
+  button {
+    margin: 0px 10px;
+  }
+}
+// ESTILOS VEL MARCHA
+.velmarcha {
+  .menu ul {
+    list-style: cjk-earthly-stem;
+  }
+  .menu li {
+    font-size: 1.3rem;
+    padding: 5px;
+  }
+  .instrucciones img {
+    width: 100%;
+    max-width: 900px;
+  }
+}
+.velmarcha .timeCrn {
+  width: 100%;
+  background: #f9f9f9; // Fondo claro
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Sombra suave
+  border: 2px solid #d6dbdf; // Color y grosor del borde
+  max-width: 400px; // Ancho máximo del contenedor
+  text-align: center; // Centrar el texto y los botones dentro del div
+  margin: 15px auto; // Margen para separar del resto y centrar horizontalmente
+  padding: 10px 5px; // Espaciado interno
+  border-radius: 15px; // Bordes redondeados
+
+  button {
+    margin: 0px 10px;
+  }
+}
+
+// ESTILOS IDENTIFICADOR RIESGO PERSONA MAYOR
+.riesgoHpt {
+  /* table.component.css */
+  .table-container {
+    margin: 10px 20px;
+    width: 100%;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  #tbl_question{
+    text-align: left;
+  }
+  th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+  }
+  table .opc{
+    padding: 1rem 2.3rem;
+  }
+  td {
+    cursor: pointer;
+  }
+
+  td.selected {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .score {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+}
+//Estilos responsivos
+@media (min-width: 901px) {
+  .cronometro .vistaTime {
+    h3 {
+      font-size: 1.8rem;
+    }
+    ul li {
+      font-size: 1.5rem;
+      margin: 15px 0;
+    }
+  }
+
+  .sppb {
+    .textoPrueba .opciones {
+      margin-left: 30px;
+      margin-top: 50px;
+    }
+    .textoPrueba .opciones label {
+      font-size: 1.3rem;
+    }
+    .balance .opciones,
+    .balance .instrucciones {
+      width: 50%;
+    }
+    .balance img {
+      margin-right: 10px;
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .cronometro .vistaTime {
+    display: inline-block;
+  }
+  .cronometro .vistaTime img {
+    margin-bottom: 2.5rem;
+  }
+  .cronometro .vistaTime {
+    h3 {
+      font-size: 1.4rem;
+    }
+    ul li {
+      font-size: 1rem;
+    }
+  }
+
+  .sppb {
+    .balance .textoPrueba {
+      display: inline-block;
+      margin-left: 5px;
+      margin-top: 0;
+    }
+    .balance .opciones,
+    .balance .instrucciones {
+      width: 100%;
+    }
+    .balance .botonesTime {
+      padding: 0;
+    }
+  }
 }

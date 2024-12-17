@@ -1,10 +1,15 @@
 <div class="resultado-container">
   <p class="texto">Puntuacion del Resultado recopilado en base de las Respuestas Seleccionadas</p>
   <h2>Resultado de la Encuesta: {{ nombreEncuesta }}</h2>
-  <p class="resultadoPuntaje"><strong>Puntaje Total:</strong> {{ puntaje }} puntos</p>
+  <p class="resultadoPuntaje"><strong>Puntaje Total:</strong> {{ puntaje }} {{ entrada }}</p>
   <p class="resultadoPuntaje"><strong>Nivel de Dependencia:</strong> {{ porcentaje }}%</p>
   <!-- <p><strong>Nivel de Dependencia:</strong> {{ obtenerNivel() }}</p> -->
   <p class="resultadoPuntaje"><strong>Observación:</strong> {{ observacion }}</p>
+</div>
+
+<div class="image-container">
+  <img *ngIf="showImage" [src]="imagePath" alt="Imagen seleccionada" draggable="false"/>
+  <p *ngIf="!showImage">No se ha recibido ninguna imagen para mostrar.</p>
 </div>
 
 <div class="d-grid gap-2 col-6 botones">

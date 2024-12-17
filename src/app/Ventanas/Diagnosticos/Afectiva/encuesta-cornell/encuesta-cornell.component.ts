@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-cornell',
@@ -33,7 +34,7 @@ export class EncuestaCornellComponent {
   observacion: string = '';
   showErrors: boolean = false;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private share: SharedService) {}
 
   setScore(index: number, score: number): void {
     this.questions[index].score = score;
@@ -52,6 +53,13 @@ export class EncuestaCornellComponent {
   }
 
   enviarResultados(): void {
+    const resultados = {
+      point: this.resultado,
+      encuesta: 'Escala de Cornell',
+      observable: this.observacion,
+      porcent: ((this.resultado / 21) * 100).toFixed(2)
+    }
+
     if (!this.showErrors || this.resultado === null) {
       alert('Primero calcula el puntaje antes de enviar los resultados.');
       return;
@@ -59,14 +67,8 @@ export class EncuestaCornellComponent {
 
     console.log('Puntaje:', this.resultado, '\nObservación:', this.observacion);
 
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'Escala de Cornell',
-        puntaje: this.resultado,
-        observacion: this.observacion,
-        porcentaje: ((this.resultado / 38) * 100).toFixed(2) // Calcula un porcentaje basado en un puntaje máximo de 30.
-      }
-    });
+    this.share.saveResults(resultados);
+    this.router.navigate(['home/resultado']);
   }
 }
 

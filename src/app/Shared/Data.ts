@@ -34,8 +34,24 @@ export interface Question{
   text: String;
   options: Option[];
 }
+//Captura respuesta seleccionada
+export interface QuestionSelec{
+  text: String;
+  option: Option[];
+  selectedScore?: number;
+}
 // OPCOINES BOOLEANAS
 export interface Checkbox{
   text: String;
   seleccionada: boolean;
+}
+export interface QuestionCheck{
+  question: String;
+  options: Checkbox[];
+}
+
+//Categoria y SubCategoria
+export interface CategorySelection {
+  mainCategory: number;
+  subCategory: number;
 }

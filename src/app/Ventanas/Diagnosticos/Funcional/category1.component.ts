@@ -8,6 +8,8 @@ import { DiagnosticComponent } from '../../diagnostic/diagnostic.component';
 import { ApiService } from 'src/app/Service/api.service';
 import { Checkbox, Question } from 'src/app/Shared/Data';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
+import { LoadJSService } from 'src/app/Service/load-js.service';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-category1',
@@ -15,6 +17,7 @@ import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/fl
   styleUrls: ['./category1.component.scss'],
 })
 export class Category1Component implements OnInit {
+  //Datos Basicos para captura
   encuestaSelect: String = '';
   puntos: number = 0;
   observacion: string = '';
@@ -255,9 +258,39 @@ export class Category1Component implements OnInit {
   optionL: number[] = Array(this.preguntasLowton.length).fill(-1);
   errorsLowton: boolean[] = Array(this.preguntasLowton.length).fill(false);
 
+  // ENCUESTA SPPB
+  respuestasSPPB = {
+    balanceA: null,
+    balanceB: null,
+    tiempoBalance: null,
+    primeraMedicion: null,
+    segundaMedicion: null,
+    tiempoSilla: null
+  };
+   // Array de imágenes
+   imgCap: string[] = [
+    'assets/Imagenes/caminata/caminata1.png',
+    'assets/Imagenes/caminata/caminata2.png',
+    'assets/Imagenes/caminata/caminata3.png',
+    'assets/Imagenes/caminata/caminata4.png',
+    'assets/Imagenes/caminata/caminata5.png'
+  ];
+  velOpt: boolean = true;
+
+  // VELOCIDAD MARCHA
+  timeCap: string = '00:00.00';
+  inBoton: boolean = false;
+
+  //Identificador de Persona Mayor
+  itemsRiesgo = [
+    { text: '¿Necesitaba regularmente ayuda para alguna de las actividades instrumentales de la vida diaria?(uso de transporte, uso de teléfono, manejo de medicación, manejo de dinero, hacer compras, preparar alimentos, labores del hogar o lavar ropa)', si: 1, no: 0, selected: '' },
+    { text: '¿Necesitaba algún auxiliar para deambular (bastón, andadera, muletas)?', si: 2, no: 0, selected: '' },
+    { text: '¿Necesitaba ayuda para salir de viaje?', si: 1, no: 0, selected: '' },
+    { text: '¿Continuó su educación después de los 14 años de edad?', si: 0, no: 1, selected: '' }
+  ];
+
   /* ------------------------------- CONSTRUC DE LA CLASE --------------------------- */
-  constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private render: Renderer2) {
-    
+  constructor(private fb: FormBuilder, private encuestaService: ApiService, private router: Router, private route: ActivatedRoute, private LoadJS: LoadJSService, private sharedService: SharedService) {  
   }
    /* ------------------------------- ONINIT = INICIALIZADOR --------------------------- */
   ngOnInit(): void {
@@ -270,6 +303,7 @@ export class Category1Component implements OnInit {
   // En el componente 'Category1Component'
   finalizarEncuesta() {
     this.encuesta(this.encuestaSelect);
+    console.log(this.encuestaSelect);
   }
 
   cambiarCategoria(categoria: String){
@@ -291,7 +325,7 @@ export class Category1Component implements OnInit {
           const letter = this.getIndependenceCategory();
           this.puntos = katzT;//Pasa los puntos obtenido al puntos
           this.showErrors = true;
-          this.encuestaResultado(this.puntos, 'Indice de KATZ', 'Letra Asignada: ' + letter,(this.puntos/6)*100)
+          this.encuestaResultado(this.puntos.toString(), 'Indice de KATZ', 'Letra Asignada: ' + letter,(this.puntos/6)*100)
           console.log(this.ent[1] + 'KATZ');
         }
         break;
@@ -326,7 +360,7 @@ export class Category1Component implements OnInit {
           this.observacion = 'Independiente';
         }
 
-        this.encuestaResultado(this.puntos, 'Indice de Barthel', this.observacion, (this.puntos/100)*100);
+        this.encuestaResultado(this.puntos.toString(), 'Indice de Barthel', this.observacion, (this.puntos/100)*100);
         console.log(this.ent[1] + 'Barthel');
         break;
       case 'lawton':
@@ -351,7 +385,7 @@ export class Category1Component implements OnInit {
 
         if(!this.errorsLowton.includes(true)){
           this.showErrors = true;
-          this.encuestaResultado(this.puntos,'Escala Lowton y Brody', this.observacion, (this.puntos/8)*100);
+          this.encuestaResultado(this.puntos.toString(),'Escala Lowton y Brody', this.observacion, (this.puntos/8)*100);
         }
       
         console.log(this.ent[1] + 'Brody y Lowton');
@@ -403,7 +437,7 @@ export class Category1Component implements OnInit {
             this.observacion = 'Probable pre-fatiga'
           }
           
-          this.encuestaResultado(this.puntos, 'FRAIL', this.observacion, (this.puntos/5)*100);
+          this.encuestaResultado(this.puntos.toString(), 'FRAIL', this.observacion, (this.puntos/5)*100);
 
           console.log("Salida de Frail | ", this.puntos);
           break;
@@ -419,21 +453,89 @@ export class Category1Component implements OnInit {
           this.observacion = 'Estado Ningun criterio (Robusto)';
         }
         console.log('Salida de: Ensrud');
-        this.encuestaResultado(this.puntos, 'Criterio Ensrud', this.observacion, (this.puntos*3)/100);
+        this.encuestaResultado(this.puntos.toString(), 'Criterio Ensrud', this.observacion, (this.puntos*3)/100);
+        break;
+      case 'timeup':
+        const tiempoEnSegundos = this.convertirATiempoEnSegundos(this.calcularPromedioTemp());
+
+        if (tiempoEnSegundos <= 10) {
+          this.observacion = 'Normal';
+        } else if (tiempoEnSegundos >= 11 && tiempoEnSegundos <= 13) {
+          this.observacion = 'Discapacidad leve de movilidad';
+        } else if (tiempoEnSegundos > 13) {
+          this.observacion = 'Riesgo elevado de caída';
+        }
+        this.showErrors = true;
+        this.encuestaResultado(this.calcularPromedioTemp(), 'Time Up and Go', this.observacion, tiempoEnSegundos, 'seg');
+        break;
+      case 'sppb':
+        this.puntajeSPPB();
+
+        if(this.puntos >= 0 && this.puntos <= 6){
+          this.observacion = 'Bajo Rendimiento';
+        } else if(this.puntos >= 7 && this.puntos <= 9){
+          this.observacion = 'Intermedio';
+        } else {
+          this.observacion = 'Alto Rendimiento';
+        }
+        this.encuestaResultado(this.puntos.toString(),'Short Physical Performance Battery', this.observacion, (this.puntos/12)*100);
+        break;
+      case 'velmarcha':
+        this.showErrors = true;
+        const capSeg = this.convertirATiempoEnSegundos(this.timeCap);
+        
+        let vm: number;
+        if (capSeg === 0) {
+          vm = 0; // O asigna un valor predeterminado
+        } else {
+          vm = 4 / capSeg;
+        }
+        if(vm == 0) {
+          this.observacion = 'None'
+        } else if(vm < 0.8){
+          this.observacion = 'Disminucion de desempeño de los componentes que definen';
+        } else if(vm < 1){
+          this.observacion = 'Predice riesgo de desenlaces adversos';
+        } else {
+          this.observacion = 'Ninguna Captura con estos datos'
+        }
+        this.encuestaResultado(vm.toFixed(2).toString(), 'Velocidad de Marcha', this.observacion, (capSeg/4)*10, 'm/seg')
+        console.log(vm.toFixed(2) + 'm/seg - Obs: '+this.observacion);
+        break;
+      case 'riesgoHpt':
+        const allSelected = this.itemsRiesgo.every(item => item.selected !== '');
+        this.showErrors = !allSelected;
+        console.log(this.showErrors);
+
+        if(this.puntos <= 1){
+          this.observacion = 'Riesgo Bajo'
+        } else if(this.puntos > 1 && this.puntos <= 3){
+          this.observacion = 'Riesgo Intermedio';
+        } else {
+          this.observacion = 'Riesgo Alto';
+        }
+
+        if(allSelected){
+          this.showErrors = true;
+          this.encuestaResultado(this.puntos.toString(), 'identificar Riesgo Hospitalizacion en Personas Mayores', this.observacion, (this.puntos/5)*100);
+        }
         break;
     }
   }
 
   //Metodo para pasar al siguiente componente, en case de que este respondidos las respuestas
-  encuestaResultado(puntos: number, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
+  encuestaResultado(puntos: string, nameEncuesta: String, observacion: String, porcentaje: FLOAT, entT: string = 'pto'): void{
+    const resultados = {
+      point: puntos,
+      encuesta: nameEncuesta,
+      observable: observacion,
+      porcent: porcentaje.toFixed(2),
+      ent: entT
+    }
     if(this.showErrors){
-      // Al navegar, enviamos los puntos al componente de resultado
-      this.router.navigate(['home/resultado'], {queryParams: {
-        puntaje: puntos, //Puntaje Obtenido
-        nameEncuesta: nameEncuesta, //Nombre de la Encuesta
-        porcentaje: porcentaje.toFixed(2),
-        observacion: observacion //Observaciones
-      }});
+      /* Al navegar, enviamos los puntos al componente de resultado */
+      this.sharedService.saveResults(resultados);
+      this.router.navigate(['home/resultado']);
       localStorage.removeItem('subCatSeleccionada'); 
    }
   }
@@ -495,6 +597,7 @@ export class Category1Component implements OnInit {
       }, 10);
     }
     this.corriendo = !this.corriendo;
+    this.inBoton = true;
   }
 
   reiniciar(){
@@ -502,6 +605,7 @@ export class Category1Component implements OnInit {
     this.tiempo = 0;
     //this.capturas = [];
     this.corriendo = false;
+    this.inBoton = false;
   }
   capturarTiempo(){
     const minutos = Math.floor(this.tiempo / 60000);
@@ -517,7 +621,49 @@ export class Category1Component implements OnInit {
     this.capturas = [];
     this.reiniciar();
   }
+  // Convierte a milisegundos
+  private convertirATiempoEnMilisegundos(captura: string): number {
+    const [minutos, segundosMilisegundos] = captura.split(':');
+    const [segundos, centisegundos] = segundosMilisegundos.split('.');
+    return (
+      parseInt(minutos, 10) * 60000 +
+      parseInt(segundos, 10) * 1000 +
+      parseInt(centisegundos, 10) * 10
+    );
+  }
+  // Método para convertir tiempo `mm:ss.SS` a segundos (number)
+  convertirATiempoEnSegundos(captura: string): number {
+    const [minutos, segundosMilisegundos] = captura.split(':');
+    const [segundos, centisegundos] = segundosMilisegundos.split('.');
 
+    // Convertir minutos a segundos y sumar los segundos y centisegundos
+    return (
+      parseInt(minutos, 10) * 60 +
+      parseInt(segundos, 10) +
+      parseInt(centisegundos, 10) / 100
+    );
+  }
+  calcularPromedioTemp(): string{
+    if (this.capturas.length == 0) {
+      return '00:00.00'; // Si no hay capturas, devolver un valor predeterminado.
+    }
+  
+    // Convertir todas las capturas a milisegundos
+    const tiemposEnMilisegundos = this.capturas.map(captura =>
+      this.convertirATiempoEnMilisegundos(captura)
+    );
+  
+    // Calcular el promedio
+    const suma = tiemposEnMilisegundos.reduce((acumulado, tiempo) => acumulado + tiempo, 0);
+    const promedio = suma / tiemposEnMilisegundos.length;
+  
+    // Convertir el promedio a formato `mm:ss.SS`
+    const minutos = Math.floor(promedio / 60000);
+    const segundos = Math.floor((promedio % 60000) / 1000);
+    const centisegundos = Math.floor((promedio % 1000) / 10);
+  
+    return `${this.pad(minutos)}:${this.pad(segundos)}.${this.pad(centisegundos)}`;
+  }
   //Funcion KATZ
   getIndependenceCategory(): string {
     // Define los niveles de independencia/dependencia para cada pregunta
@@ -567,5 +713,73 @@ export class Category1Component implements OnInit {
   
     return 'Error'; // Caso no contemplado
   }
-  
+
+  puntajeSPPB() {
+    this.mensajeError = '';
+    this.puntos = 0;
+
+    // Validaciones
+    if (this.respuestasSPPB.balanceA == null || this.respuestasSPPB.balanceB == null || this.respuestasSPPB.tiempoBalance == null || this.respuestasSPPB.primeraMedicion == null || this.respuestasSPPB.segundaMedicion == null || this.respuestasSPPB.tiempoSilla == null) {
+        this.mensajeError = 'Por favor, responda todas las preguntas.';
+        this.showErrors = false;
+      return;
+    }
+
+    // Cálculo de puntaje
+    this.puntos += parseInt(this.respuestasSPPB.balanceA) || 0;
+    this.puntos += parseInt(this.respuestasSPPB.balanceB) || 0;
+
+    if (this.respuestasSPPB.tiempoBalance >= 0 && this.respuestasSPPB.tiempoBalance <= 15) {
+      if (this.respuestasSPPB.tiempoBalance >= 3.0 && this.respuestasSPPB.tiempoBalance <= 9) this.puntos += 1;
+      else if(this.respuestasSPPB.tiempoBalance >= 10) this.puntos += 2;
+      else this.puntos += 0;
+    } else {
+      this.mensajeError = 'El tiempo en la sección de balance debe ser entre 0 y 15 segundos.';
+      return;
+    }
+    // Asignar valores vacíos o null como 0
+    const primeraMedicion = parseFloat(this.respuestasSPPB.primeraMedicion);
+    const segundaMedicion = parseFloat(this.respuestasSPPB.segundaMedicion);
+
+    this.showErrors = true;
+
+    const menorMedicion = Math.min(primeraMedicion, segundaMedicion);
+    if (menorMedicion > 8.70) this.puntos += 1;
+    else if (menorMedicion >= 6.21 && menorMedicion <= 8.70) this.puntos += 2;
+    else if (menorMedicion >= 4.82 && menorMedicion <= 6.20) this.puntos += 3;
+    else if (menorMedicion > 0 && menorMedicion < 4.82) this.puntos += 4;
+
+    if (this.respuestasSPPB.tiempoSilla > 60) this.puntos += 0;
+    else if (this.respuestasSPPB.tiempoSilla >= 16.7) this.puntos += 1;
+    else if (this.respuestasSPPB.tiempoSilla >= 13.7) this.puntos += 2;
+    else if (this.respuestasSPPB.tiempoSilla >= 11.2) this.puntos += 3;
+    else this.puntos += 4;
+  }
+
+  /* VELOCIDAD DE MARCHA */
+  captureTime(){
+    const minutos = Math.floor(this.tiempo / 60000);
+    const segundos = Math.floor((this.tiempo % 60000) / 1000);
+    const milisegundos = Math.floor((this.tiempo % 1000) / 10);
+    this.timeCap = (`${this.pad(minutos)}:${this.pad(segundos)}.${this.pad(milisegundos)}`);
+    if(this.inBoton){
+      this.iniciarPausar();
+      this.inBoton = false;
+    }
+    console.log(this.timeCap);
+  }
+  //Identificador Persona Mayor
+  selectOption(index: number, option: 'si' | 'no') {
+    const item = this.itemsRiesgo[index];
+    if (item.selected == option) return; // No action if already selected
+
+    // Update score
+    if (item.selected) {
+      this.puntos -= item[item.selected as 'si' | 'no'];
+    }
+    //Next
+    item.selected = option;
+    this.puntos += item[option];
+    this.showErrors = false;
+  }
 }

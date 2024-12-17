@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-okeeffe',
@@ -21,7 +22,7 @@ export class EncuestaOkeeffeComponent implements OnInit {
   interpretacion: string = '';
   showErrors: boolean = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private share: SharedService) {}
 
   ngOnInit(): void {
     // Crea un grupo de controles para cada pregunta
@@ -58,17 +59,16 @@ export class EncuestaOkeeffeComponent implements OnInit {
       return;
     }
 
+    const resultado = {
+      point: this.resultado,
+      encuesta: 'Escala Corta de Depresión por Observación Hammond-O\'Keeffe',
+      observable: this.interpretacion,
+      porcent: ((this.resultado / 21) * 100).toFixed(2)
+    }
     console.log('Puntaje: ', this.resultado, '\nObservación: ', this.interpretacion);
-
+    this.share.saveResults(resultado);
     // Redirige al componente Resultados con los datos mediante el estado
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        nombreEncuesta: 'Escala Corta de Depresión por Observación Hammond-O\'Keeffe',
-        puntaje: this.resultado,
-        observacion: this.interpretacion,
-        porcentaje: ((this.resultado / 6) * 100).toFixed(2) // Suponiendo un máximo de 18 puntos
-      }
-    });
+    this.router.navigate(['home/resultado']);
   }
 
   // Método para finalizar la encuesta: calcula el puntaje y luego envía los resultados

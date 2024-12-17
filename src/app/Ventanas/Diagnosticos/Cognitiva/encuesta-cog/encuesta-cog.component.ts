@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validator, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { left } from '@popperjs/core';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { ApiService } from 'src/app/Service/api.service';
-import { PreguntaDosOpc, Question } from 'src/app/Shared/Data';
+import { SharedService } from 'src/app/Service/shared.service';
+import { PreguntaDosOpc, Question, QuestionCheck } from 'src/app/Shared/Data';
 
 @Component({
   selector: 'app-encuesta-cog',
@@ -12,12 +12,15 @@ import { PreguntaDosOpc, Question } from 'src/app/Shared/Data';
   styleUrls: ['./encuesta-cog.component.scss']
 })
 export class EncuestaCogComponent implements OnInit{
-  isSelected: { [key: string]: boolean } = {};// Validacion de color de AWOL false/true
+  /* DATOS BAISCO DE CAPTURA */
   puntos: number = 0; //Puntaje
-  categoria: String = 'Undefinid';//Recibir nombre clave
-  cons: String[] = ['Entrastes en: ', 'Salida de: '];
+  showErrors: boolean = false;
   nameEncuesta?: String;
   observacion: String ='';
+  categoria: String = 'Undefinid';//Recibir nombre clave
+  cons: String[] = ['Entrastes en: ', 'Salida de: '];
+
+  isSelected: { [key: string]: boolean } = {};// Validacion de color de AWOL false/true
 
   //Preguntas Si No
   preguntasCamIcu: PreguntaDosOpc[] = [
@@ -72,9 +75,22 @@ export class EncuestaCogComponent implements OnInit{
       ]
     }
   ];
-  showErrors: boolean = false;
 
-  constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder){
+  // MINI COG PREGUNTAS
+  minicog: QuestionCheck[] = [
+    {question: '1.- Dibujo del Reloj',
+      options: [
+        { text: 'Normal', seleccionada: false },
+      ]},
+    {question: '2.- Evocación de las Tres Palabras',
+      options: [
+        { text: 'Papel', seleccionada: false },
+        { text: 'Bicicleta', seleccionada: false },
+        { text: 'Cuchara', seleccionada: false }
+      ]}
+  ];
+
+  constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder, private sharedService: SharedService){
     this.questionnaireForm = this.fb.group({
       question1: [null, Validators.required],
       question2: [null, Validators.required],
@@ -92,7 +108,6 @@ export class EncuestaCogComponent implements OnInit{
 
   //Metodo del boton Finalizar
   finalizarEncuesta(){
-    //this.puntos = 0;
     this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
    
   }
@@ -123,7 +138,7 @@ export class EncuestaCogComponent implements OnInit{
           }
         }
 
-        this.encuestaResulto(puntajeSi, 'CAM-ICU','Sin observaciones',(puntajeSi/9)*100);
+        this.encuestaResulto(puntajeSi.toString(), 'CAM-ICU','Sin observaciones',(puntajeSi/9)*100);
         console.log(this.cons[1], 'CAM-ICU');
         break;
       case 'awol':
@@ -144,7 +159,7 @@ export class EncuestaCogComponent implements OnInit{
 
         this.showErrors = true;// An finalizar marca verdadero si, dependiendo si selecciona la letra
         console.log(this.cons[1], 'AWOL');//Verificar que si hay salida
-        this.encuestaResulto(this.puntos, 'AWOL', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
+        this.encuestaResulto(this.puntos.toString(), 'AWOL', this.observacion, (this.puntos/4)/100); //Envia los parametros al metodo
         break;
       case 'spmsqp':
         var err: String = 'Errores Obtenido: ';//Acortar observacion
@@ -174,7 +189,7 @@ export class EncuestaCogComponent implements OnInit{
           this.observacion = err + 'Leve, Deteriodo cognitivo'
         }
 
-        this.encuestaResulto(respuestaNo, 'Question Pfeiffer', this.observacion, (respuestaNo/10)*100); //Envio de los parametros
+        this.encuestaResulto(respuestaNo.toString(), 'Question Pfeiffer', this.observacion, (respuestaNo/10)*100); //Envio de los parametros
         console.log(this.cons[1], 'spmsqp');
         break;
       case 'reloj':
@@ -208,9 +223,33 @@ export class EncuestaCogComponent implements OnInit{
         if(!this.showErrors){
           console.log('Entrada If del Reloj');
           this.showErrors = true; //Convertirse en verdadero antes de llamar al metod, para enviar al siguiente componente
-          this.encuestaResulto(this.puntos, 'Prueba de Reloj',this.observacion, (this.puntos/10)*100);
+          this.encuestaResulto(this.puntos.toString(), 'Prueba de Reloj',this.observacion, (this.puntos/10)*100);
         }
         console.log(this.cons[1], 'Prueba Reloj');
+        break;
+      case 'minicog':
+        this.puntos = 0;
+    
+        this.minicog.forEach(pregunta => {
+          pregunta.options.forEach(opcion => {
+            if (opcion.seleccionada) {
+              if (opcion.text === 'Normal') {
+                this.puntos += 2;  // "Normal" suma 2 puntos
+              } else {
+                this.puntos += 1;  // Las demás opciones suman 1 punto
+              }
+            }
+          });
+        });
+
+        if(this.puntos <= 2){
+          this.observacion = 'Probable deterioro cognitivo, recomienda evaluación cognitiva amplia';
+        } else {
+          this.observacion = 'Muy poco probable que haya deterioro cognitivo';
+        }
+        this.showErrors = true;
+        this.encuestaResulto(this.puntos.toString(), 'Mini-Cog', this.observacion, (this.puntos/5)*100,);
+        console.log(this.puntos);
         break;
     }
 
@@ -219,15 +258,19 @@ export class EncuestaCogComponent implements OnInit{
   /* ALGUNOS METODOS POR CADA ENCUESTA A REALIZAR */
 
    //Envia los parametros al Componente Resultado segun reciba
-   encuestaResulto(puntos: number, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
+   encuestaResulto(puntos: string, nameEncuesta: String, observacion: String, porcentaje: FLOAT){
+    // Captura de los datos en una constante tipo any
+    const resultados = {
+      point: puntos,
+      encuesta: nameEncuesta,
+      observable: observacion,
+      porcent: porcentaje.toFixed(2)
+    }
     if(this.showErrors){
-     // Al navegar, enviamos los puntos al componente de resultado
-     this.router.navigate(['home/resultado'], {queryParams: {
-       puntaje: puntos, //Puntaje Obtenido
-       nameEncuesta: nameEncuesta, //Nombre de la Encuesta
-       porcentaje: porcentaje.toFixed(2),
-       observacion: observacion //Observaciones
-     }});
+      //Captura los datos de la cosntante y envia al servicio para su captura
+      this.sharedService.saveResults(resultados);
+      // Navegar al componente de resultados
+      this.router.navigate(['home/resultado']);
    }
  }
 

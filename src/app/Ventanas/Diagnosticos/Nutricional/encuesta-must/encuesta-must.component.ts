@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-must',
@@ -21,7 +22,7 @@ export class EncuestaMustComponent implements OnInit {
   puntaje: number = 0;
   observacion: string = '';
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private share: SharedService) {}
 
   ngOnInit(): void {
     // Ya no es necesario inicializar mustForm aquí
@@ -83,8 +84,13 @@ export class EncuestaMustComponent implements OnInit {
 
     console.log('Formulario enviado:', this.MustForm.value);
     // Aquí podrías navegar a otra página o procesar el formulario
-    this.router.navigate(['home/resultado'], {
-      queryParams: { puntaje: this.puntaje, observacion: this.observacion },
-    });
+    const resultado = {
+      point: this.puntaje,
+      encuesta: 'MUST',
+      observable: this.observacion,
+      porcent: ((this.puntaje/6) * 100).toFixed(2)
+    }
+    this.share.saveResults(resultado);
+    this.router.navigate(['home/resultado']);
   }
 }

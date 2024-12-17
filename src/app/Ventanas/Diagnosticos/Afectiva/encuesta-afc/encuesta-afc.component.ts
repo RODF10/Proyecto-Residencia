@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-afc',
@@ -30,7 +31,7 @@ export class EncuestaAfcComponent implements OnInit {
   observacion: string = '';
   showErrors = false;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder, private router: Router, private shared: SharedService) {}
 
   ngOnInit(): void {
     // Inicializa el formulario
@@ -67,6 +68,13 @@ export class EncuestaAfcComponent implements OnInit {
   }
 
   enviarResultados(puntaje: number, observacion: string): void {
+    // Captura los datos en tipo any
+    const resultado = {
+      point: puntaje,
+      encuesta: 'Escala AFC',
+      observable: observacion,
+      porcent: ((puntaje / 100) * 15).toFixed(2)
+    }
     if (puntaje === null) {
       alert('Primero calcula el puntaje antes de enviar los resultados.');
       return;
@@ -78,14 +86,16 @@ export class EncuestaAfcComponent implements OnInit {
 
     // Redirige al componente Resultados con los datos mediante el estado
     if (this.showErrors) {
-      this.router.navigate(['home/resultado'], {
+      this.shared.saveResults(resultado); //Envia los datos capturados al servicio
+      this.router.navigate(['home/resultado']);
+      /*this.router.navigate(['home/resultado'], {
         queryParams: {
           nombreEncuesta: 'Escala AFC',
           puntaje: puntaje,
           observacion: observacion,
           porcentaje: ((puntaje / 100) * 15).toFixed(2)
         }
-      });
+      });*/
     }
   }
 }

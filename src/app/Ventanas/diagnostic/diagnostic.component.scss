@@ -32,9 +32,10 @@
 }
 .lista li{
     cursor: pointer;
-    max-width: 250px;
+    max-width: max-content;
     list-style: none;
     display: block;
+    margin: 5px 0;
 }
 
 .lista li:hover{
@@ -47,8 +48,10 @@
     margin: auto;
     height: 70vh;
 }
-
-@media (max-width: 1360px) {
+.category-content ul{
+    padding-top: 10px;
+}
+@media (max-width: 1000px) {
     .categoryContent{
        padding: 0px 15px;
     }
@@ -56,5 +59,15 @@
     .title p{
         font-size: 25px;
     }
-    
+    .lista li{
+        margin: 2px 0;
+    }   
+}
+@media (min-width: 1001px) {
+    .lista li, .category-content{
+        font-size: 1.4rem;
+    }
+    .lista li{
+        margin: 10px;
+    }
 }

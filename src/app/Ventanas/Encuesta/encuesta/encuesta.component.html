@@ -1,11 +1,7 @@
 <div class="tituloEncuesta">
   <h1>Encuesta {{name}}</h1>
 </div> 
-<!--
-<div class="iframe">
-  <iframe [src]="safeUrl" frameborder="0" class="ventana"></iframe>
-</div>-->
-<!-- <app-diagnostic (categoriaSeleccionada)="cambiarCategoria($event.toString())"></app-diagnostic> -->
+
  <!-- ENCUESTA COGNITIVA -->
 <app-encuesta-cog #encuestaComponent *ngIf="categoria == 'cognitiva'"></app-encuesta-cog>
 <!-- ENCUESTA FUNCIONAL -->
@@ -20,9 +16,9 @@
 <app-encuesta-gai-sf *ngIf="subCat == 'gaisf'"></app-encuesta-gai-sf>
 <app-encuesta-cornell *ngIf="subCat == 'cornell'"></app-encuesta-cornell>
 <app-encuesta-okeeffe *ngIf="subCat == 'cortdepresion'"></app-encuesta-okeeffe>
- <!-- ECNEUSTA DE LA CATEGORIA NUTRIOCONAL -->
-<app-encuesta-assessment-sf *ngIf="subCat == 'mininutri'"></app-encuesta-assessment-sf>
-<app-encuesta-assessment *ngIf="subCat == 'asessment'"></app-encuesta-assessment>
-<app-encuesta-must *ngIf="subCat == 'must'"></app-encuesta-must>
-<app-encuesta-glim *ngIf="subCat == 'glim'"></app-encuesta-glim>
-<app-encuesta-sarc-f *ngIf="subCat == 'sarcf'"></app-encuesta-sarc-f>
+<!-- ENCUESTA DE NUTRICIONAL -->
+ <app-encuesta-assessment-sf *ngIf="subCat == 'minisf'"></app-encuesta-assessment-sf>
+ <app-encuesta-assessment *ngIf="subCat == 'nutri'"></app-encuesta-assessment>
+ <app-encuesta-must *ngIf="subCat == 'must'"></app-encuesta-must>
+ <app-encuesta-sarc-f *ngIf="subCat == 'sarf'"></app-encuesta-sarc-f>
+ <app-encuesta-eat10 *ngIf="subCat == 'eat'"></app-encuesta-eat10>

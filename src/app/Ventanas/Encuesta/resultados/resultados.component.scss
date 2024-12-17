@@ -54,3 +54,26 @@
   border-radius: 5%;
   font-size: 1.2rem;
 }
+
+//Estilos de la Imagen y Texto
+.image-container {
+  width: 100%;
+  max-width: 800px; /* Ancho máximo */
+  margin: 50px auto; /* Centrado horizontal y margen superior/inferior */
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombreado */
+  text-align: center; /* Centrado de contenido */
+  background-color: #f9f9f9; /* Fondo claro */
+}
+
+.image-container img {
+  max-width: 100%; /* Escalar imagen si es necesario */
+  border-radius: 8px; /* Bordes redondeados de la imagen */
+}
+
+.image-container p {
+  font-size: 1.2em; /* Tamaño de fuente del mensaje */
+  color: #666; /* Color del texto */
+  margin-top: 20px; /* Separación del mensaje */
+}
