@@ -7,12 +7,14 @@
             </div>
         </div>
         <div class="container-fecha">
-            <p class="date">{{ fecha | date: 'EEEE, dd/MM/yyyy' }}</p>
+            <p class="date">{{ dateDay | date: 'EEEE, dd/MM/yyyy' }}</p>
         </div>
     </div>
-    
-    <div class="dashboard">
+    <div class="dashboard" *ngIf="estado">
+      <div class="registroCita">
         <h1>Bienvenido al Tablero Principal</h1>
+        <button class="btn-success btn" (click)="cambioEstado()">Agendar Cita</button>
+      </div>
         <div class="statistics row">
             <div class="stat-box1 col">
                 <img src="assets/icons/Logo_IMSS.png" alt="Home Icon" width="50" height="50">
@@ -58,19 +60,84 @@
                 </table>
             </div>
             
-            <div class="todos col">
+            <div class="todos">
                 <h2>Citas Recientes</h2>
-                <div class="citaReciente">
-                    <p class="nombre" style="margin: 0;">Jose Almendez</p>
-                    <h2 class="fecha" style="margin: 0;">22/12/2025</h2>
-                    <p class="hora" style="margin: 0;">14:16</p>
+                <!-- Verificar si hay citas -->
+                <div *ngIf="citas.length == 0" class="alert alert-info">
+                    No tienes citas recientes.
                 </div>
-                <div class="citaReciente">
-                    <p class="nombre" style="margin: 0;">Maria Peter</p>
-                    <h2 class="fecha" style="margin: 0;">22/12/2025</h2>
-                    <p class="hora" style="margin: 0;">16:00</p>
-                </div>
+                <!-- Mostrar las primeras 2 citas si hay alguna -->
+                <div class="citaReciente" *ngFor="let cita of citas.slice(0,2)">
+                    <p class="nombre" style="margin: 0;">{{ cita.nombre_completo }} / {{ cita.registration_number }}</p>
+                    <h2 class="fecha" style="margin: 0;">{{ cita.fecha }}</h2>
+                    <p class="hora" style="margin: 0;">{{ cita.hora }}</p>
+                    <button class="btn btn-danger btn-sm" (click)="eliminarCita(cita.id)">Eliminar</button>
             </div>
         </div>
     </div>
 </div>
+
+<div class="cita" *ngIf="!estado">
+  <button (click)="cambioEstado()" class="btn-close float-end" aria-label="Close"></button>
+    <h2>Gestión de Citas</h2>
+    <form (ngSubmit)="guardarCita(citaForm)" #citaForm="ngForm">
+      <!-- Campo Paciente -->
+      <div class="mb-3">
+        <label for="paciente" class="form-label">Paciente:</label>
+        <select
+          [(ngModel)]="nuevaCita.registration_number"
+          name="registration_number"
+          class="form-select"
+          id="paciente"
+          #registration_number="ngModel"
+          required
+        >
+          <option value="" disabled selected>Seleccione un paciente</option>
+          <option *ngFor="let paciente of patients" [value]="paciente.registration_number">
+            {{ paciente.first_name }} {{ paciente.last_name }} ({{ paciente.registration_number }})
+          </option>
+        </select>
+        <div *ngIf="registration_number.invalid && registration_number.touched" class="text-danger">
+          Debe seleccionar un paciente.
+        </div>
+      </div>
+  
+      <!-- Campo Fecha -->
+      <div class="mb-3">
+        <label for="fecha" class="form-label">Fecha:</label>
+        <input
+          type="date"
+          [(ngModel)]="nuevaCita.fecha"
+          name="fecha"
+          class="form-control"
+          id="fecha"
+          #fecha="ngModel"
+          required
+        />
+        <div *ngIf="fecha.invalid && fecha.touched" class="text-danger">
+          La fecha es obligatoria.
+        </div>
+      </div>
+  
+      <!-- Campo Hora -->
+      <div class="mb-3">
+        <label for="hora" class="form-label">Hora:</label>
+        <input
+          type="time"
+          [(ngModel)]="nuevaCita.hora"
+          name="hora"
+          class="form-control"
+          id="hora"
+          #hora="ngModel"
+          required
+        />
+        <div *ngIf="hora.invalid && hora.touched" class="text-danger">
+          La hora es obligatoria.
+        </div>
+      </div>
+  
+      <!-- Botón Guardar -->
+      <button type="submit" class="btn btn-primary">Guardar Cita</button>
+    </form>
+  </div>
+  

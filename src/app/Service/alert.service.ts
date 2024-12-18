@@ -54,4 +54,14 @@ export class AlertService {
         confirmButtonText: 'Aceptar'
       });
   }
+  
+  // Método para mostrar una alerta de advertencia
+  disconnected(message: string, title: string){
+      Swal.fire({
+        title: title,
+        icon: 'question',
+        text: message,
+        confirmButtonText: 'Aceptar'
+      });
+  }
 }

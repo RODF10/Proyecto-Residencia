@@ -20,6 +20,7 @@ export class StructureComponent {
   showRegisterButton: boolean = false;
   name: string = '';
   doctorID = 0; //Determinar el ID del Doctor
+  image: string = '';
 
   constructor(private observer: BreakpointObserver, private router: Router, private authService: NavbarService, private userService: UserService, private sharedService: SharedService, private LoadJS: LoadJSService){
     LoadJS.Carga(["Profile"]);
@@ -37,10 +38,16 @@ export class StructureComponent {
         }
       });
       this.name = 'Dr. ' + this.userService.getDoctorName();
+      // Recupera la URL de la imagen del perfil desde localStorage
+      const storedImage = localStorage.getItem('doctorImage');
+      this.image = storedImage && storedImage != 'null' ? storedImage : 'assets/Imagenes/default-profile.png';
+
       this.sharedService.showRegisterButton$.subscribe(show => {
         this.showRegisterButton = show;
       }); 
     this.doctorID = this.userService.getDoctorId(); //Solo el Doctor Master puede registrar Doctores
+    console.log(this.image);
+    console.log(localStorage.getItem('doctorImage'));
   }
 
   mainPage(){

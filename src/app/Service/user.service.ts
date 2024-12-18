@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ApiService } from './api.service';
 import { SharedService } from './shared.service';
+import { AlertService } from './alert.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class UserService {
     password: '12345'
   };
   
-  constructor(private serviApi: ApiService, private sharedService: SharedService) { } 
+  constructor(private serviApi: ApiService, private sharedService: SharedService, private alert: AlertService) { } 
 
   login(email: string, password: string): boolean {
     if (email === this.validar.email && password === this.validar.password) {
@@ -39,9 +40,10 @@ export class UserService {
   }
 
   logout(): void {
-    localStorage.removeItem('isAuthenticated'); // Borra el token para cerrar sesión
+    localStorage.removeItem('isAuthenticated');// Borra el token para cerrar sesión
     localStorage.removeItem('doctorName'); // Eliminar Nombre
-    localStorage.removeItem('idDoctor'); //Emilinar el ID
+    localStorage.removeItem('idDoctor'); // Eliminar el ID Doctor
+    localStorage.removeItem('doctorImage')// Eliminar la imagen del Doctor
   }
 
   isAuthenticated(): boolean {
@@ -63,11 +65,12 @@ export class UserService {
 
   async log(email: string, password: string): Promise<boolean> {
     try {
-      // Si no está en la base de datos, valida el correo de prueba
-      /*if (email === this.validar.email && password === this.validar.password) {
+      /* Si no está en la base de datos, valida el correo de prueba
+      if (email === this.validar.email && password === this.validar.password) {
         localStorage.setItem('isAuthenticated', 'logged_in');
         localStorage.setItem('doctorName', 'Dr. Master Crack'); // Guardar el nombre del doctor de prueba
         this.sharedService.setShowRegisterButton(true); // Mostrar botón en el caso del usuario de prueba
+        localStorage.setItem('idDoctor', '1');
         return true;
       }*/
 
@@ -79,30 +82,27 @@ export class UserService {
         localStorage.setItem('isAuthenticated', 'logged_in');
         localStorage.setItem('doctorName', this.usuario); // Guardar el nombre del doctor
         localStorage.setItem('idDoctor', response.user.id.toString());
+         // Guardar la URL de la imagen del perfil en localStorage
+        localStorage.setItem('doctorImage', response.user.imagen); // Asumiendo que 'profile_image' es el campo con la URL de la imagen
         this.sharedService.setShowRegisterButton(false);
         return true;
       }
-
-
-      // Si no coincide con ninguno, muestra error
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Correo electrónico y/o contraseña incorrectos',
-        confirmButtonText: 'Aceptar',
-      });
-
+      this.alert.warning('Correo no Valido','El correo no está registrado.')
       return false;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error al obtener usuarios:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo conectar al servidor',
-        confirmButtonText: 'Aceptar',
-      });
-      return false;
+    
+    if (error?.status == 401) {
+      // Si el servidor devuelve 401, muestra un mensaje adecuado
+      this.alert.warning('Error Entrada', 'Correo electrónico y/o contraseña incorrectos');
+    } else if(error?.status == 422){
+      this.alert.error('Error de Ingreso', 'Correo o contraseña invalidos')
+    } else {
+      // Si hay otro tipo de error (como de red o servidor)
+      this.alert.disconnected('Error', 'No se pudo conectar al servidor');
     }
+    return false;
+  }
   }
 
   getDoctorName(): string {

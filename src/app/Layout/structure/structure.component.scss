@@ -3,6 +3,7 @@ mat-toolbar {
   color: #ffffff;
   display: flex;
   align-items: center;
+  height: 75px;
 }
 
 mat-sidenav {
@@ -20,7 +21,7 @@ mat-sidenav {
   font-size: 16px;
 }
 mat-sidenav-container {
-  height: calc(100svh - 65px);
+  height: calc(100svh - 75px);
 }
 
 /* Espaciador para separar elementos */
@@ -57,15 +58,15 @@ mat-sidenav-container {
     margin-left: 10px;
 }
 .profile-image {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     cursor: pointer;
 }
 
 .dropdown-menu {
     position: absolute;
-    top: 50px;
+    top: 65px;
     right: 0;
     background-color: #fff;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);

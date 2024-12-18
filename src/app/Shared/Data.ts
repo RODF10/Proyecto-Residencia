@@ -55,3 +55,12 @@ export interface CategorySelection {
   mainCategory: number;
   subCategory: number;
 }
+
+//Agendar Cita
+export interface Cita {
+  id: number; // Asegúrate de incluir el ID
+  registration_number: string;
+  nombre_completo: string;
+  fecha: string;
+  hora: string;
+}

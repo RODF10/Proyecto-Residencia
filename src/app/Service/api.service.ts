@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Cita } from '../Shared/Data';
 
 @Injectable({
   providedIn: 'root'
@@ -81,5 +82,21 @@ export class ApiService {
   //Eliminar Paciente
   deletePatient(patientId: number): Observable<any> {
     return this.http.delete<any>(`${this.urlApi}/patients/${patientId}`);
+  }
+
+  /* ------------------------------- CITA -------------------------------------------*/
+  obtenerCitas(doctorId: number): Observable<Cita[]> {
+    return this.http.get<Cita[]>(`${this.urlApi}/citas/${doctorId}`);
+  }
+
+  obtenerPacientes(doctorId: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.urlApi}/pacientes/${doctorId}`);
+  }
+
+  crearCita(cita: any): Observable<any> {
+      return this.http.post(`${this.urlApi}/citas`, cita);
+  }
+  eliminarCita(id: number) {
+    return this.http.delete(`${this.urlApi}/citas/${id}`);
   }
 }

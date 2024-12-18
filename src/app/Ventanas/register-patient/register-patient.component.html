@@ -11,11 +11,11 @@
         <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
             <!-- Matrícula -->
             <div class="form-group">
-                <label for="matricula">Matrícula:</label>
+                <label for="matricula">IMSS:</label>
                 <input type="text" class="form-control" id="matricula" formControlName="matricula">
                 <div *ngIf="submitted && pacienteForm.controls['matricula'].errors">
                     <div *ngIf="pacienteForm.controls['matricula'].errors['required']" class="alert alert-danger m-2">
-                        Matrícula es requerida
+                        No. IMSS es requerida
                     </div>
                 </div>
             </div>
