@@ -25,6 +25,8 @@ export class VistasComponent implements OnInit {
       // Llamar a la API para obtener los detalles del paciente
       this.patientService.getPatientById(this.patientID).subscribe(response => {
         this.patientData = response.patient;
+        console.log('ID: ',response.patient.registration_number);
+        localStorage.setItem('patient_id', response.patient.registration_number);
       });
     });
   }

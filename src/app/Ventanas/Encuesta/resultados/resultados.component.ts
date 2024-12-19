@@ -20,7 +20,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   fecha: string = '';
   hora: string = '';
   doctorID: string = ''
-  pacienteID: string = '1452ASEF';
+  pacienteID: string = '';
 
   /* FUNCION DEL COMPONENTE */
   porcentaje: number = 0; //Porcentaje a Mostrar
@@ -64,7 +64,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
     }
 
     const resultado = {
-      number_imss: this.pacienteID,
+      number_imss: localStorage.getItem('patient_id'),
       doctor_id: this.user.getDoctorId(),
       diagnostic_id: this.inNumber,
       encuesta: this.nombreEncuesta,
@@ -73,7 +73,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
       fecha: this.fecha,
       hora:this.hora
     }
-    this.apiService.enviarResultado(resultado).subscribe(
+    /*this.apiService.enviarResultado(resultado).subscribe(
       (response) =>{
         console.log(resultado);
         this.aler.success('Datos Capturados del Paciente', 'Envio de Datos');
@@ -81,13 +81,14 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         this.aler.error('Hubo problemas al enviar los datos', 'Error de Entrada');
         console.log('Error de envio: ', error);
       }
-    );
-    
+    );*/
+    console.log(resultado);
     console.log(this.imagePath);
   }
 
   ngOnDestroy(): void {
       localStorage.removeItem('categorySelection');
+      localStorage.removeItem('patient_id');
       window.location.reload();
       this.sharedService.clearResults();
   }
