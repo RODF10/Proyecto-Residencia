@@ -1,6 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/Service/shared.service';
+import { UserService } from 'src/app/Service/user.service';
+import { formatDate } from '@angular/common';
+import { ApiService } from 'src/app/Service/api.service';
+import { AlertService } from 'src/app/Service/alert.service';
 
 @Component({
   selector: 'app-resultados',
@@ -8,9 +12,17 @@ import { SharedService } from 'src/app/Service/shared.service';
   styleUrls: ['./resultados.component.scss']
 })
 export class ResultadosComponent implements OnInit, OnDestroy{
-  nombreEncuesta: string = ''; //Encuesta
-  puntaje: string = ''; //Control del Puntaje
-  observacion: string = ''; //Observacion
+  /* *********** DATOS DE ENVIO ******** */
+  nombreEncuesta: string = '';
+  puntaje: string = '';
+  observacion: string = '';
+  categoria: string = '';
+  fecha: string = '';
+  hora: string = '';
+  doctorID: string = ''
+  pacienteID: string = '1452ASEF';
+
+  /* FUNCION DEL COMPONENTE */
   porcentaje: number = 0; //Porcentaje a Mostrar
   entrada: string = ''; // Marca si son Puntos, Segundos, Libras u otra manera de calcualar
   imagePath: string | null = null; // URL de la imagen
@@ -19,9 +31,14 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   file: string[] = ['', 'cog', 'afc', 'fun', 'nut']; // Asignar array de carpetas que continene posicion 0 = '';
   inNumber: number = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService, private user: UserService, private apiService: ApiService, private aler: AlertService) { }
 
   ngOnInit(): void {
+    // Establecer fecha y hora actuales
+    const currentDate = new Date();
+    this.fecha = formatDate(currentDate, 'yyyy-MM-dd', 'en-US');  // Formato de fecha
+    this.hora = formatDate(currentDate, 'HH:mm:ss', 'en-US');    // Formato de hora
+
     // Recibe los datos del componente sin usar this.router.queryParam y mantener limpia la url
     const resultados = this.sharedService.getStoredResults();
 
@@ -46,6 +63,26 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         this.entrada = 'undefiend';
     }
 
+    const resultado = {
+      number_imss: this.pacienteID,
+      doctor_id: this.user.getDoctorId(),
+      diagnostic_id: this.inNumber,
+      encuesta: this.nombreEncuesta,
+      puntos: this.puntaje,
+      observacion: this.observacion,
+      fecha: this.fecha,
+      hora:this.hora
+    }
+    this.apiService.enviarResultado(resultado).subscribe(
+      (response) =>{
+        console.log(resultado);
+        this.aler.success('Datos Capturados del Paciente', 'Envio de Datos');
+      }, (error) => {
+        this.aler.error('Hubo problemas al enviar los datos', 'Error de Entrada');
+        console.log('Error de envio: ', error);
+      }
+    );
+    
     console.log(this.imagePath);
   }
 

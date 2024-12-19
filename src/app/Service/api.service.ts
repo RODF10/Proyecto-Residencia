@@ -66,6 +66,10 @@ export class ApiService {
   changePassword(payload: { correo: string, password: string }): Observable<any> {
     return this.http.post(`${this.urlApi}/change-password`, payload);
   }
+  //Actualizar perfil sin cedula duplicada
+  updateDoctorProfile(doctorId: number, profileData: any): Observable<any> {
+    return this.http.put<any>(`${this.urlApi}/doctors/${doctorId}`, profileData);
+  }
   /* --------------------------- PACIENTE ------------------------------------- */
   //Crear Paciente
   crearPaciente(data: any): Observable<any> {
@@ -88,7 +92,6 @@ export class ApiService {
   obtenerCitas(doctorId: number): Observable<Cita[]> {
     return this.http.get<Cita[]>(`${this.urlApi}/citas/${doctorId}`);
   }
-
   obtenerPacientes(doctorId: number): Observable<any[]> {
       return this.http.get<any[]>(`${this.urlApi}/pacientes/${doctorId}`);
   }
@@ -98,5 +101,10 @@ export class ApiService {
   }
   eliminarCita(id: number) {
     return this.http.delete(`${this.urlApi}/citas/${id}`);
+  }
+
+  /* ---------------------------- HISTORIAL DEL PACIENTE ------------------------------------ */
+  enviarResultado(resultado: any): Observable<any> { // Método para enviar los resultados al backend
+    return this.http.post<any>(`${this.urlApi}/history-medical`, resultado);
   }
 }
