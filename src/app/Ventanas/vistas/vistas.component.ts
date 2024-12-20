@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
+import { CategoryGuard } from 'src/app/guards/category.guard';
 import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
 
@@ -9,11 +11,17 @@ import { ApiService } from 'src/app/Service/api.service';
   templateUrl: './vistas.component.html',
   styleUrls: ['./vistas.component.scss']
 })
-export class VistasComponent implements OnInit {
+export class VistasComponent implements OnInit, OnDestroy{
   patientData: any;
+  cuidadorData: any;
   patientID?: number;
+  cuidadorForm!: FormGroup;
+  idPacient: string = '';
+  cuidador: boolean = false;
+  perfil: boolean = false;
+  vista: boolean = true;
 
-  constructor(private router: Router, private route: ActivatedRoute, private patientService: ApiService, private alert: AlertService) {
+  constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private alert: AlertService, private authGuadr: CategoryGuard, private fb: FormBuilder) {
     
   }
 
@@ -22,13 +30,26 @@ export class VistasComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.patientID = +params.get('patientID')!;
 
-      // Llamar a la API para obtener los detalles del paciente
-      this.patientService.getPatientById(this.patientID).subscribe(response => {
+    // Recibe datos del paciente
+    this.apiService.getPatientById(this.patientID).subscribe(response => {
         this.patientData = response.patient;
+        this.cargaCuidador(response.patient.registration_number);
         console.log('ID: ',response.patient.registration_number);
-        localStorage.setItem('patient_id', response.patient.registration_number);
+        //localStorage.setItem('patient_id', response.patient.registration_number);
       });
     });
+    
+    // Inicializar el formulario
+    this.cuidadorForm = this.fb.group({
+      cuidador_name: [''],
+      cuidador_lastname: [''],
+      cuidador_phone: ['', [Validators.pattern(/^\d+$/), Validators.minLength(10), Validators.maxLength(10)]],
+      cuidador_email: ['', [Validators.email]],
+      cuidador_address: [''],
+    });
+  }
+  ngOnDestroy(): void {
+      this.permision();
   }
   categoria() {
     this.router.navigate(['home/diagnostic']);
@@ -45,10 +66,11 @@ export class VistasComponent implements OnInit {
       .then((isConfirmed) => {
         if (isConfirmed) {
           // Si el usuario confirma, se realiza la eliminación
-          this.patientService.deletePatient(this.patientID!).subscribe(
+          this.apiService.deletePatient(this.patientID!).subscribe(
             (response) => {
-              this.router.navigate(['home/list-person']);
+              this.permision();
               this.alert.success('Paciente eliminado correctamente', 'Éxito');
+              window.location.reload();
             },
             (error) => {
               this.alert.error('Ocurrió un error al eliminar el paciente', 'Error');
@@ -58,5 +80,51 @@ export class VistasComponent implements OnInit {
         }
       });
     });
+  }
+  submitFormCuidador(): void {
+    const idPciente = this.patientData.registration_number;
+    console.log('ID: ', idPciente);
+    if (this.cuidadorForm.valid) {
+      const formData = { ...this.cuidadorForm.value, patient_id: idPciente };
+
+      // Enviar los datos al servicio
+      this.apiService.createCuidador(formData, idPciente).subscribe({
+        next: (response) => {
+          this.cuidadorForm.reset();
+          this.cargaCuidador(idPciente);
+          this.modify();
+          this.perfilCuidador();
+          this.alert.success('Cuidador se guardo exitosamente', 'Envio Success');
+        },
+        error: (error) => {
+          this.alert.error('Error al guarda el cuidador', 'Error Conection');
+          console.error('Error al registrar el cuidador:', error);
+        },
+      });    
+    }
+  }
+  cargaCuidador(cuidador: string){
+    // Recibe datos del Cuidador
+    this.apiService.getCuidador(cuidador).subscribe(
+      (response) => {
+        this.cuidadorData = response.cuidador;
+      }, (error) => {
+        this.alert.error('Erro de conexion con servidor', 'Error Conected');
+        console.log('Error al obtener los datos del cuidador:', error);
+        this.cuidadorData = { message: 'No se encontraron datos del cuidador'};
+      }
+    );
+  }
+  permision(){
+    this.authGuadr.setAccessedFromList(false); 
+  }
+  modify(){
+    this.vista = !this.vista;
+  }
+  perfilCuidador(){
+    this.cuidador = !this.cuidador;
+  }
+  perfilUser(){
+    this.perfil = !this.perfil;
   }
 }

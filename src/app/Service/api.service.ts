@@ -107,4 +107,12 @@ export class ApiService {
   enviarResultado(resultado: any): Observable<any> { // Método para enviar los resultados al backend
     return this.http.post<any>(`${this.urlApi}/history-medical`, resultado);
   }
+
+  /* ---------------------------- CUIDADOR --------------------- */
+  createCuidador(data: any, patient_id: string): Observable<any> {
+    return this.http.put(`${this.urlApi}/cuidador/${patient_id}`, data);
+  }
+  getCuidador(patientId: string): Observable<any> {
+    return this.http.get(`${this.urlApi}/cuidador/${patientId}`);
+  }
 }

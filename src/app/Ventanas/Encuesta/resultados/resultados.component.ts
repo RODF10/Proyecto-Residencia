@@ -73,7 +73,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
       fecha: this.fecha,
       hora:this.hora
     }
-    /*this.apiService.enviarResultado(resultado).subscribe(
+    this.apiService.enviarResultado(resultado).subscribe(
       (response) =>{
         console.log(resultado);
         this.aler.success('Datos Capturados del Paciente', 'Envio de Datos');
@@ -81,7 +81,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         this.aler.error('Hubo problemas al enviar los datos', 'Error de Entrada');
         console.log('Error de envio: ', error);
       }
-    );*/
+    );
     console.log(resultado);
     console.log(this.imagePath);
   }

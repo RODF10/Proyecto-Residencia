@@ -1,13 +1,13 @@
 <!-- Visualizacion de Datos del Paciente -->
-<div class="container">
+<div class="container" *ngIf="vista">
   <div class="row justify-content-center">
     <div class="container my-4">
       <h2>Detalles del Paciente</h2>
-      <div class="card">
+      <div class="card" style="background-color: #f8f9fa;"> <!-- Fondo claro -->
         <div class="card-body">
           <!-- Información del paciente -->
           <div class="row mb-3">
-            <div class="col-md-4"><strong>Matrícula:</strong></div>
+            <div class="col-md-4"><strong>No. IMSS:</strong></div>
             <div class="col-md-8">{{ patientData.registration_number }}</div>
           </div>
           <div class="row mb-3">
@@ -27,8 +27,8 @@
             <div class="col-md-8">{{ patientData.birth_date | date }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-4"><strong>Correo de Emergencia:</strong></div>
-            <div class="col-md-8">{{ patientData.emergency_email }}</div>
+            <div class="col-md-4"><strong>G&#233;nero:</strong></div>
+            <div class="col-md-8">{{ patientData.gender }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Teléfono de Emergencia:</strong></div>
@@ -39,22 +39,108 @@
             <div class="col-md-8">{{ patientData.address }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-4"><strong>Historial Médico:</strong></div>
+            <div class="col-md-4"><strong>Historial M&#233;dico:</strong></div>
             <div class="col-md-8">{{ patientData.medical_history }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Alergias:</strong></div>
             <div class="col-md-8">{{ patientData.allergies }}</div>
           </div>
+
+          <!-- Información del cuidador -->
+           <div class="cuidador">
+             <h3 class="tituloC">Detalles del Cuidador</h3>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Nombre:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_name || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Apellido:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_lastname || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Tel&#233;fono:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_phone || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Correo Electr&#243;nico:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_email || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Direcci&#243;n:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_address || 'No registrado' }}</div>
+             </div>
+           </div>
+
           <!-- Botones Modificar y Eliminar dentro del cuadro -->
           <div class="text-center mt-3 boxBtn">
-            <button type="button" class="btn btn-warning mr-2"><i class="fa-regular fa-pen-to-square"></i> Modificar</button>
+            <button type="button" class="btn btn-warning mr-2" (click)="modify()"><i class="fa-regular fa-pen-to-square"></i> Modificar</button>
             <button type="button" class="btn btn-danger" (click)="deletePatient()"><i class="fa-solid fa-trash"></i> Eliminar</button>
-            <button type="button" class="btn btn-success" (click)="categoria()"><i class="fa-solid fa-file-medical"></i> Diagnostico</button>
+            <button type="button" class="btn btn-success" (click)="categoria()"><i class="fa-solid fa-file-medical"></i> Diagn&#243;stico</button>
             <button type="button" class="btn btn-history" (click)="history()"><i class="fa-solid fa-book-medical"></i> Historial</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+  <div class="overlay" *ngIf="!vista && !perfil && !cuidador">
+    <div class="botonesEdit">
+      <button class="btn btn-primary" type="button">Editar Perfil</button>
+      <button class="btn btn-primary" type="button" (click)="perfilCuidador()">Editar Cuidador</button>
+    </div>
+    <!-- Botón de Cerrar -->
+    <button class="btn btn-danger close-btn" type="button" (click)="modify()">X</button>
+  </div>
+  
+
+<div class="container mt-5 formCuidador" *ngIf="cuidador">
+  <h2 class="text-center mb-4">Registrar Cuidador</h2>
+  <form [formGroup]="cuidadorForm" (ngSubmit)="submitFormCuidador()" class="p-4 border rounded shadow">
+    <div class="mb-3">
+      <label for="cuidador_name" class="form-label">Nombre</label>
+      <input type="text" id="cuidador_name" class="form-control" formControlName="cuidador_name" placeholder="Ingrese el nombre del cuidador" />
+      <div *ngIf="cuidadorForm.get('cuidador_name')?.invalid && cuidadorForm.get('cuidador_name')?.touched" class="text-danger">
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_lastname" class="form-label">Apellido</label>
+      <input type="text" id="cuidador_lastname" class="form-control" formControlName="cuidador_lastname" placeholder="Ingrese el apellido del cuidador" />
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_phone" class="form-label">Tel&#233;fono</label>
+      <input type="text" id="cuidador_phone" class="form-control" formControlName="cuidador_phone" placeholder="Ingrese el teléfono"/>
+      <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['pattern'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+        El tel&#233;fono debe contener solo n&#250;meros.
+      </div>
+      <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['minlength'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+        El tel&#233;fono debe tener al menos 10 d&#237;gitos.
+      </div>
+      <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['maxlength'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+        El tel&#233;fono debe tener como máximo 10 d&#237;gitos.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_email" class="form-label">Correo Electr&#243;nico</label>
+      <input type="email" id="cuidador_email" class="form-control" formControlName="cuidador_email" placeholder="Ingrese el correo electrónico"/>
+      <div *ngIf="cuidadorForm.get('cuidador_email')?.invalid && cuidadorForm.get('cuidador_email')?.touched" class="text-danger">
+        Ingrese un correo electr&#243;nico v&#225;lido.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_address" class="form-label">Direcci&#243;n</label>
+      <textarea id="cuidador_address" class="form-control" formControlName="cuidador_address" placeholder="Ingrese la dirección"></textarea>
+    </div>
+
+    <div class="botonCuidador">
+      <button type="submit" class="btn btn-primary" [disabled]="cuidadorForm.invalid">Registrar Cuidador</button>
+      <button class="btn-danger btn" (click)="perfilCuidador()">Cancelar</button>
+    </div>
+  </form>
 </div>

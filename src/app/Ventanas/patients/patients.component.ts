@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/Service/api.service';
 import { UserService } from 'src/app/Service/user.service';
+import { CategoryGuard } from 'src/app/guards/category.guard';
 
 @Component({
   selector: 'app-patients',
@@ -39,11 +40,12 @@ export class PatientsComponent {
     | MatPaginator
     | undefined;
 
-    constructor(private router: Router, private apiService: ApiService, private userService: UserService){
+    constructor(private router: Router, private apiService: ApiService, private userService: UserService, private authGuard: CategoryGuard){
      
     }
 
   ngOnInit() {
+    localStorage.removeItem('patient_id');
     // Configura el paginador
     if (this.paginator) {
       this.dataSource.paginator = this.paginator;
@@ -51,6 +53,7 @@ export class PatientsComponent {
 
     // Obtener pacientes del doctor
     this.getPatients();
+    console.log('localStorage: ', localStorage.getItem('patient_id'));
   }
 
   columnHeaders: { [key: string]: string } = {
@@ -63,6 +66,7 @@ export class PatientsComponent {
   // Método para redirigir al perfil del paciente
   perfilUser(id: number){
     // Redirige al componente del perfil de paciente pasando el id en la URL
+    this.authGuard.setAccessedFromList(true);
     this.router.navigate(['home/view-person',{patientID: id}]);
     console.log(id)
   }

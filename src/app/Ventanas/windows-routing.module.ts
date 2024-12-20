@@ -37,6 +37,7 @@ import { RegistroComponent } from './registro/registro.component';
 import { ListDoctorsComponent } from './list-doctors/list-doctors.component';
 import { PatientsComponent } from './patients/patients.component';
 import { RegisterPatientComponent } from './register-patient/register-patient.component';
+import { CategoryGuard } from '../guards/category.guard';
 
 
 const routes: Routes = [
@@ -52,7 +53,7 @@ const routes: Routes = [
   {
     path: 'view-person',
     component: VistasComponent,
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
   {
     path: 'diagnostic',
@@ -87,7 +88,7 @@ const routes: Routes = [
   {
     path: 'encuesta/:categoria',
     component: EncuestaComponent,
-    canActivate: [checkRedirectGuard]
+    canActivate: [AuthGuard, checkRedirectGuard]
   },
   {
     path: 'doctors-register',
