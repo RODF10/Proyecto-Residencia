@@ -1,1 +1,55 @@
-<p>encuesta-volumen works!</p>
+<div class="encuesta-volumen-viscosidad">
+    <h1>Prueba Volumen-Viscosidad</h1>
+    <form [formGroup]="pruebaForm" (ngSubmit)="enviarResultados()">
+      <!-- Tabla de opciones -->
+      <table>
+        <thead>
+          <tr>
+            <th>Viscosidad</th>
+            <th>Bolo Volumen</th>
+            <th>Deglución Segura</th>
+            <th>Alteración Seguridad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Viscosidad néctar -->
+          <tr *ngFor="let volumen of volumenes">
+            <td rowspan="3">Néctar</td>
+            <td>{{ volumen }} mL</td>
+            <td>
+              <input type="radio" [formControlName]="'nectar_' + volumen" value="segura" />
+            </td>
+            <td>
+              <input type="radio" [formControlName]="'nectar_' + volumen" value="alterada" />
+            </td>
+          </tr>
+          <!-- Viscosidad líquida -->
+          <tr *ngFor="let volumen of volumenes">
+            <td rowspan="3">Líquida</td>
+            <td>{{ volumen }} mL</td>
+            <td>
+              <input type="radio" [formControlName]="'liquida_' + volumen" value="segura" />
+            </td>
+            <td>
+              <input type="radio" [formControlName]="'liquida_' + volumen" value="alterada" />
+            </td>
+          </tr>
+          <!-- Viscosidad pudding -->
+          <tr *ngFor="let volumen of volumenes">
+            <td rowspan="3">Pudding</td>
+            <td>{{ volumen }} mL</td>
+            <td>
+              <input type="radio" [formControlName]="'pudding_' + volumen" value="segura" />
+            </td>
+            <td>
+              <input type="radio" [formControlName]="'pudding_' + volumen" value="alterada" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Botón de envío -->
+      <button type="submit" [disabled]="!pruebaForm.valid">Enviar Resultados</button>
+    </form>
+  </div>
+  
