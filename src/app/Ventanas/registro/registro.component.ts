@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
@@ -26,10 +26,9 @@ export class RegistroComponent implements OnInit{
       cedula: ['', Validators.required],
       profesion: ['', Validators.required],
       date: ['', Validators.required],
-      edad: ['', [Validators.required, Validators.min(18), Validators.max(99)]],
       genero: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(8), noSpacesValidator()]],
       telefono: ['', [Validators.required, Validators.pattern(/^\d+$/)]],
       direccion: ['', Validators.required],
       imagen: [''], // Imagen es opcional
@@ -74,13 +73,31 @@ export class RegistroComponent implements OnInit{
       this.alert.warning('Error de Formulatio', 'Register Failed');
     }
    }
-
-
    onImageChange(event: any): void {
     const file = event.target.files[0];
     if (file) {
       this.selectedImage = file;
     }
   }
-
+  getPasswordErrorMessage() {
+    const passwordControl = this.registerForm.get('password');
+    if (passwordControl?.hasError('required')) {
+      return 'La contraseña es obligatoria.';
+    }
+    if (passwordControl?.hasError('minlength')) {
+      return 'La contraseña debe tener al menos 8 caracteres.';
+    }
+    if(passwordControl?.hasError('noSpaces')){
+      return 'La contraseña no debe contener espacios.';
+    }
+    return '';
+  }
 }
+// Validador para detectar espacios en blanco
+export function noSpacesValidator(): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const hasSpaces = /\s/.test(control.value); // Verifica si hay espacios
+    return hasSpaces ? { noSpaces: true } : null; // Retorna un error si hay espacios
+  };
+}
+

@@ -21,7 +21,7 @@ export class ProfileMedicComponent implements OnInit{
   cedula: string = '123456789';
   profesion: string = 'Ingeniero de Software';
   fecha?: string = '21/Agosto/2004';
-  edad: number = 30;
+  edad: number | null = null;
   genero: string = 'Masculino';
   correo: string = 'usuario@ejemplo.com';
   telefono: string = '123-456-7890';
@@ -59,7 +59,7 @@ export class ProfileMedicComponent implements OnInit{
       apellido: ['', [Validators.required]],
       cedula: ['', [Validators.required]],
       profesion: ['', [Validators.required]],
-      fecha: ['', [Validators.required]],
+      date: ['', [Validators.required]],
       genero: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
       direccion: ['', [Validators.required]],
@@ -80,18 +80,7 @@ export class ProfileMedicComponent implements OnInit{
       (response: any) => {
           if (response.success) {
               const doctor = response.data;
-              // Llenar datos del formulario ProfileForm
-              this.profileForm.patchValue({
-                nombre: doctor.nombre,
-                apellido: doctor.apellido,
-                cedula: doctor.cedula,
-                profesion: doctor.profesion,
-                fecha: doctor.date,
-                genero: doctor.genero,
-                telefono: doctor.telefono,
-                direccion: doctor.direccion,
-                imagen: doctor.imagen || 'assets/Imagenes/default-profile.png',
-              });
+              this.cargarFormDoctor(doctor);
 
               this.nombre = doctor.nombre;
               this.apellido = doctor.apellido;
@@ -99,7 +88,6 @@ export class ProfileMedicComponent implements OnInit{
               this.genero = doctor.genero;
               this.cedula = doctor.cedula;
               this.profesion = doctor.profesion;
-              this.edad = doctor.edad;
               this.correo = doctor.email;
               this.telefono = doctor.telefono;
               //this.password = doctor.password;
@@ -110,7 +98,6 @@ export class ProfileMedicComponent implements OnInit{
                 const formattedDate = this.datePipe.transform(doctor.date, 'dd/MMMM/yyyy'); // Cambia el formato a 'yyyy/MMMM/dd'
                 this.fecha = formattedDate?.replace('M', this.getMonthName(new Date(doctor.date).getMonth())); // Reemplaza el número del mes con el nombre
               }
-              console.log(doctor, id);
               //window.alert('Error Al Obtener la Contraseña del  Servidor');
           } else {
               console.error('Error: Datos del doctor no encontrados.');
@@ -144,6 +131,7 @@ export class ProfileMedicComponent implements OnInit{
     this.mostrar = !this.mostrar; // Alternar entre los divs
     if(selec == 2){
       this.profileForm.reset();
+      this.cedulaDuplicada = false;
       this.cargarDatosPerfil(this.userService.getDoctorId());
     }
   }
@@ -165,6 +153,8 @@ export class ProfileMedicComponent implements OnInit{
       this.apiService.updateDoctorProfile(id, profileData).subscribe(
         (response) => { 
           this.cedulaDuplicada = false;
+          this.mostrar = !this.mostrar;
+          this.cargarDatosPerfil(id);
           this.alertService.success('Perfil Actualziado con Éxito', 'Information Update');
         }, (error) => {
           if (error.status == 409) {
@@ -179,6 +169,7 @@ export class ProfileMedicComponent implements OnInit{
       );
       console.log('Formulario Enviado / ', profileData);
     } else {
+      this.alertService.warning('Formulario incompleto, favor de llenar los datos', 'Formulario inválido');
       console.log('Formulario inválido');
     }
   }
@@ -272,6 +263,37 @@ export class ProfileMedicComponent implements OnInit{
       return 'La contraseña actual es requerida.';
     }
     return '';
+  }
+
+  cargarFormDoctor(doctor: any){
+    // Llenar datos del formulario ProfileForm
+    this.profileForm.patchValue({
+      nombre: doctor.nombre,
+      apellido: doctor.apellido,
+      cedula: doctor.cedula,
+      profesion: doctor.profesion,
+      date: doctor.date,
+      genero: doctor.genero,
+      telefono: doctor.telefono,
+      direccion: doctor.direccion,
+      imagen: doctor.imagen || 'assets/Imagenes/default-profile.png',
+    });
+    this.edad = this.getEdad(doctor.date);
+  }
+  //Obtener edad por fecha de nacimiento
+  getEdad(birthDate: string): number {
+    const birth = new Date(birthDate); // Convierte la fecha de nacimiento a un objeto Date
+    const today = new Date(); // Obtén la fecha actual
+
+    let edad = today.getFullYear() - birth.getFullYear(); // Diferencia de años
+    const mes = today.getMonth() - birth.getMonth(); // Diferencia de meses
+
+    // Ajusta si el mes actual es menor al mes de nacimiento, o si están en el mismo mes pero el día actual es menor
+    if (mes < 0 || (mes === 0 && today.getDate() < birth.getDate())) {
+      edad--;
+    }
+
+    return edad;
   }
 }
 

@@ -20,19 +20,15 @@
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Edad:</strong></div>
-            <div class="col-md-8">{{ patientData.age }}</div>
+            <div class="col-md-8">{{ edad }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Fecha de Nacimiento:</strong></div>
-            <div class="col-md-8">{{ patientData.birth_date | date }}</div>
+            <div class="col-md-8 fecha">{{ fechaN }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>G&#233;nero:</strong></div>
             <div class="col-md-8">{{ patientData.gender }}</div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-4"><strong>Teléfono de Emergencia:</strong></div>
-            <div class="col-md-8">{{ patientData.emergency_contact }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Dirección:</strong></div>
@@ -84,17 +80,17 @@
     </div>
   </div>
 </div>
-
+<!-- VISTA DEL CONTENEDOR A PERFIL O CUIDADOR -->
   <div class="overlay" *ngIf="!vista && !perfil && !cuidador">
     <div class="botonesEdit">
-      <button class="btn btn-primary" type="button">Editar Perfil</button>
+      <button class="btn btn-primary" type="button" (click)="perfilUser(false)">Editar Perfil</button>
       <button class="btn btn-primary" type="button" (click)="perfilCuidador()">Editar Cuidador</button>
     </div>
     <!-- Botón de Cerrar -->
     <button class="btn btn-danger close-btn" type="button" (click)="modify()">X</button>
   </div>
   
-
+<!-- CONTENEDOR CUIDADOR -->
 <div class="container mt-5 formCuidador" *ngIf="cuidador">
   <h2 class="text-center mb-4">Registrar Cuidador</h2>
   <form [formGroup]="cuidadorForm" (ngSubmit)="submitFormCuidador()" class="p-4 border rounded shadow">
@@ -140,7 +136,94 @@
 
     <div class="botonCuidador">
       <button type="submit" class="btn btn-primary" [disabled]="cuidadorForm.invalid">Registrar Cuidador</button>
-      <button class="btn-danger btn" (click)="perfilCuidador()">Cancelar</button>
+      <button class="btn-danger btn" (click)="perfilCuidador()">Regresar</button>
+    </div>
+  </form>
+</div>
+<!-- CONTENEDOR PERFIL PACIENTE -->
+<div class="containerr cuestionarioPerfil" *ngIf="perfil">
+  <p>Actualizar Perfil del Paciente</p>
+  <form [formGroup]="formPerfil" (ngSubmit)="onSubmitPerfil()" class="container mt-4">
+    <div class="mb-3">
+      <label for="registration_number" class="form-label">IMSS</label>
+      <input id="registration_number" formControlName="registration_number" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('registration_number')?.invalid && formPerfil.get('registration_number')?.touched" class="text-danger">
+        El campo IMSS es obligatorio.
+      </div>
+      <div *ngIf="id_paciente" class="alert alert-danger">
+        Ya existe una IMSS registrada con este número.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="first_name" class="form-label">Nombre</label>
+      <input id="first_name" formControlName="first_name" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('first_name')?.invalid && formPerfil.get('first_name')?.touched" class="text-danger">
+        El campo Nombre es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Apellido</label>
+      <input id="last_name" formControlName="last_name" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('last_name')?.invalid && formPerfil.get('last_name')?.touched" class="text-danger">
+        El campo Apellido es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
+      <input id="birth_date" formControlName="birth_date" type="date" class="form-control" required />
+      <div *ngIf="formPerfil.get('birth_date')?.invalid && formPerfil.get('birth_date')?.touched" class="text-danger">
+        El campo Fecha de Nacimiento es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="gender" class="form-label">Género</label>
+      <select id="gender" formControlName="gender" class="form-select" required>
+        <option value="">Selecciona el género</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Undefied</option>
+      </select>
+      <div *ngIf="formPerfil.get('gender')?.invalid && formPerfil.get('gender')?.touched" class="text-danger">
+        El campo Género es obligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="address" class="form-label">Dirección</label>
+      <input id="address" formControlName="address" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('address')?.invalid && formPerfil.get('address')?.touched" class="text-danger">
+        El campo Dirección es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="medical_history" class="form-label">Historial Médico</label>
+      <textarea id="medical_history" formControlName="medical_history" class="form-control" rows="3" required></textarea>
+      <div *ngIf="formPerfil.get('medical_history')?.invalid && formPerfil.get('medical_history')?.touched" class="text-danger">
+        El campo Historial Médico es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="allergies" class="form-label">Alergia</label>
+      <input id="allergies" formControlName="allergies" type="text" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripcion</label>
+      <textarea id="description" formControlName="description" class="form-control" rows="3" required></textarea>
+      <div *ngIf="formPerfil.get('description')?.invalid && formPerfil.get('description')?.touched" class="text-danger">
+        El campo Descripción es obligatorio.
+      </div>
+    </div>
+  
+    <div class="botonPerfil">
+      <button type="submit" class="btn btn-success" [disabled]="formPerfil.invalid">Guardar</button>
+      <button type="button" class="btn-danger btn" (click)="perfilUser(true)">Regresar</button>
     </div>
   </form>
 </div>

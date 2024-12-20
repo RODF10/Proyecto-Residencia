@@ -43,16 +43,6 @@
                 </div>
             </div>
 
-            <!-- Edad -->
-            <div class="form-group">
-                <label for="edad">Edad:</label>
-                <input type="number" class="form-control" id="edad" formControlName="edad" maxlength="3">
-                <div *ngIf="submitted && pacienteForm.controls['edad'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['edad'].errors['required']">Edad es requerida</div>
-                    <div *ngIf="pacienteForm.controls['edad'].errors['min']">Edad mínima es 20</div>
-                </div>
-            </div>
-
             <!-- Género -->
             <div class="form-group">
                 <label for="genero">Género:</label>
@@ -72,30 +62,6 @@
                 <input type="date" id="fechaNacimiento" name="bday" class="form-control" [(ngModel)]="pacient.fecha_nacimiento" formControlName="fecha_nacimiento">
                 <div *ngIf="submitted && pacienteForm.controls['fecha_nacimiento'].errors" class="alert alert-danger m-2">
                     <div *ngIf="pacienteForm.controls['fecha_nacimiento'].errors['required']" >Introduzca la fecha</div>
-                </div>
-            </div>
-
-            <!-- Contacto de Emergencia -->
-            <div class="form-group">
-                <label for="telefono">Contacto de Emergencia:</label>
-                <input type="text" class="form-control" id="telefono" formControlName="telefono" maxlength="15" [(ngModel)]="pacient.telefono">
-                <div *ngIf="submitted && pacienteForm.controls['telefono'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['telefono'].errors['required']">El contacto de emergencia es obligatorio.</div>
-                    <div *ngIf="pacienteForm.controls['telefono'].errors['pattern']">Solo se permiten números.</div>
-                    <div *ngIf="pacienteForm.controls['telefono'].errors['exactLength']">
-                        El número debe ser exactamente 10 dígitos. (Actual: {{ pacienteForm.controls['telefono'].errors['exactLength'].actualLength }})
-                    </div>
-                </div>
-            </div>
-              
-
-            <!-- Correo Electrónico de Emergencia -->
-            <div class="form-group">
-                <label for="email">Correo Electrónico de Emergencia:</label>
-                <input type="email" class="form-control" id="email" formControlName="email" [(ngModel)]="pacient.email">
-                <div *ngIf="submitted && pacienteForm.controls['email'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['email'].errors['required']">Correo de emergencia requerido</div>
-                    <div *ngIf="pacienteForm.controls['email'].errors['email']">Solo acepta correo valido</div>
                 </div>
             </div>
 

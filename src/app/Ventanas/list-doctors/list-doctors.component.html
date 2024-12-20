@@ -1,7 +1,7 @@
-<div class="boton">
+<div class="boton" *ngIf="mostrar">
   <button type="button" class="btn btn-success btn-lg" (click)="register()"><i class="fa-solid fa-user-nurse"></i> Registar Doctor</button>
 </div>
-<div class="tablaDoctores">
+<div class="tablaDoctores" *ngIf="mostrar">
     <div class="container">
       <h2 class="mt-4">Lista de Doctores</h2>
       <table class="table table-striped">
@@ -37,7 +37,7 @@
                 <button class="btn btn-sm btn-danger" (click)="eliminarUsuario(user.id, user.nombre)" title="Elminar {{user.nombre}}">
                   <i class="fas fa-trash-alt"></i> <!-- Icono de eliminar -->
                 </button>
-                <button class="btn btn-sm btn-primary" (click)="actualizarUsuario(user.id)" title="Cambiar Contraseña">
+                <button class="btn btn-sm btn-primary" (click)="actualizarUsuario(user.id, user.nombre)" title="Cambiar Contraseña">
                   <i class="fas fa-edit"></i> <!-- Icono de actualizar -->
                 </button>
               </div>
@@ -47,4 +47,43 @@
       </table>
     </div>
   </div>
+
+  <div class="container mt-5" *ngIf="!mostrar">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header text-center">
+                  <button class="btn-close float-end" aria-label="Close" (click)="vistaPassword(false)"></button>
+                    <h4>Cambiar Contraseña de {{ name_doctor }}</h4>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+                        <!-- Nueva Contraseña -->
+                        <div class="form-group mb-3">
+                            <label for="password">Nueva Contraseña:</label>
+                            <input
+                                type="password"
+                                id="password"
+                                class="form-control"
+                                formControlName="password"
+                                placeholder="Ingrese la nueva contraseña"
+                            />
+                            <div *ngIf="passwordForm.get('password')?.invalid && passwordForm.get('password')?.touched" class="text-danger">
+                                {{ getPasswordErrorMessage() }}
+                            </div>
+                        </div>
+
+                        <!-- Botón -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary" [disabled]="passwordForm.invalid">
+                                Cambiar Contraseña
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
   

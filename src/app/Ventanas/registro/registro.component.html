@@ -51,16 +51,6 @@
                   Ingrese su Fecha de Nacimiento
                 </div>
               </div>
-              
-              
-              <!-- Edad -->
-              <div class="mb-3">
-                <label for="edad" class="form-label">Edad</label>
-                <input id="edad" type="number" class="form-control" formControlName="edad" />
-                <div *ngIf="registerForm.get('edad')?.invalid && registerForm.get('edad')?.touched" class="text-danger">
-                  La edad debe ser entre 18 y 99 años.
-                </div>
-              </div>
   
               <!-- Género -->
               <div class="mb-3">
@@ -88,8 +78,9 @@
               <div class="mb-3">
                 <label for="password" class="form-label">Contraseña</label>
                 <input id="password" type="password" class="form-control" formControlName="password" />
+                <!-- MENSAJE DE ERROR NEW PASSWORD -->
                 <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="text-danger">
-                  La contraseña debe tener al menos 6 caracteres.
+                  {{ getPasswordErrorMessage() }}
                 </div>
               </div>
   
@@ -111,11 +102,11 @@
                 </div>
               </div>
   
-              <!-- Imagen -->
+              <!-- Imagen 
               <div class="mb-3">
                 <label for="imagen" class="form-label"><i class="fa-solid fa-image"></i> Imagen (opcional)</label>
                 <input id="imagen" type="file" class="form-control" (change)="onImageChange($event)" accept="image/*" />
-              </div>
+              </div>-->
   
               <!-- Botón de Envío -->
               <div class="d-grid">

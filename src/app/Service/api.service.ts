@@ -40,6 +40,13 @@ export class ApiService {
   }
 
   /* SECCION DE LARAVEL DE API */
+  // ADMIN
+  updatePasswordD(drId: number, password: any) { 
+    return this.http.post(`${this.urlApi}/doctor/${drId}/change-password`, password);
+  }
+  verifyDoctorPassword(doctorId: number, password: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.urlApi}/doctors/verify-password`, { doctorId, password });
+  }
 
   // Registrar un nuevo doctor
   registerDoctor(data: FormData): Observable<any> {
@@ -75,7 +82,7 @@ export class ApiService {
   crearPaciente(data: any): Observable<any> {
     return this.http.post<any>(`${this.urlApi}/add-patients`, data);
   }
-  // En ApiService
+  // Obtiene pacientes del Doctor
   getPatientsByDoctor(doctorId: number): Observable<any> {
     return this.http.get<any>(`${this.urlApi}/doctor${doctorId}/patients`);
   }
@@ -86,6 +93,10 @@ export class ApiService {
   //Eliminar Paciente
   deletePatient(patientId: number): Observable<any> {
     return this.http.delete<any>(`${this.urlApi}/patients/${patientId}`);
+  }
+  // Actualizar Paciente
+  updatePatient(profileData: any, idPatient: string): Observable<any> {
+    return this.http.put<any>(`${this.urlApi}/patients/${idPatient}`, profileData);
   }
 
   /* ------------------------------- CITA -------------------------------------------*/

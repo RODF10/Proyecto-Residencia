@@ -24,6 +24,10 @@
   padding: 20px;
 }
 
+.fecha{
+  text-transform: capitalize;
+}
+
 .cuidador{
   background: #EBB9FF;
   padding: 10px 15px;
@@ -36,6 +40,17 @@
   width: max-content;
   font-weight: bold;
   font-style: italic;
+}
+
+.formCuidador{
+  h2 {
+    background: #EBB9FF;
+    border-radius: 15px;
+    padding: 25px 0;
+    color: rgba(0, 0, 0, 0.6);
+    text-transform: uppercase;
+    font-style: italic;
+  }
 }
 /* Fondo semi-transparente para la pantalla */
 .overlay {
@@ -103,12 +118,40 @@
 .close-btn:hover {
   background-color: rgba(255, 0, 0, 0.1);
 }
-.botonCuidador{
+.botonCuidador,
+.botonPerfil{
   width: 100%;
   text-align: center;
   margin: 5px 0;
 
   button{
     margin: 0 15px;
+    cursor: pointer;
   }
+  button:disabled{
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+}
+
+.cuestionarioPerfil{
+  max-width: 800px;
+  margin: 25px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+.cuestionarioPerfil p{
+  width: 100%;
+  background: #EBB9FF;
+  text-align: center;
+  padding: 20px 0;
+  font-style: italic;
+  text-transform: uppercase;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  border-radius: 10px;
 }

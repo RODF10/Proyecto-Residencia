@@ -44,15 +44,7 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       apellido: ['', Validators.required], //Apellido
       genero: ['', Validators.required], //Genero
       fecha_nacimiento: ['', [Validators.required]], //Fecha Nacimiento
-      telefono: ['', [ //Telefono de Emergencia
-          Validators.required,
-          Validators.pattern(/^[0-9]*$/), // Solo números
-          exactLength(10)      // Máximo de 10 dígitos
-        ]
-      ],
       direccion: ['', Validators.required], // Direccion
-      email: ['', [Validators.required, Validators.email]], //Correo de Emergencia
-      edad: ['', [Validators.required, Validators.min(20)]], //Edad
       historialMedico: ['', Validators.required], //Historial Medico
       alergias: ['', Validators.required], // Alergias que tiene
       caracteristicas: ['', Validators.required], // Descripcion
@@ -93,11 +85,8 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       registration_number: this.pacienteForm.value.matricula,
       first_name: this.pacienteForm.value.nombre,
       last_name: this.pacienteForm.value.apellido,
-      age: this.pacienteForm.value.edad,
       gender: this.pacienteForm.value.genero,
       birth_date: this.pacienteForm.value.fecha_nacimiento,
-      emergency_contact: this.pacienteForm.value.telefono,
-      emergency_email: this.pacienteForm.value.email,
       address: this.pacienteForm.value.direccion,
       medical_history: this.pacienteForm.value.historialMedico,
       allergies: this.pacienteForm.value.alergias,
