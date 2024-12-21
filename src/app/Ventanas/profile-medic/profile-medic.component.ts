@@ -1,8 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { NgxImageCompressService } from 'ngx-image-compress';
 import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
+import { LoadJSService } from 'src/app/Service/load-js.service';
 import { UserService } from 'src/app/Service/user.service';
 
 @Component({
@@ -15,6 +17,10 @@ import { UserService } from 'src/app/Service/user.service';
 export class ProfileMedicComponent implements OnInit{
   //Datos del Docto
   doctorData : any; //Recibe los datos del servido
+  public status: boolean= true; /// false: Add   true:  Edit
+  public preview: string = ""
+  public base64Image: string | null = null; // Imagen en Base64
+  public imageUrl: string | null = null; // URL de la imagen
   //Mostrar por defecto en caso de mo conectar al servidor
   nombre: string = 'Eduardo Manuel';
   apellido: string = 'Miller Martínez';
@@ -43,8 +49,11 @@ export class ProfileMedicComponent implements OnInit{
   mostrarConfirmPassword: boolean = false;
   mostrarCurrentPassword: boolean = false;
   cedulaDuplicada: boolean = false;
+  capImage: boolean = false;
 
-  constructor(private userService: UserService, private apiService: ApiService, private datePipe: DatePipe, private fb: FormBuilder, private alertService: AlertService) {}
+  constructor(private userService: UserService, private apiService: ApiService, private datePipe: DatePipe, private fb: FormBuilder, private alertService: AlertService, private Load: LoadJSService, private imageCompress: NgxImageCompressService) {
+    Load.Carga(["ValidImage"]);
+  }
 
   ngOnInit(): void {
      // Obtener el ID del doctor desde el ApiService
@@ -97,6 +106,11 @@ export class ProfileMedicComponent implements OnInit{
               if (doctor.date) {
                 const formattedDate = this.datePipe.transform(doctor.date, 'dd/MMMM/yyyy'); // Cambia el formato a 'yyyy/MMMM/dd'
                 this.fecha = formattedDate?.replace('M', this.getMonthName(new Date(doctor.date).getMonth())); // Reemplaza el número del mes con el nombre
+              }
+              if(doctor.image != null){
+                this.status = false;
+              } else {
+                this.status = true;
               }
               //window.alert('Error Al Obtener la Contraseña del  Servidor');
           } else {
@@ -294,6 +308,227 @@ export class ProfileMedicComponent implements OnInit{
     }
 
     return edad;
+  }
+
+  saveImage(){
+    const image = this.base64Image ?? this.imageUrl;
+    if(image != null){
+      this.apiEnvio(image);
+      this.alertService.success('Imagen Guardada con exito', 'Update Image');
+    }
+  }
+  deleteImage(){
+    this.alertService.confirm('¿Estás seguro de que deseas eliminar esta imagen?', 'Eliminar Imagen', 'Sí', 'No')
+    .then((confirmed) => {
+      if (confirmed) {
+        // Si el usuario confirma, procedemos a enviar la solicitud para eliminar la imagen
+        this.apiEnvio(null);
+        this.alertService.success('Imagen eliminada con exito', 'Delete Image');
+      } else {
+        // Si el usuario cancela, no hacemos nada
+        console.log('Eliminación cancelada');
+      }
+    });
+  }
+  cancelImage(ent: boolean){
+    this.capImage = !this.capImage;
+    if(!ent){
+      if(this.imageUrl){
+        this.imageUrl = null;
+        this.preview = this.imagen;
+      } else {
+        this.preview = this.imagen;
+      }
+    }
+  }
+
+  apiEnvio(image: string | null){
+    const imagen = image;
+    const id = this.userService.getDoctorId();
+    this.apiService.updateImage(id, imagen).subscribe(
+      (response) => {
+        console.log('Mensaje Enviado');
+        this.cargarDatosPerfil(id);
+      }, (error) => {
+        console.error('Error imagen: ' + error);
+      }
+    );
+    
+    this.capImage = !this.capImage;
+  }
+
+  capFile(event: any){
+    const fileCap = event.target.files[0];
+    const targetSizeInBytes = 614400;
+    this.checkSize(fileCap, targetSizeInBytes); /// Mandamos el archivo (imagen) a comprimirlo....
+    this.extraerBase64(fileCap).then((image: any) => {
+      this.preview = image.base;
+      this.base64Image = image.base;
+      //console.log(image);
+    })
+    //this.archivo.push(fileCap);
+    /*console.log(event.target.files[0].name);
+    this.nombre = event.targ.files[0].name;*/
+  }
+
+  extraerBase64 = async ($event: any) => new Promise((resolve, reject) => {
+      try{
+        //const unsafeImg = window.URL.createObjectURL($event);
+        //const image = this.santizer.bypassSecurityTrustUrl(unsafeImg);
+        const reader = new FileReader();
+        reader.readAsDataURL($event);
+        reader.onload = () => {
+          resolve({
+            base: reader.result
+          });
+        };
+        reader.onerror = error => {
+          resolve({
+              base: null
+          });
+        };
+        return reader;
+      } catch(e){
+          return null;
+      }
+  })
+
+  checkSize(file: File, targetSizeInBytes: number) { ///checamos el tamaño de la imágen
+    console.log(file);
+    if (file.size > targetSizeInBytes) {
+      if (file.size > 2000000){
+        console.log("mayor  1ue A")
+        this.compressedImage(file, 50); 
+      } else {
+        console.log("maenor qur a")
+        this.compressedImage(file, 600); 
+      }
+       /// si es más que 600x600 lo comprimimos
+    } else {
+      this.extraerBase64(file).then((image: any) => {
+        console.log("saltamos")
+        //this.newProducto.image = image.base; // sino simplemente lo codificamos en base 64
+      })
+    }
+  }
+  compressedImage(file: File, cali: number){ /// Comprimimos la imágen
+    const reader = new FileReader();
+
+  reader.onload = () => {
+    const base64Image = reader.result as string;
+    this.imageCompress.compressFile(base64Image, -1, cali, cali).then((compressedImage) => { //dimensiones de salida
+      //this.newProducto.image= compressedImage;
+      console.log("andamos ")
+      //console.log(compressedImage)
+    });
+  };
+
+  reader.readAsDataURL(file);
+  }
+  // Manejar URL de la imagen
+  loadFromURL(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const url = input.value;
+    const validImageExtensions = /\.(jpg|jpeg|png|gif|webp)$/i;
+    if(url && validImageExtensions.test(url)){
+      if (url) {
+        // Crear un nuevo objeto de imagen para verificar si es una URL de imagen válida
+        const img = new Image();
+        // Establecer el comportamiento cuando la imagen se carga correctamente
+        img.onload = () => {
+          // Si la imagen se carga correctamente, asignamos la URL y la mostramos
+          this.preview = url;
+          this.imageUrl = url;
+          //alert('Imagen compatible');
+        };
+  
+        // Comportamiento cuando hay un error al cargar la imagen
+        img.onerror = () => {
+          // Si no es una imagen válida, mostramos un mensaje y limpiamos la URL
+          console.error('La URL no es compatible o no se puede acceder a la imagen');
+          this.preview = '';
+          this.imageUrl = ''; // Limpiar la URL en caso de error
+          alert('La URL proporcionada no es válida o no es una imagen compatible');
+        };
+        // Establecer la fuente de la imagen (intenta cargarla desde la URL proporcionada)
+        img.src = url;
+      } else {
+        // Si la URL no tiene una extensión válida, mostrar un mensaje de error
+        console.error('La URL proporcionada no tiene una extensión válida de imagen');
+        this.preview = '';
+        this.imageUrl = '';
+        alert('Por favor, proporciona una URL válida de imagen (jpg, jpeg, png, gif, webp)');
+      }
+    }
+    // Llamar al método para descargar y convertir a Base64
+    //this.downloadImageAsBase64(url);
+  }
+  // Manejar arrastrar y soltar
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const dropzone = document.querySelector('.cargarImagen')!;
+    dropzone.classList.add('dragover');
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    const dropzone = document.querySelector('.cargarImagen')!;
+    dropzone.classList.remove('dragover');
+
+    if (event.dataTransfer && event.dataTransfer.files.length > 0) {
+      const file = event.dataTransfer.files[0];
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/x-icon'];
+      if(!validImageTypes.includes(file.type)){
+        this.alertService.warning('Por favor, arrastra una imagen válida (jpg, png, webp, gif, ico)', 'Formato no Compatible');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.preview = e.target.result;
+        //this.status = true;
+
+        // Borrar el campo de URL si existe
+        const urlInput = document.querySelector('.image-url') as HTMLInputElement;
+        if (urlInput) {
+          console.log('Encontrado')
+          urlInput.value = ''; // Limpiar el valor del campo de texto
+        } else {
+          console.error('Error al encontrarlo')
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  /* DESCARGAR IMAGEN PARA BASE DE DATOS */
+  downloadImageAsBase64(url: string): void {
+    fetch(url)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('No se pudo descargar la imagen.');
+        }
+        return response.blob(); // Obtener la imagen como blob
+      })
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const base64data = reader.result as string;
+          console.log('Imagen en Base64:', base64data);
+          // Aquí puedes almacenar el Base64 en tu base de datos o variable
+          this.preview = base64data; // Actualizar previsualización si lo deseas
+          //this.status = true;
+        };
+        reader.readAsDataURL(blob); // Convertir blob a Base64
+      })
+      .catch(error => {
+        console.error('Error al descargar la imagen:', error);
+      });
   }
 }
 

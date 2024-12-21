@@ -98,6 +98,11 @@ export class ApiService {
   updatePatient(profileData: any, idPatient: string): Observable<any> {
     return this.http.put<any>(`${this.urlApi}/patients/${idPatient}`, profileData);
   }
+  // Imagen Paciente
+  updateImage(id: number, imagen: string | null): Observable<any> {
+    const data = { imagen };
+    return this.http.post(`${this.urlApi}/doctors/${id}/update-image`, data);
+  }
 
   /* ------------------------------- CITA -------------------------------------------*/
   obtenerCitas(doctorId: number): Observable<Cita[]> {

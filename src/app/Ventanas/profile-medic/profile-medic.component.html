@@ -1,9 +1,9 @@
 <!-- ************************* DOCTOR PERFIL ************************************* -->
-<div class="perfilDoctor" *ngIf="mostrar && !pass">
+<div class="perfilDoctor" *ngIf="mostrar && !pass && !capImage">
     <p class="title">Perfil M&#233;dico</p>
     <!-- PERFIL DEL MEDICO -->
     <div class="perfil">
-        <div class="fotoPerfil">
+        <div class="fotoPerfil" (click)="cancelImage(true)">
             <img [src]='imagen' alt="" class="user" draggable="false"> <!-- Imagen/ImageDefault -->
         </div>
         <div class="container">
@@ -224,4 +224,30 @@
        <button class="btn btn-danger" (click)="selectChanged(2)">Cancelar</button>
      </div>
   </form>
+</div>
+<!-- ************************************ IMAGEN **************************************************** -->
+<div class="imagen" *ngIf="capImage">
+  <h2>Editar Imagen</h2>
+  <div class="cargarImagen" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (dragleave)="onDragLeave($event)">
+    <!-- Capturar archivos -->
+    <div class="addimg">
+        <input type="file" name="addimg" id="file" (change)="capFile($event)" accept="image/*" onchange="return validFile()" required>
+        <!-- <button class="upload">Subir imagen</button> -->
+        <label for="file" class="upload">{{status ? 'Editar Imagen' : 'Seleccionar Imagen'}}</label>
+        <span>o</span>
+        <input type="text" class="image-url" placeholder="Ingresa la URL de la imagen" (change)="loadFromURL($event)" />
+    </div>
+    <!-- PREVIEW IMAGE SELECT -->
+    <div class="capFile" *ngIf="status && !preview" id="capFile">
+      <img [src]='imagen' alt="" class="preview" draggable="false">
+    </div>
+    <div class="capFile" *ngIf="preview" id="capFile" draggable="false">
+        <img [src]="preview" alt="">
+    </div>
+  </div>
+  <div class="save">
+    <button type="button" class="btn btn-success" (click)="saveImage()"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+    <button type="button" class="btn-danger btn" (click)="deleteImage()"><i class="fa-solid fa-trash"></i> Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelImage(false)"><i class="fa-solid fa-ban"></i> Cancel</button>
+  </div>
 </div>
