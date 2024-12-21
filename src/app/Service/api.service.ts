@@ -118,6 +118,9 @@ export class ApiService {
   enviarResultado(resultado: any): Observable<any> { // Método para enviar los resultados al backend
     return this.http.post<any>(`${this.urlApi}/history-medical`, resultado);
   }
+  getHistoryByNumberImss(numberImss: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.urlApi}/history-medical/patient/${numberImss}`);
+  }
 
   /* ---------------------------- CUIDADOR --------------------- */
   createCuidador(data: any, patient_id: string): Observable<any> {
@@ -125,5 +128,8 @@ export class ApiService {
   }
   getCuidador(patientId: string): Observable<any> {
     return this.http.get(`${this.urlApi}/cuidador/${patientId}`);
+  }
+  newCuidador(data: any): Observable<any> {
+    return this.http.post<any>(this.urlApi+'/cuidador', data);
   }
 }

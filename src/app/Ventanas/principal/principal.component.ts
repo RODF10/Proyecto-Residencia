@@ -34,11 +34,27 @@ export class PrincipalComponent {
     setInterval(() => {
       this.horaActual = new Date();
     }, 1000);
-  }
 
+    setInterval(() => {
+      this.obtenerCitas
+      console.log("Citas ordenadas después de la filtración y ordenamiento:", this.citas); // Verificar las citas después del ordenamiento
+    }, 60000); // Actualizar cada minuto
+  }
   obtenerCitas() {
     this.citasService.obtenerCitas(this.userService.getDoctorId()).subscribe((data) => {
-        this.citas = data;
+        // Filtrar las citas futuras
+      const now = new Date();
+      this.citas = data.filter((cita) => {
+        const citaFechaHora = new Date(`${cita.fecha}T${cita.hora}`);
+        return citaFechaHora > now; // Solo incluir citas futuras
+      });
+
+      // Ordenar las citas de acuerdo a fecha y hora
+      this.citas.sort((a, b) => {
+        const citaA = new Date(`${a.fecha}T${a.hora}`);
+        const citaB = new Date(`${b.fecha}T${b.hora}`);
+        return citaA.getTime() - citaB.getTime(); // Orden ascendente
+      });
     });
   }
   obtenerPacientes(doctorId: number) {
@@ -66,8 +82,8 @@ export class PrincipalComponent {
   console.log(doctor);
     this.citasService.crearCita(citaConDoctorId).subscribe({
       next: () => {
-        
         this.obtenerCitas();
+        this.cambioEstado();
         this.nuevaCita = { registration_number: '', fecha: '', hora: '' };
         citaForm.reset();
         this.alert.success('Guardado Exitoso', 'Cita guardado con exito');
@@ -89,7 +105,7 @@ export class PrincipalComponent {
             next: () => {
               this.citas.splice(index, 1); // Eliminar cita del arreglo
               this.obtenerCitas();
-              this.cambioEstado();
+              //this.cambioEstado();
               this.alert.success('Cita eliminada correctamente', 'Éxito');
             },
             error: (err) => {
@@ -101,13 +117,7 @@ export class PrincipalComponent {
   }
   // Actualizar citas automáticamente al pasar la hora
   actualizarCitasAutomaticas() {
-    setInterval(() => {
-      const now = new Date();
-      this.citas = this.citas.filter((cita) => {
-        const citaFechaHora = new Date(`${cita.fecha}T${cita.hora}`);
-        return citaFechaHora > now; // Mantener solo citas futuras
-      });
-    }, 60000); // Actualizar cada minuto
+    
   }
 
   cambioEstado(){

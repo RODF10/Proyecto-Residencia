@@ -21,7 +21,7 @@ import { EncuestaAssessmentComponent } from './Ventanas/Diagnosticos/Nutricional
 
 //Incorporacion de Fecha
 import { LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import  localeEs  from '@angular/common/locales/es';
 import { DashboardComponent } from './Ventanas/dashboard/dashboard.component';
 import { ProfileMedicComponent } from './Ventanas/profile-medic/profile-medic.component'
@@ -97,7 +97,8 @@ registerLocaleData(localeEs, 'es');
     WindowsRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MaterialModuleModule
+    MaterialModuleModule,
+    CommonModule,
   ],
   providers: [ { provide: LOCALE_ID, useValue: 'es' } ],
   bootstrap: [AppComponent]

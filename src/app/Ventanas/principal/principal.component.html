@@ -67,7 +67,7 @@
                     No tienes citas recientes.
                 </div>
                 <!-- Mostrar las primeras 2 citas si hay alguna -->
-                <div class="citaReciente" *ngFor="let cita of citas.slice(0,2)">
+                <div class="citaReciente" *ngFor="let cita of citas.slice(0,3)">
                     <p class="nombre" style="margin: 0;">{{ cita.nombre_completo }} / {{ cita.registration_number }}</p>
                     <h2 class="fecha" style="margin: 0;">{{ cita.fecha }}</h2>
                     <p class="hora" style="margin: 0;">{{ cita.hora }}</p>
@@ -84,14 +84,7 @@
       <!-- Campo Paciente -->
       <div class="mb-3">
         <label for="paciente" class="form-label">Paciente:</label>
-        <select
-          [(ngModel)]="nuevaCita.registration_number"
-          name="registration_number"
-          class="form-select"
-          id="paciente"
-          #registration_number="ngModel"
-          required
-        >
+        <select [(ngModel)]="nuevaCita.registration_number" name="registration_number" class="form-select" id="paciente" #registration_number="ngModel" required>
           <option value="" disabled selected>Seleccione un paciente</option>
           <option *ngFor="let paciente of patients" [value]="paciente.registration_number">
             {{ paciente.first_name }} {{ paciente.last_name }} ({{ paciente.registration_number }})
@@ -105,15 +98,7 @@
       <!-- Campo Fecha -->
       <div class="mb-3">
         <label for="fecha" class="form-label">Fecha:</label>
-        <input
-          type="date"
-          [(ngModel)]="nuevaCita.fecha"
-          name="fecha"
-          class="form-control"
-          id="fecha"
-          #fecha="ngModel"
-          required
-        />
+        <input type="date" [(ngModel)]="nuevaCita.fecha" name="fecha" class="form-control" id="fecha" #fecha="ngModel" required/>
         <div *ngIf="fecha.invalid && fecha.touched" class="text-danger">
           La fecha es obligatoria.
         </div>
@@ -122,15 +107,7 @@
       <!-- Campo Hora -->
       <div class="mb-3">
         <label for="hora" class="form-label">Hora:</label>
-        <input
-          type="time"
-          [(ngModel)]="nuevaCita.hora"
-          name="hora"
-          class="form-control"
-          id="hora"
-          #hora="ngModel"
-          required
-        />
+        <input type="time" [(ngModel)]="nuevaCita.hora" name="hora" class="form-control" id="hora" #hora="ngModel" required/>
         <div *ngIf="hora.invalid && hora.touched" class="text-danger">
           La hora es obligatoria.
         </div>

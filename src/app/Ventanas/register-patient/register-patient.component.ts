@@ -15,6 +15,7 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
   pacienteForm: FormGroup;
   pacientes: any[] = []; // Array para almacenar los pacientes registrados
   submitted = false;
+  cuidadorForm!: FormGroup;
 
   doctor = {
     id: 0, // Este sería el ID del doctor autenticado
@@ -49,6 +50,14 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       alergias: ['', Validators.required], // Alergias que tiene
       caracteristicas: ['', Validators.required], // Descripcion
       confirmacion: [false, Validators.requiredTrue]
+    });
+
+    this.cuidadorForm = formBuilder.group({
+      cuidador_name: [''],
+      cuidador_lastname: [''],
+      cuidador_phone: ['', [Validators.maxLength(10), Validators.pattern(/^\d+$/), Validators.minLength(10)]],
+      cuidador_email: ['', [Validators.email]],
+      cuidador_address: ['']
     });
   }
 
@@ -99,15 +108,27 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       next: (response) => {
         this.alertService.success('Paciente registrado correctamente.', 'Éxito');
         console.log('Respuesta del servidor:', response);
-
+        const cuidador = this.cuidadorForm.value;
+        cuidador.patient_id = response.registration_number; // Asociar cuidador con paciente
+        this.apiService.newCuidador(cuidador).subscribe({
+          next: () =>{
+            //this.alertService.success('Cuidador registrado correctamente.', 'Éxito');
+            this.cuidadorForm.reset(); // Limpiar ambos formularios
+          }, error: (err) => {
+            this.alertService.error('No se pudo registrar al cuidador.', 'Error');
+          }
+        });
         // Reiniciar el formulario
         this.pacienteForm.reset();
         this.submitted = false;
         this.router.navigate(['home/list-person']);
       },
       error: (error) => {
-        this.alertService.error('Ocurrió un error al registrar el paciente. Por favor, inténtelo de nuevo.', 'Error');
-        console.error('Error al registrar paciente:', error);
+        if (error.status == 422 && error.error?.message == 'El número de registro ya está en uso.') {
+          this.alertService.warning('El número de IMSS ya está en otro paciente.', 'Duplicate IMSS');
+        } else {
+          this.alertService.error('No se pudo registrar el paciente. Inténtelo de nuevo.', 'Error');
+        }
       }
     });
 

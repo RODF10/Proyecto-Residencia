@@ -78,10 +78,26 @@ export class PatientsComponent {
   getPatients(){
     this.apiService.getPatientsByDoctor(this.userService.getDoctorId()).subscribe(
       (response) =>{
-        this.dataSource.data = response.patients;
+        this.dataSource.data = response.patients.map((patient: any) => ({
+          ...patient,
+          age: this.calculateAge(patient.birth_date),
+        }));
       }, (error) =>{
         alert('Error al obtener los pacientes');
       }
     );
+  }
+  calculateAge(birthDate: string | null): string {
+    if (!birthDate) {
+      return 'N/A';
+    }
+    const today = new Date();
+    const birthDateObj = new Date(birthDate);
+    let age = today.getFullYear() - birthDateObj.getFullYear();
+    const monthDifference = today.getMonth() - birthDateObj.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDateObj.getDate())) {
+      age--;
+    }
+    return age.toString();
   }
 }

@@ -6,6 +6,7 @@ import { first } from 'rxjs';
 import { CategoryGuard } from 'src/app/guards/category.guard';
 import { AlertService } from 'src/app/Service/alert.service';
 import { ApiService } from 'src/app/Service/api.service';
+import { LocalStorageService } from 'src/app/Service/local-storage.service';
 
 
 @Component({
@@ -28,7 +29,9 @@ export class VistasComponent implements OnInit, OnDestroy{
   id_paciente: boolean = false;
   edad: number | null = null;
 
-  constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private alert: AlertService, private authGuadr: CategoryGuard, private fb: FormBuilder, private datePipe: DatePipe) {
+  constructor(private router: Router, private route: ActivatedRoute, private apiService: ApiService, private alert: AlertService, private authGuadr: CategoryGuard, private fb: FormBuilder, 
+    private datePipe: DatePipe, private storage: LocalStorageService
+  ) {
     
   }
 
@@ -36,9 +39,8 @@ export class VistasComponent implements OnInit, OnDestroy{
     // Obtener el patientId desde los parámetros de la ruta
     this.route.paramMap.subscribe(params => {
       this.patientID = +params.get('patientID')!;
-      //Carga los pacientes
-      this.cargarPaciente(this.patientID);
-    
+        //Carga los pacientes
+        this.cargarPaciente(this.patientID);
     });
     
     // Inicializar el formulario
@@ -85,7 +87,9 @@ export class VistasComponent implements OnInit, OnDestroy{
         this.fechaN = formattedDate?.replace('M', this.getMonthName(new Date(fechaP).getMonth())); // Reemplaza el número del mes con el nombre
       }
       console.log('ID: ',response.patient.registration_number);
-      //localStorage.setItem('patient_id', response.patient.registration_number);
+      if(localStorage.getItem('patient_id') == null){
+        localStorage.setItem('patient_id', response.patient.registration_number);
+      }
     });
   }
   deletePatient(){
@@ -137,13 +141,14 @@ export class VistasComponent implements OnInit, OnDestroy{
   onSubmitPerfil(){
     if(this.formPerfil.valid){
       const pacienteID = this.patientData.registration_number;
+      const id = this.patientData.id;
       const profileData = this.formPerfil.value;
       this.apiService.updatePatient(profileData, pacienteID).subscribe(
         (response) => {
           //Logica imss duplicado
           this.modify();
           this.perfilUser(false);
-          this.cargarPaciente(pacienteID);
+          this.cargarPaciente(id);
           this.alert.success('Perfil del Paciente actualizado', 'Save Successfully');
           this.id_paciente = false;
         }, (error) =>{

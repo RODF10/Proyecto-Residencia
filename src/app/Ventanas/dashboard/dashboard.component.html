@@ -1,116 +1,54 @@
 <div class="texto">
   <h1>Historial del Paciente Diagnosticado</h1>
 </div>
+<div class="filtro">
+  <!-- Filtro por criterio -->
+  <div class="mb-3">
+    <label for="filterCriteria" class="form-label">Filtrar por:</label>
+    <select class="form-control" id="filterCriteria" [(ngModel)]="selectedFilter" (ngModelChange)="filterList()">
+      <option value="">Seleccione Filtro</option>
+      <option value="fecha">Fecha</option>
+      <option value="categoria">Categoría</option>
+      <option value="encuesta">Encuesta</option>
+    </select>
+  </div>
+  
+   <!-- Filtro dinámico según el criterio seleccionado -->
+   <div class="mb-3">
+    <label for="filterValue" class="form-label">Valor a filtrar:</label>
+    <select class="form-control" id="filterValue" [(ngModel)]="filterValue" (ngModelChange)="filterList()">
+      <option value="">Seleccione un valor</option>
+      <option *ngFor="let option of filterOptions" [value]="option">{{ option }}</option>
+    </select>
+  </div>
+</div>
 
-<!--<div class="container" id="htmlData">
-    <table class="table table-bordered" id="tblHistory">
+<div class="container mt-4">
+  <div class="table-responsive">
+    <table class="table table-striped">
       <thead>
         <tr>
-          <th>Doctor</th>
-          <th>Paciente</th>
-          <th>Diagnóstico</th>
-          <th>Puntaje</th>
-          <th>Observaciones</th>
-          <th>Fecha de Captura</th>
-          <th>Hora</th>
-          <th>Centro Médico</th>
-          <th>Acciones</th>
+          <th class="text-center">Fecha</th>
+          <th class="text-center">Categoría</th>
+          <th class="text-center">Encuesta</th>
+          <th class="text-center">Puntos</th>
+          <th class="text-center">Observaciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let record of medicalRecords">
-          <td>{{ record.doctor }}</td>
-          <td>{{ record.paciente }}</td>
-          <td>{{ record.diagnostico }}</td>
-          <td>{{ record.resultado }} pto</td>
-          <td>{{ record.observaciones }}</td>
-          <td>{{ record.fechaCaptura }}</td>
-          <td>{{ record.hora }}</td>
-          <td>{{ record.centroMedico }}</td>
-          <td>
-            <button (click)="downloadPDF()" class="btn btn-primary btn-sm" title="Descargar PDF">
-              <i class="fa fa-edit"></i>
-              <i class="fas fa-download"></i>
-            </button>
-            <button (click)="deleteRecord(record.id)" class="btn btn-danger btn-sm">
-              <i class="fa fa-trash"></i>
-            </button>
-            <button (click)="updateRecord(record)" class="btn btn-info btn-sm">
-              <i class="fa fa-refresh"></i>
-            </button>
-          </td>
+        <!-- Verifica si hay historial, si no, muestra el mensaje -->
+        <tr *ngIf="history.length == 0">
+          <td colspan="5" class="text-center text-danger">No hay historial disponible</td>
+        </tr>
+        <!-- Si hay historial, muestra los datos -->
+        <tr *ngFor="let item of filteredHistory">
+          <td class="text-center">{{ item.fecha }}</td>
+          <td class="text-center">{{ item.diagnostic?.category }}</td> <!-- Usamos el ? para evitar errores si no existe la relación -->
+          <td class="text-center">{{ item.encuesta }}</td>
+          <td class="text-center">{{ item.puntos }}</td>
+          <td class="text-center">{{ item.observacion }}</td>
         </tr>
       </tbody>
     </table>
-</div>-->
-
-<div class="tableHistory">
-  <table border="1" style="width: 100%; text-align: center; border-collapse: collapse;">
-    <tr style="background-color: #0095ff; color: white;">
-      <th colspan="7">COGNITIVA</th>
-    </tr>
-    <tr style="background-color: #ff8cff; color: black;">
-      <th>Encuestas</th>
-      <th>Matrícula</th>
-      <th>Nombre</th>
-      <th>Fecha</th>
-      <th>Puntos</th>
-      <th>Observación</th>
-      <th>Porcentaje</th>
-    </tr>
-    <tr *ngFor="let survey of surveys.cognitive">
-      <td>{{ survey.survey }}</td>
-      <td>{{ survey.matricula }}</td>
-      <td>{{ survey.nombre }}</td>
-      <td>{{ survey.fecha }}</td>
-      <td>{{ survey.puntos }}</td>
-      <td>{{ survey.observacion }}</td>
-      <td>{{ survey.porcentaje }}</td>
-    </tr>
-  
-    <tr style="background-color: #0095ff; color: white;">
-      <th colspan="7">FUNCIONAL</th>
-    </tr>
-    <!--<tr style="background-color: #ff8cff; color: black;">
-      <th>Encuestas</th>
-      <th>Matrícula</th>
-      <th>Nombre</th>
-      <th>Fecha</th>
-      <th>Puntos</th>
-      <th>Observación</th>
-      <th>Porcentaje</th>
-    </tr>-->
-    <tr *ngFor="let survey of surveys.functional">
-      <td>{{ survey.survey }}</td>
-      <td>{{ survey.matricula }}</td>
-      <td>{{ survey.nombre }}</td>
-      <td>{{ survey.fecha }}</td>
-      <td>{{ survey.puntos }}</td>
-      <td>{{ survey.observacion }}</td>
-      <td>{{ survey.porcentaje }}</td>
-    </tr>
-  
-    <tr style="background-color: #0095ff; color: white;">
-      <th colspan="7">NUTRICIONAL</th>
-    </tr>
-    <!--<tr style="background-color: #ff8cff; color: black;">
-      <th>Encuestas</th>
-      <th>Matrícula</th>
-      <th>Nombre</th>
-      <th>Fecha</th>
-      <th>Puntos</th>
-      <th>Observación</th>
-      <th>Porcentaje</th>
-    </tr>-->
-    <tr *ngFor="let survey of surveys.nutritional">
-      <td>{{ survey.survey }}</td>
-      <td>{{ survey.matricula }}</td>
-      <td>{{ survey.nombre }}</td>
-      <td>{{ survey.fecha }}</td>
-      <td>{{ survey.puntos }}</td>
-      <td>{{ survey.observacion }}</td>
-      <td>{{ survey.porcentaje }}</td>
-    </tr>
-  </table>
-  
+  </div>
 </div>

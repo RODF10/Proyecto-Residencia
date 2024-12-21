@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { ApiService } from './api.service';
+import { FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 
 @Injectable({
   providedIn: 'root'
@@ -96,5 +97,16 @@ export class AlertService {
 
     // Devolvemos si el usuario ha confirmado correctamente
     return result.isConfirmed;
+  }
+
+  alertTime(message: string, title: string){
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: title,
+      text: message,
+      showConfirmButton: false,
+      timer: 1000
+    });
   }
 }

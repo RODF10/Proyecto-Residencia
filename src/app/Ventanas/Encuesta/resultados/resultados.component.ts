@@ -34,6 +34,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService, private user: UserService, private apiService: ApiService, private aler: AlertService) { }
 
   ngOnInit(): void {
+    console.log(localStorage.getItem('patient_id'));
     // Establecer fecha y hora actuales
     const currentDate = new Date();
     this.fecha = formatDate(currentDate, 'yyyy-MM-dd', 'en-US');  // Formato de fecha
@@ -63,26 +64,29 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         this.entrada = 'undefiend';
     }
 
-    const resultado = {
-      number_imss: localStorage.getItem('patient_id'),
-      doctor_id: this.user.getDoctorId(),
-      diagnostic_id: this.inNumber,
-      encuesta: this.nombreEncuesta,
-      puntos: this.puntaje,
-      observacion: this.observacion,
-      fecha: this.fecha,
-      hora:this.hora
-    }
-    this.apiService.enviarResultado(resultado).subscribe(
-      (response) =>{
-        console.log(resultado);
-        this.aler.success('Datos Capturados del Paciente', 'Envio de Datos');
-      }, (error) => {
-        this.aler.error('Hubo problemas al enviar los datos', 'Error de Entrada');
-        console.log('Error de envio: ', error);
+    if(localStorage.getItem('patient_id') != null){
+      const resultado = {
+        number_imss: localStorage.getItem('patient_id'),
+        doctor_id: this.user.getDoctorId(),
+        diagnostic_id: this.inNumber,
+        encuesta: this.nombreEncuesta,
+        puntos: this.puntaje,
+        observacion: this.observacion,
+        fecha: this.fecha,
+        hora:this.hora
       }
-    );
-    console.log(resultado);
+      this.apiService.enviarResultado(resultado).subscribe(
+        (response) =>{
+          console.log(resultado);
+          localStorage.removeItem('patient_id');
+          this.aler.alertTime('Datos Capturados del Paciente', 'Envio de Datos');
+        }, (error) => {
+          this.aler.error('Hubo problemas al enviar los datos', 'Error de Entrada');
+          console.log('Error de envio: ', error);
+        }
+      );
+    }
+    //console.log(resultado);
     console.log(this.imagePath);
   }
 

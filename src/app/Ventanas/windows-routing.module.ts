@@ -53,7 +53,7 @@ const routes: Routes = [
   {
     path: 'view-person',
     component: VistasComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, CategoryGuard],
   },
   {
     path: 'diagnostic',
