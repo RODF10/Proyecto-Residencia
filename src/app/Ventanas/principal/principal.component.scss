@@ -205,6 +205,7 @@
   justify-content: space-between; /* Alinea el título a la izquierda y el botón a la derecha */
   align-items: center; /* Alinea ambos elementos verticalmente al centro */
   padding: 20px; /* Opcional: Añadir espacio alrededor */
+  gap: 1rem; /* Espaciado entre el título y el botón */
 
   button{
     margin-left: auto; /* Asegura que el botón se alinee a la derecha */
@@ -229,5 +230,14 @@
 
   .fecha-hora {
     margin-bottom: 20px;
+  }
+
+  .registroCita {
+    flex-direction: column; /* Cambiar a disposición vertical */
+    text-align: center;     /* Centrar el contenido */
+  }
+
+  .registroCita h1 {
+    margin-bottom: 1rem; /* Espaciado inferior entre el título y el botón */
   }
 }

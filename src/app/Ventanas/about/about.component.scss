@@ -1,23 +1,63 @@
+/* Estilos básicos */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.about-section {
+  background-color: #ffffff;
+  padding: 40px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .container {
-    margin-top: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.about-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  background: #3888ff;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+
+.about-text {
+  font-size: 16px;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+/* Diseño responsivo */
+@media (max-width: 768px) {
+  .about-title {
+      font-size: 20px;
   }
-  
-  .card {
-    border: 1px solid #e3e6f0;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .about-text {
+      font-size: 14px;
   }
-  
-  .card-body {
-    padding: 20px;
+}
+
+@media (max-width: 480px) {
+  .about-section {
+      padding: 20px 10px;
   }
-  
-  h2, h4 {
-    color: #333;
+
+  .about-title {
+      font-size: 18px;
   }
-  
-  p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #555;
+
+  .about-text {
+      font-size: 12px;
   }
-  
+}

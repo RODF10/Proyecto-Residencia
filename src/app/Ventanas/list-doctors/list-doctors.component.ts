@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/Service/alert.service';
@@ -21,6 +21,7 @@ export class ListDoctorsComponent implements OnInit{
   name_doctor = '';
   id_doctor: number = 0;
   mostrar: boolean = true;
+  isDesktopView = true; // Visiblidad Responsiva
 
   constructor(private apiService: ApiService, private alertService: AlertService, private sharedService: SharedService, private router: Router, private fb: FormBuilder, private userID: UserService){
     this.passwordForm = this.fb.group({
@@ -34,8 +35,16 @@ export class ListDoctorsComponent implements OnInit{
         this.showTableMaster = show;
       });      
       console.log(this.userID.getDoctorId());
+      this.updateView();
   }
 
+  updateView() {
+    this.isDesktopView = window.matchMedia('(min-width: 900px)').matches;
+  }
+  @HostListener('window:resize', [])
+  onResize(){
+    this.updateView();
+  }
 
   eliminarUsuario(id: number, name: string): void {
     console.log('Eliminar usuario con ID:', id ,name);

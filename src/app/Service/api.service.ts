@@ -16,6 +16,9 @@ export class ApiService {
   //Selecciona la Categoria
   private categoriaSeleccionadaSource: BehaviorSubject<String> = new BehaviorSubject<String>('Undefinid');
   categoriaSeleccionada$: Observable<String>; 
+  //Imagen Update
+  private imageSubject = new BehaviorSubject<string>('assets/Imagenes/default-profile.png'); // Valor inicial
+  image$ = this.imageSubject.asObservable();  // Observable para que los componentes se suscriban
 
   constructor(private http: HttpClient) {
     // Recuperar la categoría/encuesta seleccionada del Local Storage o establecer un valor predeterminado
@@ -38,7 +41,10 @@ export class ApiService {
     this.categoriaSeleccionadaSource.next(categoria);
     localStorage.setItem('categoriaSeleccionada', categoria.toString());
   }
-
+  // Método para actualizar la imagen en el BehaviorSubject
+  getUpdateImage(imageUrl: string) {
+    this.imageSubject.next(imageUrl); // Actualiza la imagen en el BehaviorSubject
+  }
   /* SECCION DE LARAVEL DE API */
   // ADMIN
   updatePasswordD(drId: number, password: any) { 
@@ -47,7 +53,6 @@ export class ApiService {
   verifyDoctorPassword(doctorId: number, password: string): Observable<boolean> {
     return this.http.post<boolean>(`${this.urlApi}/doctors/verify-password`, { doctorId, password });
   }
-
   // Registrar un nuevo doctor
   registerDoctor(data: FormData): Observable<any> {
     return this.http.post<any>(`${this.urlApi}/doctors`, data);
@@ -76,6 +81,10 @@ export class ApiService {
   //Actualizar perfil sin cedula duplicada
   updateDoctorProfile(doctorId: number, profileData: any): Observable<any> {
     return this.http.put<any>(`${this.urlApi}/doctors/${doctorId}`, profileData);
+  }
+  // Obtener imagen
+  getDoctorImage(id: number): Observable<{ imagen: string }> {
+    return this.http.get<{ imagen: string }>(`${this.urlApi}/doctors/${id}/image`);
   }
   /* --------------------------- PACIENTE ------------------------------------- */
   //Crear Paciente

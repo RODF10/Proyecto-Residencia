@@ -112,6 +112,7 @@ export class ProfileMedicComponent implements OnInit{
               } else {
                 this.status = true;
               }
+              this.apiService.getUpdateImage(doctor.imagen);
               //window.alert('Error Al Obtener la Contraseña del  Servidor');
           } else {
               console.error('Error: Datos del doctor no encontrados.');
@@ -120,8 +121,12 @@ export class ProfileMedicComponent implements OnInit{
       (error) => {
           console.error('Error al obtener los datos del doctor:', error);
       }
-     );     
+     );
+
+     this.apiService.getUpdateImage(this.imagen);
   }
+  // Actualizar Imagen
+  
   //Visibilidad de la Contraseña
   togglePasswordVisibility(): void {
     this.mostrarPassword = !this.mostrarPassword;
@@ -429,39 +434,13 @@ export class ProfileMedicComponent implements OnInit{
   loadFromURL(event: Event): void {
     const input = event.target as HTMLInputElement;
     const url = input.value;
-    const validImageExtensions = /\.(jpg|jpeg|png|gif|webp)$/i;
-    if(url && validImageExtensions.test(url)){
-      if (url) {
-        // Crear un nuevo objeto de imagen para verificar si es una URL de imagen válida
-        const img = new Image();
-        // Establecer el comportamiento cuando la imagen se carga correctamente
-        img.onload = () => {
-          // Si la imagen se carga correctamente, asignamos la URL y la mostramos
-          this.preview = url;
-          this.imageUrl = url;
-          //alert('Imagen compatible');
-        };
-  
-        // Comportamiento cuando hay un error al cargar la imagen
-        img.onerror = () => {
-          // Si no es una imagen válida, mostramos un mensaje y limpiamos la URL
-          console.error('La URL no es compatible o no se puede acceder a la imagen');
-          this.preview = '';
-          this.imageUrl = ''; // Limpiar la URL en caso de error
-          alert('La URL proporcionada no es válida o no es una imagen compatible');
-        };
-        // Establecer la fuente de la imagen (intenta cargarla desde la URL proporcionada)
-        img.src = url;
-      } else {
-        // Si la URL no tiene una extensión válida, mostrar un mensaje de error
-        console.error('La URL proporcionada no tiene una extensión válida de imagen');
-        this.preview = '';
-        this.imageUrl = '';
-        alert('Por favor, proporciona una URL válida de imagen (jpg, jpeg, png, gif, webp)');
-      }
+    if (url) {
+      this.preview = url; // Mantener funcionalidad actual
+      this.imageUrl = url;
+
+      // Llamar al método para descargar y convertir a Base64
+      //this.downloadImageAsBase64(url);
     }
-    // Llamar al método para descargar y convertir a Base64
-    //this.downloadImageAsBase64(url);
   }
   // Manejar arrastrar y soltar
   onDragOver(event: DragEvent): void {
