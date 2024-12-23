@@ -32,10 +32,11 @@ body {
 }
 
 .about-text {
-  font-size: 16px;
+  font-size: 25px;
   margin-bottom: 15px;
   text-align: justify;
 }
+
 
 /* Diseño responsivo */
 @media (max-width: 768px) {
@@ -44,13 +45,16 @@ body {
   }
 
   .about-text {
-      font-size: 14px;
+      font-size: 17px;
   }
+  .about-section {
+    padding: 20px 10px;
+}
 }
 
 @media (max-width: 480px) {
   .about-section {
-      padding: 20px 10px;
+      padding: 20px 5px;
   }
 
   .about-title {
@@ -58,6 +62,6 @@ body {
   }
 
   .about-text {
-      font-size: 12px;
+      font-size: 15px;
   }
 }

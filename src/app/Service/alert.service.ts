@@ -71,7 +71,8 @@ export class AlertService {
    async confirmPasswordChange(doctorId: number): Promise<boolean> {
     const result = await Swal.fire({
       icon: 'info',
-      title: 'Confirma tu contraseña',
+      title: 'Cambiar tu contraseña',
+      text: 'Confirma la contraseña para terminar la acción',
       input: 'password',  // Tipo de entrada es 'password'
       inputAttributes: {
         autocapitalize: 'off',
