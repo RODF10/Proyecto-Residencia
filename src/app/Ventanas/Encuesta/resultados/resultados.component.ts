@@ -82,7 +82,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         doctor_id: this.user.getDoctorId(),
         diagnostic_id: this.inNumber,
         encuesta: this.nombreEncuesta,
-        puntos: this.puntaje,
+        puntos: this.puntaje + ' ' + this.entrada,
         observacion: this.observacion,
         fecha: this.fecha,
         hora:this.hora
@@ -97,6 +97,7 @@ export class ResultadosComponent implements OnInit, OnDestroy{
           console.log('Error de envio: ', error);
         }
       );
+      console.log(resultado);
     }
   }
 

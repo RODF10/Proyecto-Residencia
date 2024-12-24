@@ -40,6 +40,7 @@ export class DashboardComponent implements OnInit {
         (data) => {
           this.history = data;
           this.filteredHistory = [...this.history];
+          this.sortByDate(); // Ordenar por fecha después de obtener los datos
         },
         (error) => {
           this.alert.error(
@@ -93,5 +94,13 @@ export class DashboardComponent implements OnInit {
         return false;
       });
     }
+    this.sortByDate(); // Ordenar por fecha después de obtener los datos
+  }
+  sortByDate() {
+    this.filteredHistory.sort((a, b) => {
+      const dateA = new Date(a.fecha).getTime();
+      const dateB = new Date(b.fecha).getTime();
+      return dateB - dateA; // Orden descendente
+    });
   }
 }
