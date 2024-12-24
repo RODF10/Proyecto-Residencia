@@ -31,13 +31,13 @@ export interface Question{
   options: Option[];
 }
 //Captura respuesta seleccionada
-export interface QuestionSelec{
+export interface QuestionSelec{// Opciones con checbox
   text: String;
   option: Option[];
   selectedScore?: number;
 }
 // OPCOINES BOOLEANAS
-export interface Checkbox{
+export interface Checkbox{// Checkbox
   text: String;
   seleccionada: boolean;
 }
@@ -59,4 +59,16 @@ export interface Cita {
   nombre_completo: string;
   fecha: string;
   hora: string;
+}
+// Opciones Boolenas con imagen
+export interface ResImage{ // Opciones con imagenes
+  titulo: string;
+  imagen?: string;
+  opciones: CheckPoint[];
+  tipoEspecial?: string;
+}
+interface CheckPoint{ // Check con Puntuacion
+  text: string;
+  seleccionada: boolean;
+  puntuacion: number;
 }

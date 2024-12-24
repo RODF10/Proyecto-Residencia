@@ -47,7 +47,13 @@ import { PatientsComponent } from './Ventanas/patients/patients.component';
 import { RegisterPatientComponent } from './Ventanas/register-patient/register-patient.component';
 import { EncuestaMustComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
 import { EncuestaSarcFComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
+import { EncuestaGlimComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-glim/encuesta-glim.component';
 import { EncuestaEat10Component } from './Ventanas/Diagnosticos/Nutricional/encuesta-eat10/encuesta-eat10.component';
+import { EncuestaDisfagiaComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-disfagia/encuesta-disfagia.component';
+import { EncuestaVolumenComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-volumen/encuesta-volumen.component';
+import { EncuestaGussComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-guss/encuesta-guss.component';
+import { EncuestaChumleaComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-chumlea/encuesta-chumlea.component';
+import { EncuestaRabitoComponent } from './Ventanas/Diagnosticos/Nutricional/encuesta-rabito/encuesta-rabito.component';
 //import { NotFoundComponent } from './Ventanas/not-found/not-found.component';
 
 //Registro de Fecha
@@ -86,7 +92,13 @@ registerLocaleData(localeEs, 'es');
     EncuestaAssessmentComponent,
     EncuestaMustComponent,
     EncuestaSarcFComponent,
+    EncuestaGlimComponent,
     EncuestaEat10Component,
+    EncuestaDisfagiaComponent,
+    EncuestaVolumenComponent,
+    EncuestaGussComponent,
+    EncuestaChumleaComponent,
+    EncuestaRabitoComponent,
     //NotFoundComponent,
   ],
   imports: [

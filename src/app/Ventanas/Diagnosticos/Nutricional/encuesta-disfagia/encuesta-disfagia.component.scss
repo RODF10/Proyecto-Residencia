@@ -1,0 +1,26 @@
+.image-container {
+    text-align: center; // Centra la imagen y título
+    margin: 0 auto;
+    padding: 10px;
+  
+    h1 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+  
+    .responsive-image {
+      max-width: 100%; // La imagen no excederá el ancho de su contenedor
+      height: auto;    // Mantiene la proporción de la imagen
+      border: 1px solid #ddd; // Opcional: bordes sutiles
+      border-radius: 8px;     // Bordes redondeados
+      box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); // Sombra ligera
+    }
+  }
+  @media (max-width: 768px) {
+    .image-container {
+      h1 {
+        font-size: 20px; // Reduce el tamaño del título en pantallas pequeñas
+      }
+    }
+  }

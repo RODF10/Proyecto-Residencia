@@ -63,7 +63,19 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         this.observacion = 'none';
         this.entrada = 'undefiend';
     }
+    this.envioResultado();    
+    //console.log(resultado);
+    console.log(this.imagePath);
+  }
 
+  ngOnDestroy(): void {
+      localStorage.removeItem('categorySelection');
+      //localStorage.removeItem('patient_id');
+      window.location.reload();
+      this.sharedService.clearResults();
+  }
+
+  envioResultado(){
     if(localStorage.getItem('patient_id') != null){
       const resultado = {
         number_imss: localStorage.getItem('patient_id'),
@@ -86,15 +98,6 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         }
       );
     }
-    //console.log(resultado);
-    console.log(this.imagePath);
-  }
-
-  ngOnDestroy(): void {
-      localStorage.removeItem('categorySelection');
-      localStorage.removeItem('patient_id');
-      window.location.reload();
-      this.sharedService.clearResults();
   }
 
   funcionBoton(n: number): void{
@@ -120,6 +123,12 @@ export class ResultadosComponent implements OnInit, OnDestroy{
           case 1:
             this.imagePath = this.sectionImage(cat, '4at');
           break;
+          case 2:
+            this.imagePath = this.sectionImage(cat, 'codesf');
+            break;
+          case 3:
+            this.imagePath = this.sectionImage(cat, 'moca');
+            break;
           case 4:
             /* this.imagePath = this.ruta + this.file[subc] + '/awol.png';
               categoria = POr defecto se recibe en DiagnosticComponent */
@@ -243,13 +252,14 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   }
 
   /* Selecciona la imagen de la carpeta, si no recibe por defecto es 0 */
-  sectionImage(categoria: number = 0, imagen: string):string{
+  sectionImage(categoria: number = 0, imagen: string, format: string = 'png'):string{
     /*
      * ruta = Acceso a la carpeta de Puntaje
      * file[x] = acceso a la carpeta de la categoria
      * imagen = Receptor de nombre de la imagen
+     * format = formato de la imagen
     */
-    return this.ruta + this.file[categoria] + '/' + imagen + '.png';
+    return this.ruta + this.file[categoria] + '/' + imagen + '.' + format;
   }
 
   resetImage(){

@@ -1,0 +1,64 @@
+<div class="encuesta-rabito">
+    <h1>Fórmulas de Rabito</h1>
+    <form [formGroup]="rabitoForm" (ngSubmit)="calcularResultadosRabito()">
+      <h2>Ingresar Medidas</h2>
+      <div class="form-group">
+        <!-- Entrada de datos -->
+        <label for="sexoRabito">Sexo</label>
+        <select id="sexoRabito" formControlName="sexo">
+          <option value="1">Hombre</option>
+          <option value="2">Mujer</option>
+        </select>
+  
+        <label for="circBrazoRabito">Circunferencia del brazo (cm)</label>
+        <input
+          type="number"
+          id="circBrazoRabito"
+          formControlName="circBrazo"
+          placeholder="Ej. 30"
+        />
+  
+        <label for="circAbdominal">Circunferencia abdominal (cm)</label>
+        <input
+          type="number"
+          id="circAbdominal"
+          formControlName="circAbdominal"
+          placeholder="Ej. 85"
+        />
+  
+        <label for="circPantorrillaRabito">Circunferencia de pantorrilla (cm)</label>
+        <input
+          type="number"
+          id="circPantorrillaRabito"
+          formControlName="circPantorrilla"
+          placeholder="Ej. 35"
+        />
+  
+        <label for="mediaEnvergaduraRabito">Envergadura media del brazo (cm)</label>
+        <input
+          type="number"
+          id="mediaEnvergaduraRabito"
+          formControlName="mediaEnvergadura"
+          placeholder="Ej. 50"
+        />
+  
+        <label for="edadRabito">Edad (años)</label>
+        <input
+          type="number"
+          id="edadRabito"
+          formControlName="edad"
+          placeholder="Ej. 45"
+        />
+      </div>
+  
+      <!-- Botón para calcular -->
+      <button type="submit" [disabled]="!rabitoForm.valid">Calcular</button>
+    </form>
+  
+    <div *ngIf="resultadoRabito" class="resultados">
+      <h2>Resultados</h2>
+      <p><strong>Peso estimado:</strong> {{ resultadoRabito.peso }} kg</p>
+      <p><strong>Talla estimada:</strong> {{ resultadoRabito.talla }} cm</p>
+    </div>
+  </div>
+  

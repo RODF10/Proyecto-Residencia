@@ -29,6 +29,7 @@ import { EncuestaAssessmentSFComponent } from './Diagnosticos/Nutricional/encues
 import { EncuestaAssessmentComponent } from './Diagnosticos/Nutricional/encuesta-assessment/encuesta-assessment.component';
 import { EncuestaMustComponent } from './Diagnosticos/Nutricional/encuesta-must/encuesta-must.component';
 import { EncuestaSarcFComponent } from './Diagnosticos/Nutricional/encuesta-sarc-f/encuesta-sarc-f.component';
+import { EncuestaGlimComponent } from './Diagnosticos/Nutricional/encuesta-glim/encuesta-glim.component';
 //Componentes de la encuesta
 import { EncuestaCogComponent } from './Diagnosticos/Cognitiva/encuesta-cog/encuesta-cog.component';
 import { EncuestaBeckAnxietyComponent } from './Diagnosticos/Afectiva/encuesta-beck-anxiety/encuesta-beck-anxiety.component';
@@ -105,82 +106,11 @@ const routes: Routes = [
     component: RegisterPatientComponent,
     canActivate: [AuthGuard]
   },
-  //Encuestas de los URL
-  {
-    path: 'encuesta-cog', 
-    component: EncuestaCogComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-func',
-    component: Category1Component,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-afc', 
-    component: EncuestaAfcComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-ces-d7', 
-    component: EncuestaCESD7Component,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-phq9', 
-    component: EncuestaPhq9Component,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-gai-sf', 
-    component: EncuestaGaiSfComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-beck', 
-    component: EncuestaBeckAnxietyComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-soledad', 
-    component: EncuestaEscalaSoledadComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-Sad', 
-    component: EncuestaSADPERSONSComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-cornell', 
-    component: EncuestaCornellComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-okeeffe', 
-    component: EncuestaOkeeffeComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-assessment-sf', 
-    component: EncuestaAssessmentSFComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-asesment', 
-    component: EncuestaAssessmentComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-must', 
-    component: EncuestaMustComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'encuesta-sarc-f', 
-    component: EncuestaSarcFComponent,
-    canActivate: [AuthGuard]
-  },
+  /**
+   * Borras este comentario despues, aqu estaba las url de las encuestas segu, pero no va a ser necesario,
+   * porque todas las encuestas estan dentro de un componente y ahi solo lo llamamos con <app-encuesta??><-/app-encuesta>
+   * asi que vi incesario que este aqu, solo extenden el codigo cuanod eso se usa en el componente encuesta
+   */
 ];
 
 @NgModule({
