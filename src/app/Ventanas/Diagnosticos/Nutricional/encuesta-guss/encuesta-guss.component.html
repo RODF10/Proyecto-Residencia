@@ -1,1 +1,92 @@
-<p>encuesta-guss works!</p>
+<div class="container mt-4">
+    <h2>Protocolo GUSS</h2>
+    <form (ngSubmit)="calcularPuntaje()">
+      <!-- Investigación Preliminar -->
+      <h3>1. Investigación Preliminar / Prueba Indirecta de Deglución</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Pregunta</th>
+            <th>Sí</th>
+            <th>No</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pregunta of preguntasPreliminares; let i = index">
+            <td>{{ pregunta.texto }}</td>
+            <td>
+              <input
+                type="radio"
+                [name]="'preguntaPreliminar' + i"
+                [value]="pregunta.puntajeSi"
+                (change)="asignarPuntaje(i, pregunta.puntajeSi, 'preliminar')"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [name]="'preguntaPreliminar' + i"
+                [value]="pregunta.puntajeNo"
+                (change)="asignarPuntaje(i, pregunta.puntajeNo, 'preliminar')"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Prueba Directa -->
+      <h3>2. Prueba Directa de Deglución</h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Pregunta</th>
+            <th>Semisólido</th>
+            <th>Líquido</th>
+            <th>Sólido</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pregunta of preguntasDirectas; let i = index">
+            <td>{{ pregunta.texto }}</td>
+            <td>
+              <input
+                type="radio"
+                [name]="'preguntaDirecta' + i"
+                [value]="pregunta.puntajeSemisolido"
+                (change)="asignarPuntaje(i, pregunta.puntajeSemisolido, 'directa')"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [name]="'preguntaDirecta' + i"
+                [value]="pregunta.puntajeLiquido"
+                (change)="asignarPuntaje(i, pregunta.puntajeLiquido, 'directa')"
+              />
+            </td>
+            <td>
+              <input
+                type="radio"
+                [name]="'preguntaDirecta' + i"
+                [value]="pregunta.puntajeSolido"
+                (change)="asignarPuntaje(i, pregunta.puntajeSolido, 'directa')"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary">Calcular Puntaje</button>
+      </div>
+    </form>
+  
+    <!-- Resultados -->
+    <div class="mt-4" *ngIf="resultado">
+      <h3>Resultado</h3>
+      <p>Puntaje Total: {{ puntajeTotal }}</p>
+      <p><strong>{{ resultado.codigo }}</strong>: {{ resultado.descripcion }}</p>
+      <p><strong>Recomendaciones:</strong> {{ resultado.recomendaciones }}</p>
+    </div>
+  </div>
+  
