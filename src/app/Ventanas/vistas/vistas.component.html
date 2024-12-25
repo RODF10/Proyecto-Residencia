@@ -1,13 +1,13 @@
 <!-- Visualizacion de Datos del Paciente -->
-<div class="container">
+<div class="container" *ngIf="vista">
   <div class="row justify-content-center">
     <div class="container my-4">
       <h2>Detalles del Paciente</h2>
-      <div class="card">
+      <div class="card" style="background-color: #f8f9fa;"> <!-- Fondo claro -->
         <div class="card-body">
           <!-- Información del paciente -->
           <div class="row mb-3">
-            <div class="col-md-4"><strong>Matrícula:</strong></div>
+            <div class="col-md-4"><strong>No. IMSS:</strong></div>
             <div class="col-md-8">{{ patientData.registration_number }}</div>
           </div>
           <div class="row mb-3">
@@ -20,41 +20,210 @@
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Edad:</strong></div>
-            <div class="col-md-8">{{ patientData.age }}</div>
+            <div class="col-md-8">{{ edad }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Fecha de Nacimiento:</strong></div>
-            <div class="col-md-8">{{ patientData.birth_date | date }}</div>
+            <div class="col-md-8 fecha">{{ fechaN }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-4"><strong>Correo de Emergencia:</strong></div>
-            <div class="col-md-8">{{ patientData.emergency_email }}</div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-md-4"><strong>Teléfono de Emergencia:</strong></div>
-            <div class="col-md-8">{{ patientData.emergency_contact }}</div>
+            <div class="col-md-4"><strong>G&#233;nero:</strong></div>
+            <div class="col-md-8">{{ patientData.gender }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Dirección:</strong></div>
             <div class="col-md-8">{{ patientData.address }}</div>
           </div>
           <div class="row mb-3">
-            <div class="col-md-4"><strong>Historial Médico:</strong></div>
+            <div class="col-md-4"><strong>Historial M&#233;dico:</strong></div>
             <div class="col-md-8">{{ patientData.medical_history }}</div>
           </div>
           <div class="row mb-3">
             <div class="col-md-4"><strong>Alergias:</strong></div>
             <div class="col-md-8">{{ patientData.allergies }}</div>
           </div>
+
+          <!-- Información del cuidador -->
+           <div class="cuidador">
+             <h3 class="tituloC">Detalles del Cuidador</h3>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Nombre:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_name || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Apellido:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_lastname || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Tel&#233;fono:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_phone || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Correo Electr&#243;nico:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_email || 'No registrado' }}</div>
+             </div>
+             <div class="row mb-3">
+               <div class="col-md-4"><strong>Direcci&#243;n:</strong></div>
+               <div class="col-md-8">{{ cuidadorData.cuidador_address || 'No registrado' }}</div>
+             </div>
+           </div>
+
           <!-- Botones Modificar y Eliminar dentro del cuadro -->
           <div class="text-center mt-3 boxBtn">
-            <button type="button" class="btn btn-warning mr-2"><i class="fa-regular fa-pen-to-square"></i> Modificar</button>
+            <button type="button" class="btn btn-warning mr-2" (click)="modify()"><i class="fa-regular fa-pen-to-square"></i> Modificar</button>
             <button type="button" class="btn btn-danger" (click)="deletePatient()"><i class="fa-solid fa-trash"></i> Eliminar</button>
-            <button type="button" class="btn btn-success" (click)="categoria()"><i class="fa-solid fa-file-medical"></i> Diagnostico</button>
+            <button type="button" class="btn btn-success" (click)="categoria()"><i class="fa-solid fa-file-medical"></i> Diagn&#243;stico</button>
             <button type="button" class="btn btn-history" (click)="history()"><i class="fa-solid fa-book-medical"></i> Historial</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<!-- VISTA DEL CONTENEDOR A PERFIL O CUIDADOR -->
+  <div class="overlay" *ngIf="!vista && !perfil && !cuidador">
+    <div class="botonesEdit">
+      <button class="btn btn-primary" type="button" (click)="perfilUser(false)">Editar Perfil</button>
+      <button class="btn btn-primary" type="button" (click)="perfilCuidador()">Editar Cuidador</button>
+    </div>
+    <!-- Botón de Cerrar -->
+    <button class="btn btn-danger close-btn" type="button" (click)="modify()">X</button>
+  </div>
+  
+<!-- CONTENEDOR CUIDADOR -->
+<div class="container mt-5 formCuidador" *ngIf="cuidador">
+  <h2 class="text-center mb-4">Registrar Cuidador</h2>
+  <form [formGroup]="cuidadorForm" (ngSubmit)="submitFormCuidador()" class="p-4 border rounded shadow">
+    <div class="mb-3">
+      <label for="cuidador_name" class="form-label">Nombre</label>
+      <input type="text" id="cuidador_name" class="form-control" formControlName="cuidador_name" placeholder="Ingrese el nombre del cuidador" />
+      <div *ngIf="cuidadorForm.get('cuidador_name')?.invalid && cuidadorForm.get('cuidador_name')?.touched" class="text-danger">
+        El nombre es obligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_lastname" class="form-label">Apellido</label>
+      <input type="text" id="cuidador_lastname" class="form-control" formControlName="cuidador_lastname" placeholder="Ingrese el apellido del cuidador" />
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_phone" class="form-label">Tel&#233;fono</label>
+      <input type="text" id="cuidador_phone" class="form-control" formControlName="cuidador_phone" placeholder="Ingrese el teléfono"/>
+      <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['pattern'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+        El tel&#233;fono debe contener solo n&#250;meros.
+      </div>
+      <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['minlength'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+        El tel&#233;fono debe tener al menos 10 d&#237;gitos.
+      </div>
+      <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['maxlength'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+        El tel&#233;fono debe tener como máximo 10 d&#237;gitos.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_email" class="form-label">Correo Electr&#243;nico</label>
+      <input type="email" id="cuidador_email" class="form-control" formControlName="cuidador_email" placeholder="Ingrese el correo electrónico"/>
+      <div *ngIf="cuidadorForm.get('cuidador_email')?.invalid && cuidadorForm.get('cuidador_email')?.touched" class="text-danger">
+        Ingrese un correo electr&#243;nico v&#225;lido.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="cuidador_address" class="form-label">Direcci&#243;n</label>
+      <textarea id="cuidador_address" class="form-control" formControlName="cuidador_address" placeholder="Ingrese la dirección"></textarea>
+    </div>
+
+    <div class="botonCuidador">
+      <button type="submit" class="btn btn-primary" [disabled]="cuidadorForm.invalid">Registrar Cuidador</button>
+      <button class="btn-danger btn" (click)="perfilCuidador()">Regresar</button>
+    </div>
+  </form>
+</div>
+<!-- CONTENEDOR PERFIL PACIENTE -->
+<div class="containerr cuestionarioPerfil" *ngIf="perfil">
+  <p>Actualizar Perfil del Paciente</p>
+  <form [formGroup]="formPerfil" (ngSubmit)="onSubmitPerfil()" class="container mt-4">
+    <div class="mb-3">
+      <label for="registration_number" class="form-label">IMSS</label>
+      <input id="registration_number" formControlName="registration_number" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('registration_number')?.invalid && formPerfil.get('registration_number')?.touched" class="text-danger">
+        El campo IMSS es obligatorio.
+      </div>
+      <div *ngIf="id_paciente" class="alert alert-danger">
+        Ya existe una IMSS registrada con este número.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="first_name" class="form-label">Nombre</label>
+      <input id="first_name" formControlName="first_name" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('first_name')?.invalid && formPerfil.get('first_name')?.touched" class="text-danger">
+        El campo Nombre es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="last_name" class="form-label">Apellido</label>
+      <input id="last_name" formControlName="last_name" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('last_name')?.invalid && formPerfil.get('last_name')?.touched" class="text-danger">
+        El campo Apellido es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="birth_date" class="form-label">Fecha de Nacimiento</label>
+      <input id="birth_date" formControlName="birth_date" type="date" class="form-control" required />
+      <div *ngIf="formPerfil.get('birth_date')?.invalid && formPerfil.get('birth_date')?.touched" class="text-danger">
+        El campo Fecha de Nacimiento es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="gender" class="form-label">Género</label>
+      <select id="gender" formControlName="gender" class="form-select" required>
+        <option value="">Selecciona el género</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Undefied</option>
+      </select>
+      <div *ngIf="formPerfil.get('gender')?.invalid && formPerfil.get('gender')?.touched" class="text-danger">
+        El campo Género es obligatorio.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="address" class="form-label">Dirección</label>
+      <input id="address" formControlName="address" type="text" class="form-control" required />
+      <div *ngIf="formPerfil.get('address')?.invalid && formPerfil.get('address')?.touched" class="text-danger">
+        El campo Dirección es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="medical_history" class="form-label">Historial Médico</label>
+      <textarea id="medical_history" formControlName="medical_history" class="form-control" rows="3" required></textarea>
+      <div *ngIf="formPerfil.get('medical_history')?.invalid && formPerfil.get('medical_history')?.touched" class="text-danger">
+        El campo Historial Médico es obligatorio.
+      </div>
+    </div>
+  
+    <div class="mb-3">
+      <label for="allergies" class="form-label">Alergia</label>
+      <input id="allergies" formControlName="allergies" type="text" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label for="description" class="form-label">Descripcion</label>
+      <textarea id="description" formControlName="description" class="form-control" rows="3" required></textarea>
+      <div *ngIf="formPerfil.get('description')?.invalid && formPerfil.get('description')?.touched" class="text-danger">
+        El campo Descripción es obligatorio.
+      </div>
+    </div>
+  
+    <div class="botonPerfil">
+      <button type="submit" class="btn btn-success" [disabled]="formPerfil.invalid">Guardar</button>
+      <button type="button" class="btn-danger btn" (click)="perfilUser(true)">Regresar</button>
+    </div>
+  </form>
 </div>

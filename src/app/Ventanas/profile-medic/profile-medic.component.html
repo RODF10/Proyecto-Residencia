@@ -1,10 +1,10 @@
-<div class="perfilDoctor" *ngIf="mostrar && !pass">
+<!-- ************************* DOCTOR PERFIL ************************************* -->
+<div class="perfilDoctor" *ngIf="mostrar && !pass && !capImage">
     <p class="title">Perfil M&#233;dico</p>
     <!-- PERFIL DEL MEDICO -->
     <div class="perfil">
-        <div class="fotoPerfil">
-            <img [src]='imagen' alt="" class="user"> <!-- Imagen/ImageDefault -->
-            <div class="overlay"><i class="fas fa-camera"></i></div> <!--Cambiar foto-->
+        <div class="fotoPerfil" (click)="cancelImage(true)">
+            <img [src]='imagen' alt="" class="user" draggable="false"> <!-- Imagen/ImageDefault -->
         </div>
         <div class="container">
             <p class="firstName">{{ nombre }}</p> <!-- Nombre -->
@@ -44,7 +44,7 @@
             <span class="value">{{ correo }}</span>
         </div>
 
-        <!-- Mostrar/Ocultar Contraseña -->
+        <!-- Mostrar/Ocultar Contraseña
         <div class="perfil-item password-item">
             <span class="label">Contraseña:</span>
             <span class="value">
@@ -54,7 +54,7 @@
                     <mat-icon>{{ mostrarPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
             </span>
-        </div>
+        </div> -->
 
         <!-- Telefono -->
         <div class="perfil-item">
@@ -67,76 +67,111 @@
             <span class="label">Dirección:</span>
             <span class="value">{{ direccion }}</span>
         </div>
-
-        <button class="btn btn-success" (click)="selectChanged(1)">Cambiar Contrase&#241;a</button>
+        <div class="changeButtons">
+          <button class="btn btn-primary" (click)="selectChanged(1)">Cambiar Contrase&#241;a</button>
+        </div>
     </div>
 </div>
-
 <!-- *********************** ACTUALIZACION DEL DOCTOR ****************************** -->
 <div class="containerForm" *ngIf="!mostrar">
     <p class="title">Actualizaci&#243;n del Perfil</p>
     <form [formGroup]="profileForm" (ngSubmit)="onSubmitForm()">
         <div class="form-group">
           <label for="nombre">Nombre:</label>
-          <input type="text" id="nombre" formControlName="nombre" class="form-control" />
+          <input type="text" id="nombre" formControlName="nombre" class="form-control"/>
+        </div>
+        <div *ngIf="profileForm.get('nombre')?.invalid && profileForm.get('nombre')?.touched" class="alert-danger alert">
+          El nombre es obligatorio.
         </div>
       
         <div class="form-group">
           <label for="apellido">Apellido:</label>
           <input type="text" id="apellido" formControlName="apellido" class="form-control"/>
         </div>
+        <div *ngIf="profileForm.get('apellido')?.invalid && profileForm.get('apellido')?.touched" class="alert alert-danger">
+          El apellido es obligatorio.
+        </div>
       
         <div class="form-group">
           <label for="cedula">Cédula:</label>
-          <input type="text" id="cedula" class="form-control disabled" [disabled]="!mostrar" value="{{ cedula }}" title="{{ cursor }}"/>
+          <input type="text" id="cedula" class="form-control cedula"  formControlName="cedula"/>
         </div>
-      
+        <div *ngIf="profileForm.get('cedula')?.invalid && profileForm.get('cedula')?.touched" class="alert alert-danger">
+          La cédula es obligatoria.
+        </div>
+        <div *ngIf="cedulaDuplicada" class="alert alert-danger">
+          Ya existe una cédula registrada con este número.
+        </div>
+
         <div class="form-group">
           <label for="profesion">Profesión:</label>
-          <input type="text" id="profesion" formControlName="profesion" class="form-control" required/>
+          <input type="text" id="profesion" formControlName="profesion" class="form-control"/>
+        </div>
+        <div *ngIf="profileForm.get('profesion')?.invalid && profileForm.get('profesion')?.touched" class="alert alert-danger">
+          La profesión es obligatoria.
         </div>
       
         <div class="form-group">
-          <label for="fecha">Fecha de Nacimiento:</label>
-          <input type="text" id="fecha" class="form-control disabled" required value="{{ fechaForm }}" [disabled]="!mostrar" title="{{ cursor }}"/>
+          <label for="date">Fecha de Nacimiento:</label>
+          <input type="date" id="date" class="form-control disabled" formControlName="date"/>
         </div>
-      
+
         <div class="form-group">
-          <label for="edad">Edad:</label>
-          <input type="number" id="edad" formControlName="edad" class="form-control" required [ngClass]="{'is-invalid': profileForm.get('edad')?.invalid && profileForm.get('edad')?.touched}"/>
-          <div *ngIf="profileForm.get('edad')?.invalid && profileForm.get('edad')?.touched" class="invalid-feedback">
-            La edad debe ser igual o mayor a 20.
-          </div>
+          <label for="genero">G&#233;nero:</label>
+          <select id="genero" class="form-control" formControlName="genero">
+            <option value="">Selecciona G&#233;nero</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Otro">Indefinido</option>
+          </select> 
         </div>
-      
-        <div class="form-group">
-          <label for="genero">Género:</label>
-          <input type="text" id="genero" class="form-control disabled" [disabled]="!mostrar" value="{{ genero }}" title="{{ cursor }}"/>
+        <div *ngIf="profileForm.get('genero')?.invalid && profileForm.get('genero')?.touched" class="alert alert-danger">
+          El género es obligatorio.
         </div>
-      
+        
         <div class="form-group">
           <label for="telefono">Teléfono:</label>
           <input type="tel" id="telefono" formControlName="telefono" class="form-control" required [ngClass]="{'is-invalid': profileForm.get('telefono')?.invalid && profileForm.get('telefono')?.touched}"/>
-          <div *ngIf="profileForm.get('telefono')?.invalid && profileForm.get('telefono')?.touched" class="invalid-feedback">
+          <div *ngIf="profileForm.get('telefono')?.invalid && profileForm.get('telefono')?.touched" class="alert alert-danger" style="margin-top: 15px;">
             El teléfono debe tener un máximo de 10 dígitos y contener solo números.
           </div>
         </div>
-      
+    
         <div class="form-group">
           <label for="direccion">Dirección:</label>
-          <input type="text" id="direccion" formControlName="direccion" class="form-control" required />
+          <input type="text" id="direccion" formControlName="direccion" class="form-control" />
         </div>
-      
+        <div *ngIf="profileForm.get('direccion')?.invalid && profileForm.get('direccion')?.touched" class="alert alert-danger">
+          La dirección es obligatoria.
+        </div>
+        
         <div class="botones">
-            <button type="submit" class="btn btn-primary" [disabled]="profileForm">Actualizar</button>
+            <button type="submit" class="btn btn-primary">Actualizar</button>
             <button class="btn btn-danger" (click)="seleccionPerfil(2)">Cancelar</button>
         </div>
       </form>      
 </div>
-
+<!-- ***************************** CHANGE PASSWORD PERFIL ************************************** -->
 <div class="containerPassword" *ngIf="pass">
   <p class="title">Cambiar Contrase&#241;a</p>
 <form [formGroup]="changePasswordForm" (ngSubmit)="onSubmitPassword()" class="container mt-5">
+    <!-- Contraseña Actual -->
+  <div class="form-group">
+    <label for="currentPassword">Contraseña Actual:</label>
+    <div class="input-group">
+      <input [type]="mostrarCurrentPassword ? 'text' : 'password'" id="currentPassword" formControlName="currentPassword" class="form-control" 
+        [ngClass]="{'is-invalid': changePasswordForm.get('currentPassword')?.invalid && changePasswordForm.get('currentPassword')?.touched}"
+        placeholder="Ingresa tu contraseña actual" />
+      <button type="button" mat-icon-button class="input-group-text" (click)="toggleCurrentPasswordVisibility()" title="{{ mostrarCurrentPassword ? 'Ocultar' : 'Mostrar' }} contraseña">
+        <mat-icon>{{ mostrarCurrentPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+      </button>
+      <div *ngIf="changePasswordForm.get('currentPassword')?.invalid && changePasswordForm.get('currentPassword')?.touched" class="invalid-feedback">
+        {{ getCurrentPasswordErrorMessage() }}
+      </div>
+    </div>
+  </div>
+
+
     <!-- Correo Electrónico (opcional) -->
     <div class="form-group">
       <label for="correo">Correo Electrónico (Opcional):</label>
@@ -150,10 +185,14 @@
     <div class="form-group">
       <label for="password">Nueva Contraseña:</label>
       <div class="input-group">
-        <input [type]="mostrarPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control" [ngClass]="{'is-invalid': changePasswordForm.get('password')?.invalid && changePasswordForm.get('password')?.touched}" placeholder="Ingresa nueva contraseña"/>
+        <!-- INPUT PASSWORD -->
+        <input [type]="mostrarPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-control"  placeholder="Ingresa nueva contraseña"
+        [ngClass]="{'is-invalid': changePasswordForm.get('password')?.invalid && changePasswordForm.get('password')?.touched}"/>
+        
         <button type="button" mat-icon-button class="input-group-text" (click)="togglePasswordVisibility()" title="{{ mostrarPassword ? 'Ocultar' : 'Mostrar' }} contraseña">
           <mat-icon>{{ mostrarPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
+        <!-- MENSAJE DE ERROR NEW PASSWORD -->
         <div *ngIf="changePasswordForm.get('password')?.invalid && changePasswordForm.get('password')?.touched" class="invalid-feedback">
           {{ getPasswordErrorMessage() }}
         </div>
@@ -163,13 +202,16 @@
     <!-- Confirmar Nueva Contraseña -->
     <div class="form-group">
       <label for="confirmPassword">Confirmar Nueva Contraseña:</label>
+      <!-- INPUT CONFIRM PASSWORD -->
       <div class="input-group">
         <input [type]="mostrarConfirmPassword ? 'text' : 'password'" id="confirmPassword" formControlName="confirmPassword" class="form-control" 
         [ngClass]="{'is-invalid': (changePasswordForm.get('confirmPassword')?.invalid && changePasswordForm.get('confirmPassword')?.touched) || changePasswordForm.hasError('passwordsMismatch') && changePasswordForm.get('confirmPassword')?.touched}"
           placeholder="Confirma nueva contraseña" />
+
         <button type="button" mat-icon-button class="input-group-text" (click)="toggleConfirmPasswordVisibility()" title="{{ mostrarConfirmPassword ? 'Ocultar' : 'Mostrar' }} contraseña">
           <mat-icon>{{ mostrarConfirmPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
+        <!-- MENSAJE ERROR CONFIRM PASSWORD -->
         <div *ngIf="(changePasswordForm.get('confirmPassword')?.invalid && changePasswordForm.get('confirmPassword')?.touched) || (changePasswordForm.hasError('passwordsMismatch') && changePasswordForm.get('confirmPassword')?.touched)" class="invalid-feedback">
           {{ getConfirmPasswordErrorMessage() }}
         </div>
@@ -182,4 +224,30 @@
        <button class="btn btn-danger" (click)="selectChanged(2)">Cancelar</button>
      </div>
   </form>
+</div>
+<!-- ************************************ IMAGEN **************************************************** -->
+<div class="imagen" *ngIf="capImage">
+  <h2>Editar Imagen</h2>
+  <div class="cargarImagen" (dragover)="onDragOver($event)" (drop)="onDrop($event)" (dragleave)="onDragLeave($event)">
+    <!-- Capturar archivos -->
+    <div class="addimg">
+        <input type="file" name="addimg" id="file" (change)="capFile($event)" accept="image/*" onchange="return validFile()" required>
+        <!-- <button class="upload">Subir imagen</button> -->
+        <label for="file" class="upload">{{status ? 'Editar Imagen' : 'Seleccionar Imagen'}}</label>
+        <span>o</span>
+        <input type="text" class="image-url" placeholder="Ingresa la URL de la imagen" (change)="loadFromURL($event)" />
+    </div>
+    <!-- PREVIEW IMAGE SELECT -->
+    <div class="capFile" *ngIf="status && !preview" id="capFile">
+      <img [src]='imagen' alt="" class="preview" draggable="false">
+    </div>
+    <div class="capFile" *ngIf="preview" id="capFile" draggable="false">
+        <img [src]="preview" alt="">
+    </div>
+  </div>
+  <div class="save">
+    <button type="button" class="btn btn-success" (click)="saveImage()"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+    <button type="button" class="btn-danger btn" (click)="deleteImage()"><i class="fa-solid fa-trash"></i> Delete</button>
+    <button type="button" class="btn btn-secondary" (click)="cancelImage(false)"><i class="fa-solid fa-ban"></i> Cancel</button>
+  </div>
 </div>

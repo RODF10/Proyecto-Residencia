@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { float, FLOAT } from 'html2canvas/dist/types/css/property-descriptors/float';
 import { ApiService } from 'src/app/Service/api.service';
 import { SharedService } from 'src/app/Service/shared.service';
-import { PreguntaDosOpc, Question, QuestionCheck } from 'src/app/Shared/Data';
+import { Option, PreguntaDosOpc, Question, QuestionCheck, QuestionSelec, ResImage } from 'src/app/Shared/Data';
 
 @Component({
   selector: 'app-encuesta-cog',
@@ -19,6 +19,7 @@ export class EncuestaCogComponent implements OnInit{
   observacion: String ='';
   categoria: String = 'Undefinid';//Recibir nombre clave
   cons: String[] = ['Entrastes en: ', 'Salida de: '];
+  mensajeError?: string;
 
   isSelected: { [key: string]: boolean } = {};// Validacion de color de AWOL false/true
 
@@ -89,6 +90,101 @@ export class EncuestaCogComponent implements OnInit{
         { text: 'Cuchara', seleccionada: false }
       ]}
   ];
+  //MoCA
+  MoCA: ResImage[] = [
+    { titulo: 'De acuerdo a la imagen que se muestra, responda de acuerdo al paciente haya hecho correctamente',
+      imagen: 'assets/Imagenes/cognitiva/1.jpg',
+      opciones: [
+        { text: 'Siguió la línea de la primera imagen en orden correcto', seleccionada: false, puntuacion: 1 },
+        { text: 'Copió el cuadro de la segunda imagen', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Dibuja el Reloj: Responda si el paciente pudo realizar el reloj correctamente',
+      imagen: 'assets/Imagenes/cognitiva/2.jpg',
+      opciones: [
+        { text: 'Contorno', seleccionada: false, puntuacion: 1 },
+        { text: 'Números', seleccionada: false, puntuacion: 1 },
+        { text: 'Agujas', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Identificación de Animales, seleccione cuales animales respondio correctamente',
+      imagen: 'assets/Imagenes/cognitiva/3.jpg',
+      opciones: [
+        { text: 'León', seleccionada: false, puntuacion: 1 },
+        { text: 'Rinoceronte', seleccionada: false, puntuacion: 1 },
+        { text: 'Camello', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Lea los números de acuerdo a lo siguiente:',
+      opciones: [
+        { text: 'Orden normal [2, 1, 8, 5, 4]', seleccionada: false, puntuacion: 1 },
+        { text: 'Orden Inverso [7, 4, 2]', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Serie de palabras: Debe dar un golpe por la cada palabra "A" mencionada',
+      opciones: [
+        { text: 'F B A C M N A A J K L B A F A K D A A A J A M O F A A B', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Repita las siguinetes oraciones:',
+      opciones: [
+        { text: 'Solo sé que le toca a Juan ayudar hoy', seleccionada: false, puntuacion: 1 },
+        { text: 'El gato simpre se esconde debajo del sofá cuando hay perros en la habitación', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Semejanza entre p. ej. plátano-naranja = fruta',
+      opciones: [
+        { text: 'tren-bicicleta', seleccionada: false, puntuacion: 1 },
+        { text: 'reloj-regla', seleccionada: false, puntuacion: 1}
+      ] },
+    { titulo: 'Recuerdo Diferido: Puntuación escala de memoria (MIS)',
+      imagen: 'assets/Imagenes/cognitiva/4.png',
+      opciones: [
+        { text: 'Rostro', seleccionada: false, puntuacion: 1 },
+        { text: 'Seda', seleccionada: false, puntuacion: 1 },
+        { text: 'Templo', seleccionada: false, puntuacion: 1 },
+        { text: 'Clave', seleccionada: false, puntuacion: 1 },
+        { text: 'Rojo', seleccionada: false, puntuacion: 1 }
+      ] },
+    { titulo: 'Orientación, responda de acuerdo a la orientación del paciente',
+      opciones: [
+        { text: 'Fecha', seleccionada: false, puntuacion: 1 },
+        { text: 'Mes', seleccionada: false, puntuacion: 1 },
+        { text: 'Año', seleccionada: false, puntuacion: 1 },
+        { text: 'Día de la Semana', seleccionada: false, puntuacion: 1 },
+        { text: 'Lugar', seleccionada: false, puntuacion: 1 },
+        { text: 'Localidad', seleccionada: false, puntuacion: 1 }
+      ] },
+  ];
+  restaSeleccionada = {
+    93: false,
+    86: false,
+    79: false,
+    72: false,
+    65: false
+  };
+  //Preguntas IQCODE-SF
+  optionsSF: Option[] = [
+    { label: 'Ha mejorado mucho', score: 1 },
+    { label: 'Ha mejorado un poco', score: 2 },
+    { label: 'Casi sin cambios', score: 3 },
+    { label: 'Ha empeorado un poco', score: 4 },
+    { label: 'Ha empeorado mucho', score: 5 }
+  ];
+  questionSF: QuestionSelec[] = [
+    { text: '1.- Para recordar los nombres de personas más íntimas (parientes, amigos).', option: this.optionsSF },
+    { text: '2.- Recordar cosas que han sucedido recientemente, durante los 2 ó 3 últimos meses (noticias, cosas suyas o de sus familiares).', option: this.optionsSF },
+    { text: '3.- Recordar de qué se habló en una conversación de unos días antes.', option: this.optionsSF },
+    { text: '4.- Olvidar qué ha dicho unos minutos antes, pararse en mitad de una frase y no saber que iba a decir, repetir lo que ha dicho un rato antes.', option: this.optionsSF },
+    { text: '5.- Recordar la fecha en que vive.', option: this.optionsSF },
+    { text: '6.- Conocer el lugar exacto de los armarios de su casa y dónde se guardan las cosas.', option: this.optionsSF },
+    { text: '7.- Saber dónde va una cosa que se ha encontrado descolocado.', option: this.optionsSF },
+    { text: '8.- Aprender a utilizar un aparato nuevo (lavadora, tocadiscos, radio, ...)', option: this.optionsSF },
+    { text: '9.- Recordar las cosas que han sucedido recientemente.', option: this.optionsSF },
+    { text: '10.- Aprender cosas nuevas (en general).', option: this.optionsSF },
+    { text: '11.- Comprender el significado de palabras poco usuales (del periódico, TV, conversación).', option: this.optionsSF },
+    { text: '12.- Entender artículos de los periódicos o revistas en las que está interesado.', option: this.optionsSF },
+    { text: '13.- Seguir una historia en un libro, la prensa, el cine, la radio o la TV.', option: this.optionsSF },
+    { text: '14.- Tomar decisiones tanto en cuestiones cotidianas (qué ropa ponerse, qué comida preparar) como en asuntos de más trascendencia (dónde ir de vacaciones o invertir el dinero)', option: this.optionsSF },
+    { text: '15.- Control de los asuntos financieros (cobrar la pensión, pagar los impuestos, trato con el banco).', option: this.optionsSF },
+    { text: '16.- Control de otros problemas de cálculo cotidianos (tiempo entre visitas de familiares, distancias entre lugares y cuánta comida comprar y preparar especialmente si hay invitados)', option: this.optionsSF },
+    { text: '17.- ¿Cree que su inteligencia (en general) ha cambiado durante los últimos 10 años?', option: this.optionsSF },
+  ];
+  selectedAnswersSF: number[] = new Array(this.questionSF.length).fill(-1);
 
   constructor(private router: Router, private categoriaEncuestaComponenet: ApiService, private fb: FormBuilder, private sharedService: SharedService){
     this.questionnaireForm = this.fb.group({
@@ -98,20 +194,16 @@ export class EncuestaCogComponent implements OnInit{
     });
 
   }
-
   ngOnInit(): void {
       this.categoriaEncuestaComponenet.selectEncuest$.subscribe(subCategoria => { 
         this.categoria = subCategoria;
       });
       console.log(this.categoria);
   }
-
   //Metodo del boton Finalizar
   finalizarEncuesta(){
     this.encuestas(this.categoria);// Entrar a la encuesta segun sea seleccionada
-   
-  }
-  
+  }  
   //Receptaculo Categoria
   actualizarEncuesta(encuestaS: String){
     this.categoria = encuestaS;
@@ -120,26 +212,23 @@ export class EncuestaCogComponent implements OnInit{
   /* METODOS DE LAS ENCUESTAS PARA CALCULAR LOS PUNTOS OBTENIDO */
   encuestas(enc: String){
     switch(enc){
-      case 'camicu':
+      case 'moca':
         console.log(this.cons[0], this.categoria);
-        const todasRespondidas = this.preguntasCamIcu.every(p => p.respuesta != null && p.respuesta != undefined && p.respuesta != '');
-        console.log('Preguntas CAM-ICU: '+ todasRespondidas); 
+        const puntajeEncuesta = this.calcularPuntos();
+        const puntajeRestar = this.calcularPuntajeRestar();
         
-        if (!todasRespondidas) {
-          // Mostrar errores si hay preguntas sin responder
-          this.showErrors = true;
-          return;
-        } else{ this.showErrors = true}
+        // Sumar ambos puntajes
+        this.puntos = puntajeEncuesta + puntajeRestar;
+        console.log(this.puntos);
 
-        let puntajeSi = 0;
-        for (const pregunta of this.preguntasCamIcu) {
-          if (pregunta.respuesta == 'si') {
-            puntajeSi++;
-          }
+        if(this.puntos >= 26){
+          this.observacion = 'Se considera normal';
+        } else {
+          this.observacion = 'Probable transtorno cognitivo';
         }
-
-        this.encuestaResulto(puntajeSi.toString(), 'CAM-ICU','Sin observaciones',(puntajeSi/9)*100);
-        console.log(this.cons[1], 'CAM-ICU');
+        this.showErrors = true;
+        this.encuestaResulto(this.puntos.toString(), 'Montreal Cognitive Assessment', this.observacion,(this.puntos/30)*100);
+        console.log(this.cons[1], 'MoCA');
         break;
       case 'awol':
         var del: String = 'Riesgo de Delirium: '; //Validacion riesgo
@@ -251,6 +340,21 @@ export class EncuestaCogComponent implements OnInit{
         this.encuestaResulto(this.puntos.toString(), 'Mini-Cog', this.observacion, (this.puntos/5)*100,);
         console.log(this.puntos);
         break;
+      case 'codesf':
+        let total = 0;
+        this.showErrors = false;
+
+        for (let i = 0; i < this.selectedAnswersSF.length; i++) {
+          const score = this.selectedAnswersSF[i];
+          if (score == -1) {
+            this.showErrors = true;
+            return;
+          }
+          // Sumar el puntaje si la respuesta es válida
+          total += score;
+        }
+        this.nextComponent(total);
+        break;
     }
 
   }
@@ -292,4 +396,59 @@ export class EncuestaCogComponent implements OnInit{
     return !!control?.invalid && (control?.touched || this.showErrors);
   }
 
+  calcularPuntos(): number {
+    let totalPuntos = 0;
+  
+    this.MoCA.forEach(encuesta => {
+      encuesta.opciones.forEach(opcion => {
+        if (opcion.seleccionada) {
+          totalPuntos += opcion.puntuacion;
+        }
+      });
+    });
+  
+    return totalPuntos;
+  }
+  calcularPuntajeRestar(): number {
+    let respuestasCorrectas = 0;
+
+    // Verificar cuántas respuestas correctas se seleccionaron
+    if (this.restaSeleccionada[93]) respuestasCorrectas++;
+    if (this.restaSeleccionada[86]) respuestasCorrectas++;
+    if (this.restaSeleccionada[79]) respuestasCorrectas++;
+    if (this.restaSeleccionada[72]) respuestasCorrectas++;
+    if (this.restaSeleccionada[65]) respuestasCorrectas++;
+
+    // Calcular el puntaje según las respuestas correctas seleccionadas
+    if (respuestasCorrectas >= 4) {
+      return 3;
+    } else if (respuestasCorrectas >= 2) {
+      return 2;
+    } else if (respuestasCorrectas === 1) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+  //Preguntas iqcode-sf
+   // Establecer la respuesta de una pregunta
+   setAnswer(index: number, score: number): void {
+    this.selectedAnswersSF[index] = score;
+  }
+  nextComponent(points: number){
+    if(points >= 57){
+      this.observacion = 'Probable deterioro cognitivo';
+    } else {
+      this.observacion = 'Paciente normal, sin deterioro cognitivo';
+    }
+    console.log(points + ' / ' + this.observacion)
+    const resultado = {
+      point: points,
+      encuesta: 'IQCODE-SF',
+      observable: this.observacion,
+      porcent: ((points/85) * 100).toFixed(2)
+    }
+    this.sharedService.saveResults(resultado);
+    this.router.navigate(['home/resultado']);
+  }
 }

@@ -18,137 +18,61 @@
 </div>
 
 <!-- Encuesta CAM -->
-<div class="cam containerEncuesta" *ngIf="categoria == 'cam'">
+<div class="codesf containerEncuesta opcmult" *ngIf="categoria == 'codesf'">
   <div class="title">
-    CAM
+    IQCODE-SF
   </div>
   <div class="opciones">
-    <p class="texto">
-      El Diagnostico de Delirium por CAM requeire la presencia de AMBAS caracteristicas A + B
-    </p>
-    <table class="tabla-delirium">
-      <thead>
-        <tr>
-          <th colspan="3">
-            El diagnóstico de Delirium por CAM requiere la presencia de AMBAS características A + B
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Característica A -->
-        <tr>
-          <td><strong>A. Comienzo agudo y curso fluctuante</strong></td>
-          <td colspan="2">¿Hay evidencia de un cambio agudo en el estado mental del paciente distinto a su basal?</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td colspan="2">El comportamiento anormal...
-            <div>
-              <label><input type="radio" name="comportamiento" /> a. Va y viene?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="comportamiento" /> b. Fluctúa durante el día?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="comportamiento" /> c. Aumenta o disminuye en severidad?</label>
-            </div>
-          </td>
-        </tr>
-        <!-- Característica B -->
-        <tr>
-          <td><strong>B. Inatención</strong></td>
-          <td colspan="2">El paciente...
-            <div>
-              <label><input type="radio" name="inatencion" /> a. Tiene dificultad para enfocar su atención?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="inatencion" /> b. Se distrae fácilmente?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="inatencion" /> c. Tiene dificultad para seguir una conversación?</label>
-            </div>
-          </td>
-        </tr>
-        <!-- Separador -->
-        <tr>
-          <th colspan="3">Y la presencia de al menos una de las características C o D</th>
-        </tr>
-        <!-- Característica C -->
-        <tr>
-          <td><strong>C. Pensamiento desorganizado</strong></td>
-          <td colspan="2">¿El pensamiento del paciente es...
-            <div>
-              <label><input type="radio" name="pensamiento" /> a. Desorganizado?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="pensamiento" /> b. Incoherente?</label>
-            </div>
-            <p>Por ejemplo, ¿ha visto usted que el paciente tenga...</p>
-            <div>
-              <label><input type="radio" name="pensamientoEjemplo" /> a. Discurso divagante / conversaciones
-                irrelevantes?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="pensamientoEjemplo" /> b. Cambios de tema impredecibles durante una
-                conversación?</label>
-            </div>
-            <div>
-              <label><input type="radio" name="pensamientoEjemplo" /> c. Flujo de ideas ilógico o poco claro?</label>
-            </div>
-          </td>
-        </tr>
-        <!-- Característica D -->
-        <tr>
-          <td><strong>D. Alteración en el nivel de conciencia</strong></td>
-          <td colspan="2">¿Generalmente cómo consideraría el nivel de conciencia del paciente?
-            <div>
-              <label><input type="radio" name="conciencia" /> 1. Alerta (normal)</label>
-            </div>
-            <div>
-              <label><input type="radio" name="conciencia" /> 2. Vigilante (hiperalerta)</label>
-            </div>
-            <div>
-              <label><input type="radio" name="conciencia" /> 3. Letárgico (somnoliento pero fácil de despertar)</label>
-            </div>
-            <div>
-              <label><input type="radio" name="conciencia" /> 4. Estuporoso (difícilmente despertable)</label>
-            </div>
-            <div>
-              <label><input type="radio" name="conciencia" /> 5. Comatoso (no despertable)</label>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="encuesta-lista">
+      <h2>Recuerda, por favor c&#243;mo era su familia hace 5 &#243; 10 a&#241;os y compare c&#243;mo es &#233;l en este momento. Conteste si ha habido alg&#250;n cambio a lo largo de este tiempo en la capacidad de su familiar para cada uno de los aspectos que le preguntemos.</h2>
+      <div *ngFor="let question of questionSF; let i = index" class="question">
+        <p class="preguntas">{{ question.text }}</p>
+        <div class="options">
+          <label *ngFor="let option of question.option">
+            <input type="radio" [name]="'question' + i" [value]="option.score" (change)="setAnswer(i, option.score)"/>
+            {{ option.label }}
+          </label>
+        </div>
+      </div>
+      <div *ngIf="showErrors" class="alert alert-danger mt-3" role="alert">
+        Por favor, responde todas las preguntas antes de calcular el puntaje.
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- Encuesta CAM-ICU -->
-<div class="camicu containerEncuesta" *ngIf="categoria == 'camicu'">
+<div class="moca containerEncuesta" *ngIf="categoria == 'moca'">
   <div class="title">
-    CAM-ICU
+    Montreal Cognitive Assessment (MoCA)
   </div>
-  <div class="encuesta">
-    <div class="instruccion">Confusion Assessments Method for the ICU &#40;CAM-ICU&#41;</div>
-    <form> <!--(ngSubmit)="enviarEncuesta()">-->
-      <div *ngFor="let pregunta of preguntasCamIcu; let i = index" class="pregunta">
-        <label [for]="'pregunta-' + i" class="preguntas">{{ pregunta.texto }}</label>
-        <div class="opciones">
-          <div class="opcSi" (click)="pregunta.respuesta = 'si'" [class.selected]="pregunta.respuesta == 'si'">
-            <input type="radio" [name]="'pregunta-' + i" [id]="'si-' + i" value="si" [(ngModel)]="pregunta.respuesta" required />
-            <label [for]="'si-' + i">Si</label>
-          </div>
-          <div class="opcNo" (click)="pregunta.respuesta = 'no'" [class.selected]="pregunta.respuesta == 'no'">
-            <input type="radio" [name]="'pregunta-' + i" [id]="'no-' + i" value="no" [(ngModel)]="pregunta.respuesta" required />
-            <label [for]="'no-' + i">No</label>
-          </div>
-        </div>
-        <!-- Mensaje de error para preguntas no respondidas -->
-        <div *ngIf="!pregunta.respuesta && showErrors" class="text-danger small">
-          Por favor selecciona una respuesta.
-        </div>
+
+  <div class="instruccion">
+    <div *ngFor="let encuesta of MoCA" class="encuesta">
+      <h3>{{ encuesta.titulo }}</h3>
+      <!-- Mostrar imagen si existe -->
+      <img *ngIf="encuesta.imagen" [src]="encuesta.imagen" alt="Imagen de la encuesta" class="encuesta-imagen" draggable="false">
+    
+      <div class="opciones">
+        <label *ngFor="let opcion of encuesta.opciones">
+          <input 
+            type="checkbox" 
+            [(ngModel)]="opcion.seleccionada" 
+          />
+          {{ opcion.text }}
+        </label>
       </div>
-    </form>
+    </div>
+    <div class="resLogica encuesta">
+      <h3>Restar 7 en 7 empenzando desde 100</h3>
+      <div class="opciones">
+        <label><input type="checkbox" [(ngModel)]="restaSeleccionada[93]">93</label>
+        <label><input type="checkbox" [(ngModel)]="restaSeleccionada[86]">86</label>
+        <label><input type="checkbox" [(ngModel)]="restaSeleccionada[79]">79</label>
+        <label><input type="checkbox" [(ngModel)]="restaSeleccionada[72]">72</label>
+        <label><input type="checkbox" [(ngModel)]="restaSeleccionada[65]">65</label>
+      </div>
+    </div>
   </div>
 </div>
 

@@ -18,7 +18,7 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
 
   //Lista de la Categoria a Mostrar
   categoria = [
-    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'CAM', cont3: 'CAM-ICU', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj', cont7: 'Mini-Cog' },
+    { title: this.ec.toUpperCase(), cat: 1, content: this.sub + ' ' + this.ec, cont1: '4AT', cont2: 'IQCODE-SF', cont3: 'MoCA', cont4: 'AWOL', cont5: 'SPMSQP', cont6: 'Prueba del Reloj', cont7: 'Mini-Cog' },
     { title: this.ea.toUpperCase(), cat: 2, content: this.sub + ' ' + this.ea, 
       cont1: 'GDS-15', cont2: 'CES-D7', cont3: 'PHQ9', cont4: 'GAI-SF', cont5: 'Inventario Ansiedad Beck', cont6: 'Escala Soledad 3 Elementos', cont7: 'Riesgo de Suicidio SAD PERSON', cont8: 'Escala Cornell', cont9:'Corta Depresion por Observacion' },
     { title: this.ef.toUpperCase(), cat: 3, content: this.sub + ' ' + this.ef, cont1: 'KATZ', cont2: 'Indice Barthel', cont3: 'Lawton y Brody', cont4: 'FRAIL', cont5: 'Criterios Ensrud', cont6: 'Time UP and Go', cont7: 'Short Physical Performance Battery',
@@ -63,12 +63,12 @@ export class DiagnosticComponent implements OnInit, OnDestroy{
             this.seleccionarSubCategoria('4at'); //Enciat nombre (Clave) para cada encuesta
             break;
           case 2:
-            this.cambiarCategoria(this.url(this.ec,'cam'))
-            this.seleccionarSubCategoria('cam');
+            this.cambiarCategoria(this.url(this.ec,'iqcode-sf'))
+            this.seleccionarSubCategoria('codesf');
             break;
           case 3:
-            this.cambiarCategoria(this.url(this.ec,'cam-icu'));
-            this.seleccionarSubCategoria('camicu');
+            this.cambiarCategoria(this.url(this.ec,'moca'));
+            this.seleccionarSubCategoria('moca');
             break;
           case 4:
             this.cambiarCategoria(this.url(this.ec,'awol'));

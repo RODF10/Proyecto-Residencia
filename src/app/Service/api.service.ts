@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Cita } from '../Shared/Data';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,9 @@ export class ApiService {
   //Selecciona la Categoria
   private categoriaSeleccionadaSource: BehaviorSubject<String> = new BehaviorSubject<String>('Undefinid');
   categoriaSeleccionada$: Observable<String>; 
+  //Imagen Update
+  private imageSubject = new BehaviorSubject<string>('assets/Imagenes/default-profile.png'); // Valor inicial
+  image$ = this.imageSubject.asObservable();  // Observable para que los componentes se suscriban
 
   constructor(private http: HttpClient) {
     // Recuperar la categoría/encuesta seleccionada del Local Storage o establecer un valor predeterminado
@@ -37,9 +41,18 @@ export class ApiService {
     this.categoriaSeleccionadaSource.next(categoria);
     localStorage.setItem('categoriaSeleccionada', categoria.toString());
   }
-
+  // Método para actualizar la imagen en el BehaviorSubject
+  getUpdateImage(imageUrl: string) {
+    this.imageSubject.next(imageUrl); // Actualiza la imagen en el BehaviorSubject
+  }
   /* SECCION DE LARAVEL DE API */
-
+  // ADMIN
+  updatePasswordD(drId: number, password: any) { 
+    return this.http.post(`${this.urlApi}/doctor/${drId}/change-password`, password);
+  }
+  verifyDoctorPassword(doctorId: number, password: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.urlApi}/doctors/verify-password`, { doctorId, password });
+  }
   // Registrar un nuevo doctor
   registerDoctor(data: FormData): Observable<any> {
     return this.http.post<any>(`${this.urlApi}/doctors`, data);
@@ -65,12 +78,20 @@ export class ApiService {
   changePassword(payload: { correo: string, password: string }): Observable<any> {
     return this.http.post(`${this.urlApi}/change-password`, payload);
   }
+  //Actualizar perfil sin cedula duplicada
+  updateDoctorProfile(doctorId: number, profileData: any): Observable<any> {
+    return this.http.put<any>(`${this.urlApi}/doctors/${doctorId}`, profileData);
+  }
+  // Obtener imagen
+  getDoctorImage(id: number): Observable<{ imagen: string }> {
+    return this.http.get<{ imagen: string }>(`${this.urlApi}/doctors/${id}/image`);
+  }
   /* --------------------------- PACIENTE ------------------------------------- */
   //Crear Paciente
   crearPaciente(data: any): Observable<any> {
     return this.http.post<any>(`${this.urlApi}/add-patients`, data);
   }
-  // En ApiService
+  // Obtiene pacientes del Doctor
   getPatientsByDoctor(doctorId: number): Observable<any> {
     return this.http.get<any>(`${this.urlApi}/doctor${doctorId}/patients`);
   }
@@ -81,5 +102,48 @@ export class ApiService {
   //Eliminar Paciente
   deletePatient(patientId: number): Observable<any> {
     return this.http.delete<any>(`${this.urlApi}/patients/${patientId}`);
+  }
+  // Actualizar Paciente
+  updatePatient(profileData: any, idPatient: string): Observable<any> {
+    return this.http.put<any>(`${this.urlApi}/patients/${idPatient}`, profileData);
+  }
+  // Imagen Paciente
+  updateImage(id: number, imagen: string | null): Observable<any> {
+    const data = { imagen };
+    return this.http.post(`${this.urlApi}/doctors/${id}/update-image`, data);
+  }
+
+  /* ------------------------------- CITA -------------------------------------------*/
+  obtenerCitas(doctorId: number): Observable<Cita[]> {
+    return this.http.get<Cita[]>(`${this.urlApi}/citas/${doctorId}`);
+  }
+  obtenerPacientes(doctorId: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.urlApi}/pacientes/${doctorId}`);
+  }
+
+  crearCita(cita: any): Observable<any> {
+      return this.http.post(`${this.urlApi}/citas`, cita);
+  }
+  eliminarCita(id: number) {
+    return this.http.delete(`${this.urlApi}/citas/${id}`);
+  }
+
+  /* ---------------------------- HISTORIAL DEL PACIENTE ------------------------------------ */
+  enviarResultado(resultado: any): Observable<any> { // Método para enviar los resultados al backend
+    return this.http.post<any>(`${this.urlApi}/history-medical`, resultado);
+  }
+  getHistoryByNumberImss(numberImss: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.urlApi}/history-medical/patient/${numberImss}`);
+  }
+
+  /* ---------------------------- CUIDADOR --------------------- */
+  createCuidador(data: any, patient_id: string): Observable<any> {
+    return this.http.put(`${this.urlApi}/cuidador/${patient_id}`, data);
+  }
+  getCuidador(patientId: string): Observable<any> {
+    return this.http.get(`${this.urlApi}/cuidador/${patientId}`);
+  }
+  newCuidador(data: any): Observable<any> {
+    return this.http.post<any>(this.urlApi+'/cuidador', data);
   }
 }

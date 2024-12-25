@@ -15,6 +15,7 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
   pacienteForm: FormGroup;
   pacientes: any[] = []; // Array para almacenar los pacientes registrados
   submitted = false;
+  cuidadorForm!: FormGroup;
 
   doctor = {
     id: 0, // Este sería el ID del doctor autenticado
@@ -44,19 +45,19 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       apellido: ['', Validators.required], //Apellido
       genero: ['', Validators.required], //Genero
       fecha_nacimiento: ['', [Validators.required]], //Fecha Nacimiento
-      telefono: ['', [ //Telefono de Emergencia
-          Validators.required,
-          Validators.pattern(/^[0-9]*$/), // Solo números
-          exactLength(10)      // Máximo de 10 dígitos
-        ]
-      ],
       direccion: ['', Validators.required], // Direccion
-      email: ['', [Validators.required, Validators.email]], //Correo de Emergencia
-      edad: ['', [Validators.required, Validators.min(20)]], //Edad
       historialMedico: ['', Validators.required], //Historial Medico
       alergias: ['', Validators.required], // Alergias que tiene
       caracteristicas: ['', Validators.required], // Descripcion
       confirmacion: [false, Validators.requiredTrue]
+    });
+
+    this.cuidadorForm = formBuilder.group({
+      cuidador_name: [''],
+      cuidador_lastname: [''],
+      cuidador_phone: ['', [Validators.maxLength(10), Validators.pattern(/^\d+$/), Validators.minLength(10)]],
+      cuidador_email: ['', [Validators.email]],
+      cuidador_address: ['']
     });
   }
 
@@ -93,11 +94,8 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       registration_number: this.pacienteForm.value.matricula,
       first_name: this.pacienteForm.value.nombre,
       last_name: this.pacienteForm.value.apellido,
-      age: this.pacienteForm.value.edad,
       gender: this.pacienteForm.value.genero,
       birth_date: this.pacienteForm.value.fecha_nacimiento,
-      emergency_contact: this.pacienteForm.value.telefono,
-      emergency_email: this.pacienteForm.value.email,
       address: this.pacienteForm.value.direccion,
       medical_history: this.pacienteForm.value.historialMedico,
       allergies: this.pacienteForm.value.alergias,
@@ -110,15 +108,27 @@ export class RegisterPatientComponent implements OnInit, OnDestroy{
       next: (response) => {
         this.alertService.success('Paciente registrado correctamente.', 'Éxito');
         console.log('Respuesta del servidor:', response);
-
+        const cuidador = this.cuidadorForm.value;
+        cuidador.patient_id = response.registration_number; // Asociar cuidador con paciente
+        this.apiService.newCuidador(cuidador).subscribe({
+          next: () =>{
+            //this.alertService.success('Cuidador registrado correctamente.', 'Éxito');
+            this.cuidadorForm.reset(); // Limpiar ambos formularios
+          }, error: (err) => {
+            this.alertService.error('No se pudo registrar al cuidador.', 'Error');
+          }
+        });
         // Reiniciar el formulario
         this.pacienteForm.reset();
         this.submitted = false;
         this.router.navigate(['home/list-person']);
       },
       error: (error) => {
-        this.alertService.error('Ocurrió un error al registrar el paciente. Por favor, inténtelo de nuevo.', 'Error');
-        console.error('Error al registrar paciente:', error);
+        if (error.status == 422 && error.error?.message == 'El número de registro ya está en uso.') {
+          this.alertService.warning('El número de IMSS ya está en otro paciente.', 'Duplicate IMSS');
+        } else {
+          this.alertService.error('No se pudo registrar el paciente. Inténtelo de nuevo.', 'Error');
+        }
       }
     });
 

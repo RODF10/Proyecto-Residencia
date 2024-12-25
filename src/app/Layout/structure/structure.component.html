@@ -7,7 +7,7 @@
 
     <!-- Logo -->
     <div class="logo" (click)="mainPage()" title="VGI Home">
-        <img src="assets/Imagenes/icon-logo.png" title="VGI" alt="" class="icono">
+        <img src="assets/Imagenes/icon-logo.png" title="VGI" alt="" class="icono" draggable="false">
         <h2>VGI</h2>
     </div>
 
@@ -16,7 +16,7 @@
 
     <!-- Perfil -->
     <div class="profile">
-        <img src="https://i.pinimg.com/1200x/88/f4/8f/88f48f94c2b60bb17a009a1513c53716.jpg" alt="Profile Image" class="profile-image" onclick="toggleDropdown()">
+        <img [src]="image" alt="Profile Image" class="profile-image" onclick="toggleDropdown()" draggable="false">
         <div id="dropdownMenu" class="dropdown-menu">
             <span class="user-name">{{name}}</span> <!-- Nombre del usuario -->
             <a routerLink="profile">Profile<i class="fas fa-user-circle"></i></a>

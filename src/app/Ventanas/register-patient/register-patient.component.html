@@ -11,11 +11,11 @@
         <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()">
             <!-- Matrícula -->
             <div class="form-group">
-                <label for="matricula">Matrícula:</label>
+                <label for="matricula">IMSS:</label>
                 <input type="text" class="form-control" id="matricula" formControlName="matricula">
                 <div *ngIf="submitted && pacienteForm.controls['matricula'].errors">
                     <div *ngIf="pacienteForm.controls['matricula'].errors['required']" class="alert alert-danger m-2">
-                        Matrícula es requerida
+                        No. IMSS es requerida
                     </div>
                 </div>
             </div>
@@ -43,16 +43,6 @@
                 </div>
             </div>
 
-            <!-- Edad -->
-            <div class="form-group">
-                <label for="edad">Edad:</label>
-                <input type="number" class="form-control" id="edad" formControlName="edad" maxlength="3">
-                <div *ngIf="submitted && pacienteForm.controls['edad'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['edad'].errors['required']">Edad es requerida</div>
-                    <div *ngIf="pacienteForm.controls['edad'].errors['min']">Edad mínima es 20</div>
-                </div>
-            </div>
-
             <!-- Género -->
             <div class="form-group">
                 <label for="genero">Género:</label>
@@ -72,30 +62,6 @@
                 <input type="date" id="fechaNacimiento" name="bday" class="form-control" [(ngModel)]="pacient.fecha_nacimiento" formControlName="fecha_nacimiento">
                 <div *ngIf="submitted && pacienteForm.controls['fecha_nacimiento'].errors" class="alert alert-danger m-2">
                     <div *ngIf="pacienteForm.controls['fecha_nacimiento'].errors['required']" >Introduzca la fecha</div>
-                </div>
-            </div>
-
-            <!-- Contacto de Emergencia -->
-            <div class="form-group">
-                <label for="telefono">Contacto de Emergencia:</label>
-                <input type="text" class="form-control" id="telefono" formControlName="telefono" maxlength="15" [(ngModel)]="pacient.telefono">
-                <div *ngIf="submitted && pacienteForm.controls['telefono'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['telefono'].errors['required']">El contacto de emergencia es obligatorio.</div>
-                    <div *ngIf="pacienteForm.controls['telefono'].errors['pattern']">Solo se permiten números.</div>
-                    <div *ngIf="pacienteForm.controls['telefono'].errors['exactLength']">
-                        El número debe ser exactamente 10 dígitos. (Actual: {{ pacienteForm.controls['telefono'].errors['exactLength'].actualLength }})
-                    </div>
-                </div>
-            </div>
-              
-
-            <!-- Correo Electrónico de Emergencia -->
-            <div class="form-group">
-                <label for="email">Correo Electrónico de Emergencia:</label>
-                <input type="email" class="form-control" id="email" formControlName="email" [(ngModel)]="pacient.email">
-                <div *ngIf="submitted && pacienteForm.controls['email'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['email'].errors['required']">Correo de emergencia requerido</div>
-                    <div *ngIf="pacienteForm.controls['email'].errors['email']">Solo acepta correo valido</div>
                 </div>
             </div>
 
@@ -128,19 +94,59 @@
 
             <!-- Descripción -->
             <div class="form-group">
-                <label for="caracteristicas">Descripción:</label>
+                <label for="caracteristicas">Descripci&#243;n:</label>
                 <textarea class="form-control" id="caracteristicas" formControlName="caracteristicas" rows="3"></textarea>
                 <div *ngIf="submitted && pacienteForm.controls['caracteristicas'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['caracteristicas'].errors['required']">Agrege una breve descriocion para mostrar</div>
+                    <div *ngIf="pacienteForm.controls['caracteristicas'].errors['required']">Agrege una breve descripci&#243;n para mostrar</div>
                 </div>
             </div>
+
+            <form [formGroup]="cuidadorForm" class="p-4 border rounded shadow">
+                <h2 class="text-center mb-4">Datos del Cuidador &#40;Opcional&#41;</h2>
+                <div class="mb-3">
+                <label for="cuidador_name" class="form-label">Nombre</label>
+                <input type="text" id="cuidador_name" class="form-control" formControlName="cuidador_name" placeholder="Ingrese el nombre del cuidador" />
+                </div>
+        
+                <div class="mb-3">
+                <label for="cuidador_lastname" class="form-label">Apellido</label>
+                <input type="text" id="cuidador_lastname" class="form-control" formControlName="cuidador_lastname" placeholder="Ingrese el apellido del cuidador" />
+                </div>
+        
+                <div class="mb-3">
+                <label for="cuidador_phone" class="form-label">Tel&#233;fono</label>
+                <input type="text" id="cuidador_phone" class="form-control" formControlName="cuidador_phone" placeholder="Ingrese el teléfono"/>
+                <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['pattern'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+                    El tel&#233;fono debe contener solo n&#250;meros.
+                </div>
+                <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['minlength'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+                    El tel&#233;fono debe tener al menos 10 d&#237;gitos.
+                </div>
+                <div *ngIf="cuidadorForm.get('cuidador_phone')?.errors?.['maxlength'] && cuidadorForm.get('cuidador_phone')?.touched" class="text-danger">
+                    El tel&#233;fono debe tener como máximo 10 d&#237;gitos.
+                </div>
+                </div>
+        
+                <div class="mb-3">
+                <label for="cuidador_email" class="form-label">Correo Electr&#243;nico</label>
+                <input type="email" id="cuidador_email" class="form-control" formControlName="cuidador_email" placeholder="Ingrese el correo electrónico"/>
+                <div *ngIf="cuidadorForm.get('cuidador_email')?.invalid && cuidadorForm.get('cuidador_email')?.touched" class="text-danger">
+                    Ingrese un correo electr&#243;nico v&#225;lido.
+                </div>
+                </div>
+        
+                <div class="mb-3">
+                <label for="cuidador_address" class="form-label">Direcci&#243;n</label>
+                <textarea id="cuidador_address" class="form-control" formControlName="cuidador_address" placeholder="Ingrese la dirección"></textarea>
+                </div>
+            </form>
 
             <!-- Confirmación -->
             <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="confirmacion" formControlName="confirmacion">
                 <label class="form-check-label" for="confirmacion">Confirmo que los datos Ingresados son correctos</label>
                 <div *ngIf="submitted && pacienteForm.controls['confirmacion'].errors" class="alert alert-danger m-2">
-                    <div *ngIf="pacienteForm.controls['confirmacion'].errors['required']">La confirmación es requerida</div>
+                    <div *ngIf="pacienteForm.controls['confirmacion'].errors['required']">Acepta que los datos guardados son validos y no ficticio</div>
                 </div>
             </div>
 
@@ -149,8 +155,5 @@
                 <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> Guardar</button>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal"><i class="fa-solid fa-circle-xmark"></i> Cancelar</button>
             </div>
-        </form>
-
-        
+        </form>        
     </div>
-</div>

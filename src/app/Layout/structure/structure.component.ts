@@ -6,6 +6,7 @@ import { NavbarService } from 'src/app/Service/navbar.service';
 import { UserService } from 'src/app/Service/user.service';
 import { SharedService } from 'src/app/Service/shared.service';
 import { LoadJSService } from 'src/app/Service/load-js.service';
+import { ApiService } from 'src/app/Service/api.service';
 
 @Component({
   selector: 'app-structure',
@@ -20,13 +21,20 @@ export class StructureComponent {
   showRegisterButton: boolean = false;
   name: string = '';
   doctorID = 0; //Determinar el ID del Doctor
+  image: string = '';
 
-  constructor(private observer: BreakpointObserver, private router: Router, private authService: NavbarService, private userService: UserService, private sharedService: SharedService, private LoadJS: LoadJSService){
+  constructor(private observer: BreakpointObserver, private router: Router, private authService: NavbarService, private userService: UserService, private sharedService: SharedService, 
+    private LoadJS: LoadJSService, private apiService: ApiService){
     LoadJS.Carga(["Profile"]);
   }
 
   ngOnInit(): void{
-    this.observer.observe(["(max-width: 720px)"])
+    this.doctorID = this.userService.getDoctorId(); //Solo el Doctor Master puede registrar Doctores
+    this.loadImage(this.doctorID);
+    this.apiService.image$.subscribe((imageUrl) =>{
+      this.image = imageUrl;
+    });
+    this.observer.observe(["(max-width: 900px)"])
       .subscribe((res) => {
         if (res.matches) {
           this.sidenav.mode = "over";
@@ -37,10 +45,39 @@ export class StructureComponent {
         }
       });
       this.name = 'Dr. ' + this.userService.getDoctorName();
+      // Recupera la URL de la imagen del perfil desde localStorage
+      const storedImage = localStorage.getItem('doctorImage');
+      //this.image = storedImage && storedImage != 'null' ? storedImage : 'assets/Imagenes/default-profile.png';
+
       this.sharedService.showRegisterButton$.subscribe(show => {
         this.showRegisterButton = show;
-      }); 
-    this.doctorID = this.userService.getDoctorId(); //Solo el Doctor Master puede registrar Doctores
+      });   
+    
+    console.log(this.image);
+    console.log(localStorage.getItem('doctorImage'));
+  }
+
+  loadImage(id: number){
+    /*this.apiService.getDoctorImage(id).subscribe({
+      next: (response) =>{
+        this.image = response.imagen;
+      }, error: (err) => {
+        console.log('Error al cargar: ', err);
+      }
+    });*/
+    this.apiService.getDoctorImage(id).subscribe({
+      next: (response) => {
+        const timestamp = new Date().getTime(); // Añadir timestamp para evitar caché
+        if (response.imagen.startsWith('data:')) {
+          this.apiService.getUpdateImage(response.imagen); // Actualiza la imagen con Base64
+        } else {
+          this.apiService.getUpdateImage(response.imagen); // Actualiza la imagen con URL
+        }
+      },
+      error: (err) => {
+        console.error('Error al cargar la imagen:', err);
+      },
+    });
   }
 
   mainPage(){

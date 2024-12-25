@@ -1,6 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/Service/shared.service';
+import { UserService } from 'src/app/Service/user.service';
+import { formatDate } from '@angular/common';
+import { ApiService } from 'src/app/Service/api.service';
+import { AlertService } from 'src/app/Service/alert.service';
 
 @Component({
   selector: 'app-resultados',
@@ -8,9 +12,17 @@ import { SharedService } from 'src/app/Service/shared.service';
   styleUrls: ['./resultados.component.scss']
 })
 export class ResultadosComponent implements OnInit, OnDestroy{
-  nombreEncuesta: string = ''; //Encuesta
-  puntaje: string = ''; //Control del Puntaje
-  observacion: string = ''; //Observacion
+  /* *********** DATOS DE ENVIO ******** */
+  nombreEncuesta: string = '';
+  puntaje: string = '';
+  observacion: string = '';
+  categoria: string = '';
+  fecha: string = '';
+  hora: string = '';
+  doctorID: string = ''
+  pacienteID: string = '';
+
+  /* FUNCION DEL COMPONENTE */
   porcentaje: number = 0; //Porcentaje a Mostrar
   entrada: string = ''; // Marca si son Puntos, Segundos, Libras u otra manera de calcualar
   imagePath: string | null = null; // URL de la imagen
@@ -19,9 +31,15 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   file: string[] = ['', 'cog', 'afc', 'fun', 'nut']; // Asignar array de carpetas que continene posicion 0 = '';
   inNumber: number = 0;
 
-  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService, private user: UserService, private apiService: ApiService, private aler: AlertService) { }
 
   ngOnInit(): void {
+    console.log(localStorage.getItem('patient_id'));
+    // Establecer fecha y hora actuales
+    const currentDate = new Date();
+    this.fecha = formatDate(currentDate, 'yyyy-MM-dd', 'en-US');  // Formato de fecha
+    this.hora = formatDate(currentDate, 'HH:mm:ss', 'en-US');    // Formato de hora
+
     // Recibe los datos del componente sin usar this.router.queryParam y mantener limpia la url
     const resultados = this.sharedService.getStoredResults();
 
@@ -45,14 +63,42 @@ export class ResultadosComponent implements OnInit, OnDestroy{
         this.observacion = 'none';
         this.entrada = 'undefiend';
     }
-
+    this.envioResultado();    
+    //console.log(resultado);
     console.log(this.imagePath);
   }
 
   ngOnDestroy(): void {
       localStorage.removeItem('categorySelection');
+      //localStorage.removeItem('patient_id');
       window.location.reload();
       this.sharedService.clearResults();
+  }
+
+  envioResultado(){
+    if(localStorage.getItem('patient_id') != null){
+      const resultado = {
+        number_imss: localStorage.getItem('patient_id'),
+        doctor_id: this.user.getDoctorId(),
+        diagnostic_id: this.inNumber,
+        encuesta: this.nombreEncuesta,
+        puntos: this.puntaje + ' ' + this.entrada,
+        observacion: this.observacion,
+        fecha: this.fecha,
+        hora:this.hora
+      }
+      this.apiService.enviarResultado(resultado).subscribe(
+        (response) =>{
+          console.log(resultado);
+          localStorage.removeItem('patient_id');
+          this.aler.alertTime('Datos Capturados del Paciente', 'Envio de Datos');
+        }, (error) => {
+          this.aler.error('Hubo problemas al enviar los datos', 'Error de Entrada');
+          console.log('Error de envio: ', error);
+        }
+      );
+      console.log(resultado);
+    }
   }
 
   funcionBoton(n: number): void{
@@ -78,6 +124,12 @@ export class ResultadosComponent implements OnInit, OnDestroy{
           case 1:
             this.imagePath = this.sectionImage(cat, '4at');
           break;
+          case 2:
+            this.imagePath = this.sectionImage(cat, 'codesf');
+            break;
+          case 3:
+            this.imagePath = this.sectionImage(cat, 'moca');
+            break;
           case 4:
             /* this.imagePath = this.ruta + this.file[subc] + '/awol.png';
               categoria = POr defecto se recibe en DiagnosticComponent */
@@ -201,13 +253,14 @@ export class ResultadosComponent implements OnInit, OnDestroy{
   }
 
   /* Selecciona la imagen de la carpeta, si no recibe por defecto es 0 */
-  sectionImage(categoria: number = 0, imagen: string):string{
+  sectionImage(categoria: number = 0, imagen: string, format: string = 'png'):string{
     /*
      * ruta = Acceso a la carpeta de Puntaje
      * file[x] = acceso a la carpeta de la categoria
      * imagen = Receptor de nombre de la imagen
+     * format = formato de la imagen
     */
-    return this.ruta + this.file[categoria] + '/' + imagen + '.png';
+    return this.ruta + this.file[categoria] + '/' + imagen + '.' + format;
   }
 
   resetImage(){

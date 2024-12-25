@@ -26,35 +26,9 @@
 
 .opciones label,
 .opciones input {
-  display: block;
+  //display: block;
   cursor: pointer;
   width: max-content;
-}
-
-/* Estilos de la Encuesta CAM */
-.cam .tabla-delirium {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.cam .tabla-delirium th,
-.cam .tabla-delirium td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
-  vertical-align: top;
-}
-.cam .tabla-delirium th {
-  background-color: #ddd;
-  font-weight: bold;
-  text-align: center;
-}
-.cam .tabla-delirium td div {
-  margin-bottom: 5px;
-}
-
-.cam .tabla-delirium label {
-  font-weight: normal;
 }
 
 /* Estilos de Encuesta AWOL */
@@ -252,4 +226,74 @@
       }
     }
   }  
+}
+.moca{
+  .encuesta {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Alineación central para todo el contenido */
+  }
+  
+  .encuesta h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .encuesta-imagen {
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto; /* Centrar automáticamente */
+    border-radius: 10px;
+    display: block; /* Asegura que sea tratado como bloque */
+  }
+  
+  .opciones {
+    margin-top: 1rem;
+    text-align: left; /* Opciones alineadas a la izquierda para claridad */
+  }
+  
+  .opciones label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  .opciones input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+    
+}
+.opcmult .opciones {
+  label input[type="radio"] {
+    margin-top: 0.1rem;
+    align-self: start;
+  }
+  .preguntas {
+    padding: 10px 15px;
+    background: #d7dbdd;
+    color: rgba(0, 0, 0, 0.7);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.3rem;
+    border-radius: 5px;
+    margin: 15px 0;
+  }
+  .options label{
+    display: block;
+    margin: 10px 5px;
+    font-size: 1.1rem;
+
+    input{
+      margin: 10px 0;
+    }
+  }
+  .options{
+    padding-left: 15px;
+  }
 }

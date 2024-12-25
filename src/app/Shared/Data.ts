@@ -1,13 +1,9 @@
 export interface MedicalHistory {
-    id: number;
-    doctor: string;
-    paciente: string;
-    diagnostico: string;
-    resultado: number;
-    observaciones: string;
-    fechaCaptura: string;
-    hora: string;
-    centroMedico: string;
+  categoria: string;
+  encuesta: string;
+  fecha: Date;
+  puntos: number;
+  observacion: string;
   }
 
 export interface Resultado {
@@ -35,13 +31,13 @@ export interface Question{
   options: Option[];
 }
 //Captura respuesta seleccionada
-export interface QuestionSelec{
+export interface QuestionSelec{// Opciones con checbox
   text: String;
   option: Option[];
   selectedScore?: number;
 }
 // OPCOINES BOOLEANAS
-export interface Checkbox{
+export interface Checkbox{// Checkbox
   text: String;
   seleccionada: boolean;
 }
@@ -54,4 +50,25 @@ export interface QuestionCheck{
 export interface CategorySelection {
   mainCategory: number;
   subCategory: number;
+}
+
+//Agendar Cita
+export interface Cita {
+  id: number; // Asegúrate de incluir el ID
+  registration_number: string;
+  nombre_completo: string;
+  fecha: string;
+  hora: string;
+}
+// Opciones Boolenas con imagen
+export interface ResImage{ // Opciones con imagenes
+  titulo: string;
+  imagen?: string;
+  opciones: CheckPoint[];
+  tipoEspecial?: string;
+}
+interface CheckPoint{ // Check con Puntuacion
+  text: string;
+  seleccionada: boolean;
+  puntuacion: number;
 }
