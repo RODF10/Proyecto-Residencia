@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SharedService } from 'src/app/Service/shared.service';
 
 @Component({
   selector: 'app-encuesta-sarc-f',
@@ -11,7 +12,7 @@ export class EncuestaSarcFComponent implements OnInit{
   sarcFForm: FormGroup;
   puntuacionTotal: number = 0;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private shared: SharedService) {
     this.sarcFForm = this.fb.group({
       strength: [0, Validators.required],
       walking: [0, Validators.required],
@@ -50,12 +51,15 @@ export class EncuestaSarcFComponent implements OnInit{
 
     console.log('Puntaje total:', puntajeTotal, 'Resultado:', observacion);
 
-    this.router.navigate(['home/resultado'], {
-      queryParams: {
-        puntaje: puntajeTotal,
-        observacion: observacion,
-      },
-    });
+    const resultado = {
+      point: puntajeTotal,
+      encuesta: 'SARC-F',
+      observable: observacion,
+      porcent: ((puntajeTotal/10)*100).toFixed(2)
+    }
+    
+    this.shared.saveResults(resultado);
+    this.router.navigate(['home/resultado']);
   }
 
   private calcularTotal(): number {
