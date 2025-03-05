@@ -58,8 +58,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 ```
 4. 🛠 Instalación y Configuración de XAMPP y Laravel
 
-Paso 1: Descargar e instalar XAMPP desde su sitio oficial:
-
+Paso 1: Descargar e instalar XAMPP desde su sitio oficial:  
 👉 https://www.apachefriends.org/es/index.html
 
 Ejecuta el instalador y sigue las instrucciones:
@@ -77,3 +76,20 @@ Importar el Archivo .sql en phpMyAdmin
 - Haz clic en "Seleccionar archivo" y busca el archivo SQL en donde lo descargo.
 - Asegúrate de que el formato sea SQL.
 - Haz clic en "Continuar" para importar la base de datos.
+Si todo está bien, phpMyAdmin mostrará un mensaje de éxito y las tablas aparecerán en la base de datos.
+
+### Instalacion y Configuracion del Laravel
+1. Instalar Composer
+Descarga Composer desde su página oficial:  
+👉 https://getcomposer.org/
+2. Instalar Laravel Global
+```sh
+composer global require laravel/installer # Instalacion Global
+composer create-project --prefer-dist laravel/laravel mi_proyecto # ⚠️ Reemplaza mi_proyecto con el nombre de tu proyecto.
+# Clonar Proyecto Existente
+git clone https://github.com/usuario/proyecto.git # Cambiar por el link del Proyecto
+cd proyecto
+composer install
+```
+Edita el archivo .env (Dentro del Proyecto) y configura la base de datos con los valores de XAMPP:
+![Vista Previa](src/assets/Captura%20de%20Pantalla.png)
