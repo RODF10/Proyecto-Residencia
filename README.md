@@ -109,7 +109,7 @@ Después de crear/clonar el proyecto, en la consola derebas escribir la ruta del
 cd mi_proyecto #Ubicacion del Proyecto
 ```
 Ten en encuenta que tienes que seleccionar en el buscador del explorador, estando dentro de la carpeta del proyecto para acceder rapido escribiendo **CMD** en el explorador para entrar a la consola.
-![Vista Previa](main/src/assets/Captura%20de%20pantalla.png)
+![Vista Previa](src/assets/Captura%20de%20pantalla.png)
 
 Edita el archivo .env y configura la base de datos con los valores de XAMPP:
 ```sb
