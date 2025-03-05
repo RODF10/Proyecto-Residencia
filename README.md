@@ -92,4 +92,4 @@ cd proyecto
 composer install
 ```
 Edita el archivo .env (Dentro del Proyecto) y configura la base de datos con los valores de XAMPP:
-![Vista Previa](main/src/assets/Captura%20de%20pantalla.png)
+![Vista Previa](src/assets/Captura%20de%20pantalla.png)
