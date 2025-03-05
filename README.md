@@ -1,4 +1,17 @@
 
+# Encuetas Geriatria
+
+Este proyecto automatiza las capturas de los resltados de las encuestas de geatria, obteniendo ciertos puntajes, los cuales interpreta mostrando ciertos mensajes hechos por el diagnostico de la encuesta. 
+
+# Descripcion
+El proyecto fue enfocado en cierto establecimiento medico, donde hacer las encuesta es un poco tardoso, tomando tiempo del diagnostico y calculao el puntaje para dar cierta observacion a un paciente, para solucionar el probelma, se automatizo la caprtua del diagnostico mediante una aplicacion web, tomando las encuesta ya hechas para dar el puntaje, escribiendo o seleccionando los puntos que observen del paciente.
+
+## Link del Proyecto en GitHub
+Angular: [Project](https://github.com/RODF10/Proyecto-Residencia/tree/test-Rodolfo)
+
+Laravel: [Project](https://github.com/RODF10/Backend_Proyecto/tree/master)
+
+
 # Instalacion del Proyecto
 
 Antes de empezar, se necesita instalar Angular, NodeJS, Laravel, PHP y Xampp para su buen funcionamiento del proyecto.
@@ -91,5 +104,34 @@ git clone https://github.com/usuario/proyecto.git # Cambiar por el link del Proy
 cd proyecto
 composer install
 ```
-Edita el archivo .env (Dentro del Proyecto) y configura la base de datos con los valores de XAMPP:
-![Vista Previa](src/assets/Captura%20de%20pantalla.png)
+Después de crear/clonar el proyecto, en la consola derebas escribir la ruta del proyecto:
+```sb
+cd mi_proyecto #Ubicacion del Proyecto
+```
+Ten en encuenta que tienes que seleccionar en el buscador del explorador, estando dentro de la carpeta del proyecto para acceder rapido escribiendo **CMD** en el explorador para entrar a la consola.
+![Vista Previa](main/src/assets/Captura%20de%20pantalla.png)
+
+Edita el archivo .env y configura la base de datos con los valores de XAMPP:
+```sb
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=proyecto_vgi  # Nombre de la base de datos creada en phpMyAdmin
+DB_USERNAME=root
+DB_PASSWORD=  # Déjalo vacío si no estableciste una contraseña en MySQL
+```
+Comando Utiles de LaravelComandos Útiles de Laravel
+```sb
+php artisan serve  # Inicia el servidor de desarrollo
+php artisan migrate  # Ejecuta migraciones de la base de datos
+php artisan make:model Nombre -m  # Crea un modelo con migración
+php artisan make:controller NombreController  # Crea un controlador
+php artisan cache:clear  # Limpia la caché de la aplicación
+```
+Una vez instalado y configurado se puede iniciar el Xampp, Laravel y angular    
+En en XAMPP debera estar funcionando PHP y MySQL    
+Corre Angular y Laravel
+```bash
+ng serve # Correr Aplicación Angular
+php artisan serve # Correr Servidor Laravel
+```
